@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "회원 가입 요청 DTO")
 public class UserInfoRequestDTO {
 
-    @ApiModelProperty(value = "이름", example = "홍길동", required = true)
+    @ApiModelProperty(value = "이름", example = "홍길동999", required = true)
     private String name;
 
     // Getter & Setter
