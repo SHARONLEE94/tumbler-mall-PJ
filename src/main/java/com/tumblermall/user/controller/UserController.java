@@ -19,12 +19,12 @@ public class UserController {
 
        String userIdVal = request.getParameter("userId");
 
-        UserInfoRequestDTO userInfo = null;
+        UserInfoRequestDTO userInfo = new UserInfoRequestDTO();
         String userId = userInfo.setName(userIdVal);
 
-        String userName = userService.userNameTest(userId);
+         String userName = userService.userNameTest(userId);
 
-        if(!"".equals(userName)) {
+        if("".equals(userName)) {
             return "/common/error";
         }
 
