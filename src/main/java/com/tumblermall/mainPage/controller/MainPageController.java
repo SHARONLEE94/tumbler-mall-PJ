@@ -21,7 +21,7 @@ public class MainPageController {
     private BannerService bannerService;
 
     @ApiOperation(value = "메인 배너 페이지 이동")
-    @GetMapping("/")
+    @GetMapping("/main")
     public String bannerPage(Model model) {
         model.addAttribute("banners", bannerService.getBanners());
         return "main/mainPage"; // JSP 페이지 반환

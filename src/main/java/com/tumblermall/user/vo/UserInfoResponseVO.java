@@ -1,17 +1,27 @@
 package com.tumblermall.user.vo;
 
 public class UserInfoResponseVO {
-    private Long userId;
-    private String email;
+
     private String name;
+    private String phone;
+    private String email;
+    private String remarks;
 
     // Getter & Setter
-    public Long getUserId() {
-        return userId;
+    public String getName() {
+        return name;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -22,11 +32,11 @@ public class UserInfoResponseVO {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }
