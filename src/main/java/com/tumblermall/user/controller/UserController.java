@@ -67,4 +67,9 @@ public class UserController {
             return "/common/error";
         }
     }
+
+    @GetMapping("/register")
+    public String register() {
+        return "/user/register";
+    }
 }
