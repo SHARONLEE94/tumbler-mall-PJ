@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,18 +22,21 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
-
     @Autowired
     private UserService userService;
-
-    @GetMapping("/checkout")
-    public String checkout(HttpServletRequest request, Model model) {
+    
+    //테스트
+    @GetMapping("/")
+    public String a(Model model, HttpServletRequest request) {
+        //임시
+        model.addAttribute("userId",1);
+        return "redirect:/orderCart";
+    }
+    //주문/결제페이지
+    @GetMapping("/orderCart")
+    public String orderCart(HttpServletRequest request, Model model) {
         String id = request.getParameter("userId");
-        //제품 하드코딩
-        List<Integer> itemlist = new ArrayList<>();
-        itemlist.add(1);
-        itemlist.add(3);
-        itemlist.add(5);
+
         try {
             String userIdVal = request.getParameter("userId");
             UserInfoRequestDTO userInfo = new UserInfoRequestDTO();
@@ -43,11 +47,11 @@ public class OrderController {
             }
 
             String userName = userService.userNameTest(userId);
-
-            List<ProductVo> pv = orderService.selectProduct(itemlist);
-            List<AdressVo> av = orderService.selectAdress(id);
+            //현재하드코딩 되어있음
+            List<ProductVo> pv = orderService.selectProduct();
+            AdressVo av = orderService.selectAdressDefault(id);
             model.addAttribute("userName", userName);
-            model.addAttribute("addressList", av);
+            model.addAttribute("address", av);
             model.addAttribute("pv", pv);
             return "order/orderPayment";
         } catch (Exception e) {
@@ -56,11 +60,48 @@ public class OrderController {
             return "/common/error";
         }
     }
+    //주소 변경/생성 페이지
+    @GetMapping("/address/edit")
+    public String addressAdit(HttpServletRequest request, Model model) {
+        //임시
+        List<AdressVo> av = orderService.selectAddress("1");
+//        System.out.println(av);
+        model.addAttribute("addressList", av);
+        return "order/addressEdit";
+    }
+    //주소 삭제
+    @GetMapping("/address/del")
+    public String delAddress(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        String id  = request.getParameter("addressBookId");
+        try {
+            orderService.delAddress(id);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getMessage();
+            return "/common/error";
+        }
+        //임시
+        model.addAttribute("userId",1);
+        return "redirect:/orderCart";
+    }
+    //주문!
+    @PostMapping("/order")
+    public String order(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            orderService.orderInsert(request);
+        }catch (Exception e) {
+            e.printStackTrace();
+            e.getMessage();
+            return "/common/error";}
+        return "redirect:/main";
+    }
+
 
     @GetMapping("/address")
     public String address(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         String id = request.getParameter("userId");
-        List<AdressVo> av = orderService.selectAdress(id);
+        List<AdressVo> av = orderService.selectAddress(id);
         System.out.println(av);
         model.addAttribute("addressList", av);
         return "order/address";

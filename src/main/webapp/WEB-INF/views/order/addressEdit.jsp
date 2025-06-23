@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>배송지 목록</title>
+    <title>배송지</title>
     <!-- 필요 시 CSS/JS 프레임워크 (예: Bootstrap) 추가 -->
     <%--  <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.min.css'/>">--%>
     <%--  <script src="<c:url value='/resources/js/jquery.min.js'/>"></script>--%>
@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h2>배송지 목록</h2>
+    <h2>배송지</h2>
     <!-- 새 배송지 등록 버튼 -->
     <div class="mb-3">
         <%--    <a href="<c:url value='/address/new'/>" class="btn btn-primary">새 배송지 등록</a>--%>
@@ -60,21 +60,22 @@
                     <td><c:out value="${addr.address}"/></td>
                     <td><c:out value="${addr.addressDetail}"/></td>
                     <td><c:out value="${addr.postalCode}"/></td>
-                        <%--          <td>--%>
-                        <%--            <c:choose>--%>
-                        <%--              <c:when test="${addr.isDefault == 'Y'}">--%>
-                        <%--                <span class="default-label">기본배송지</span>--%>
-                        <%--              </c:when>--%>
-                        <%--              <c:otherwise>--%>
-                        <%--                <!-- 기본배송지 설정 폼/버튼 -->--%>
-                        <%--                <form action="<c:url value='/'/>" method="post" style="display:inline;">--%>
-                        <%--                  <!-- CSRF 토큰이 필요하면 hidden 필드로 삽입 -->--%>
-                        <%--                  <input type="hidden" name="addressBookId" value="${addr.adressBookId}" />--%>
-                        <%--                  <button type="submit" class="btn btn-sm btn-outline-primary action-btn">기본 설정</button>--%>
-                        <%--                </form>--%>
-                        <%--              </c:otherwise>--%>
-                        <%--            </c:choose>--%>
-                        <%--          </td>--%>
+                    <td>
+                        <c:choose>
+                            <c:when test="${'Y' eq addr.isDefault.toString()}">
+                                <span class="default-label">기본배송지</span>
+                            </c:when>
+                            <c:otherwise>
+                                <!-- 기본배송지 설정 폼/버튼 -->
+                                <form action="<c:url value='/'/>" method="post" style="display:inline;">
+                                    <!-- CSRF 토큰이 필요하면 hidden 필드로 삽입 -->
+                                    <input type="hidden" name="addressBookId" value="${addr.adressBookId}"/>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary action-btn">기본 설정
+                                    </button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td>
                         <!-- 수정 버튼 -->
                         <a href="<c:url value='/address/edit/${addr.adressBookId}'/>"
