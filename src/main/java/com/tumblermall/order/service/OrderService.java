@@ -3,6 +3,8 @@ package com.tumblermall.order.service;
 import com.tumblermall.order.mapper.OrderMapper;
 import com.tumblermall.order.vo.AdressVo;
 import com.tumblermall.order.vo.ProductVo;
+import com.tumblermall.order.vo.userInfoVo;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,18 +28,18 @@ public class OrderService {
         return orderMapper.selectAdressDefault(id);
     }
 
-    public List<ProductVo> selectProduct() {
+    public List<ProductVo> selectProduct(List<String> items) {
         //제품 하드코딩
-        List<Integer> itemlist = new ArrayList<>();
-        itemlist.add(1);
-        itemlist.add(3);
-        itemlist.add(5);
         List<ProductVo> products = new ArrayList<>();
-        for (int id : itemlist) {
-            ProductVo p = orderMapper.selectProduct(id);
+        for (String pair : items) {
+            String[] parts = pair.split(":");
+            Integer count = Integer.valueOf(parts[1]);
+            ProductVo p = orderMapper.selectProduct(Integer.parseInt(parts[0]));
+            p.setCount(count);
             if (p != null) {
                 products.add(p);
             }
+            // 처리 로직...
         }
         System.out.println(products.toString().toString());
         return products;
@@ -64,5 +66,9 @@ public class OrderService {
         //        orderMapper.insertOrder();
 //        orderMapper.insertOrderdetail();
 
+    }
+
+    public userInfoVo userInfo(String userIdVal) {
+        return orderMapper.orderUserInfo(Integer.parseInt(userIdVal));
     }
 }

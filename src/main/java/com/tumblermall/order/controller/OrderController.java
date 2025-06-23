@@ -3,6 +3,7 @@ package com.tumblermall.order.controller;
 import com.tumblermall.order.service.OrderService;
 import com.tumblermall.order.vo.AdressVo;
 import com.tumblermall.order.vo.ProductVo;
+import com.tumblermall.order.vo.userInfoVo;
 import com.tumblermall.products.service.ProductService;
 import com.tumblermall.user.dto.UserInfoRequestDTO;
 import com.tumblermall.user.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,34 +28,32 @@ public class OrderController {
     private UserService userService;
 
     //테스트
-    @GetMapping("/")
-    public String a(Model model, HttpServletRequest request) {
-        //임시
-        model.addAttribute("userId",1);
-        return "redirect:/orderCart";
-    }
+//    @GetMapping("/")
+//    public String a(Model model, HttpServletRequest request) {
+//        //임시
+//        model.addAttribute("items","1:1");
+//        return "redirect:/orderTest";
+//    }
     //주문/결제페이지
     @GetMapping("/orderCart")
-    public String orderCart(HttpServletRequest request, Model model) {
+    public String orderCart(HttpServletRequest request, @RequestParam("items") List<String> items, Model model) {
         String id = request.getParameter("userId");
+
 
         try {
             String userIdVal = request.getParameter("userId");
-            UserInfoRequestDTO userInfo = new UserInfoRequestDTO();
-            String userId = userInfo.setName(userIdVal);
 
-            if (userId == null) {
+            if (userIdVal == null) {
                 throw new Exception("userId is Null");
             }
 
-            String userName = userService.userNameTest(userId);
-            //현재하드코딩 되어있음
-            List<ProductVo> pv = orderService.selectProduct();
+            userInfoVo userInfo = orderService.userInfo(userIdVal);
+            List<ProductVo> pv = orderService.selectProduct(items);
             AdressVo av = orderService.selectAdressDefault(id);
-            model.addAttribute("userName", userName);
+            model.addAttribute("userInfo", userInfo);
             model.addAttribute("address", av);
-            model.addAttribute("pv", pv);
-            return "order/orderPayment";
+            model.addAttribute("productList", pv);
+            return "/order/order";
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
@@ -98,12 +98,10 @@ public class OrderController {
     }
 
 
-    @GetMapping("/address")
-    public String address(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
-        String id = request.getParameter("userId");
-        List<AdressVo> av = orderService.selectAddress(id);
-        System.out.println(av);
-        model.addAttribute("addressList", av);
+    @GetMapping("/orderTest")
+    public String address(HttpServletRequest request, @RequestParam("items") List<String> items, Model model) throws IOException {
+        List<ProductVo> pv = orderService.selectProduct(items);
+        model.addAttribute("productList", pv);
         return "order/address";
     }
 

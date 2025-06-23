@@ -21,4 +21,6 @@ public interface OrderMapper {
 
     // delete
     boolean delAddress(int id);
+
+    userInfoVo orderUserInfo(int userId);
 }

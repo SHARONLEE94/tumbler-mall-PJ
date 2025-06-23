@@ -22,6 +22,7 @@
     </style>
 </head>
 <body>
+<jsp:include page="../common/header.jsp" />
 <div class="container mt-4">
     <h2>구매자</h2>
     <h2>${userName}</h2>
@@ -44,7 +45,7 @@
         <table class="table table-striped table-bordered">
             <thead class="thead-light">
             <tr>
-                <th>번호</th>
+<%--                <th>번호</th>--%>
                 <th>배송지명</th>
                 <th>수령인명</th>
                 <th>연락처</th>
@@ -57,7 +58,7 @@
             </thead>
             <tbody>
             <tr>
-                <td><c:out value="${address.adressBookId}"/></td>
+<%--                <td><c:out value="${address.adressBookId}"/></td>--%>
                 <td><c:out value="${address.adressName}"/></td>
                 <td><c:out value="${address.recipientName}"/></td>
                 <td><c:out value="${address.recipientPhone}"/></td>
@@ -134,7 +135,7 @@
                         </tr>
                         <tr>
                             <th scope="row">수량</th>
-                            <td><c:out value="1"/></td>
+                            <td><c:out value="${item.count}"/></td>
                         </tr>
                         </tbody>
                     </table>
@@ -158,5 +159,6 @@
     <form action="/order" method="post">
         <button>주문!</button>
     </form>
+<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

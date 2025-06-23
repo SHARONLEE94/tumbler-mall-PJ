@@ -8,6 +8,9 @@ public class ProductVo {
     private String color;
     private String size;
 
+
+    private int count;
+
     public int getProductOptionId() {
         return productOptionId;
     }
@@ -46,5 +49,13 @@ public class ProductVo {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

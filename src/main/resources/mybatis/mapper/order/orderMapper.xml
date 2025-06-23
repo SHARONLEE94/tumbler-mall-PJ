@@ -21,6 +21,15 @@
         <result property="size" column="sizes" />
     </resultMap>
 
+
+    <resultMap id="userInfo" type="com.tumblermall.order.vo.userInfoVo">
+        <result property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+        <result property="userEmail" column="email" />
+        <result property="userPhone" column="phone" />
+        <result property="userPoint" column="points" />
+    </resultMap>
+
     <select id="selectProduct" parameterType="int" resultMap="productInfo">
         SELECT pdo.product_option_id AS productOptionId, pd.product_name AS productName, pd.product_base_price +pdo.additional_price AS  price,
                color_cd.code_name AS color, size_cd.code_name AS  sizes
@@ -81,8 +90,11 @@
         WHERE address_book_id = #{id};
     </insert>
 
-    <select id="selectLastInsertId" resultType="long">
-        SELECT LAST_INSERT_ID();
+    <select id="orderUserInfo" resultType="int" resultMap="userInfo">
+        SELECT user_id, email,user_name,phone,points
+        FROM modeling.users
+        where user_id =#{userId}
+        ;
     </select>
 
 </mapper>
