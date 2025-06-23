@@ -1,4 +1,5 @@
 <%--
+<%--
   Created by IntelliJ IDEA.
   User: sharo
   Date: 2025-06-22
@@ -70,7 +71,7 @@
                                 <div class="w-4 h-4 rounded-full border border-beige-300 bg-pink-300"></div>
                             </div>
                         </div>
-                        <a href="/productDetl?id=1" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <a href="/productDetl?productId=1001" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             상품 보기
                         </a>
                     </div>
@@ -102,7 +103,7 @@
                                 <div class="w-4 h-4 rounded-full border border-beige-300 bg-gray-800"></div>
                             </div>
                         </div>
-                        <a href="/productDetl?id=2" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <a href="/productDetl?productId=1002" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             상품 보기
                         </a>
                     </div>

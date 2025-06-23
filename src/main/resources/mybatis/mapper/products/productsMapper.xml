@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.tumblermall.user.mapper.UserMapper">
+<mapper namespace="com.tumblermall.products.mapper.ProductsMapper">
+
+    <select id="selectProductById" parameterType="long" resultType="com.tumblermall.products.dto.ProductRequestDTO">
+        SELECT
+            product_id AS id,
+            product_name AS name,
+            product_base_price AS price,
+            release_date,
+            discontinued_date,
+            shipping_method_id,
+            shipping_method
+        FROM modeling.product
+        WHERE product_id = #{productId}
+    </select>
+
+    <select id="selectOptionsByProductId" parameterType="long" resultType="com.tumblermall.products.vo.ProductRequestVO">
+        SELECT
+            po.product_option_id AS id,
+            po.product_id,
+            po.product_color AS colorGroup,
+            po.color,
+            po.product_size AS sizeGroup,
+            po.size,
+            po.additional_price AS additionalPrice,
+            po.is_deleted AS isDeleted,
+
+            pd.made_in_country AS madeInCountry,
+            pd.country,
+            pd.material_id AS materialId,
+            pd.material,
+            pd.weight,
+            pd.dimensions,
+            pd.heat_retention_time AS heatRetentionTime,
+            pd.cold_retention_time AS coldRetentionTime,
+            pd.ice_retention_time AS iceRetentionTime,
+            pd.is_sealed AS isSealed,
+            pd.components,
+            pd.as_available AS asAvailable,
+            pd.as_period AS asPeriod,
+            pd.care_note_id AS careNoteId,
+            pd.product_strengths AS productStrengths
+
+        FROM modeling.product_option po
+                 LEFT JOIN modeling.product_detail pd ON po.product_option_id = pd.product_option_id
+        WHERE po.product_id = #{productId}
+    </select>
 
 </mapper>
