@@ -706,6 +706,8 @@
         }
 
         alert(`장바구니에 추가되었습니다.\n상품: <%= productName %>\n색상: ${selectedColor}\n사이즈: ${selectedSize}\n수량: ${quantity}`);
+
+        window.location.href = `/cart`;
     }
 
     // Buy now
@@ -720,7 +722,8 @@
         }
 
         // Redirect to order page with product info
-        window.location.href = `orders.jsp?productId=<%= id %>&color=${selectedColor}&size=${selectedSize}&quantity=${quantity}`;
+        <%--window.location.href = `/order?productId=<%= id %>&color=${selectedColor}&size=${selectedSize}&quantity=${quantity}`;--%> // 가이드
+        window.location.href = `/order`;
     }
 
     // Tab functionality
