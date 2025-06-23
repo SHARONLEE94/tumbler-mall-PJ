@@ -24,7 +24,7 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private UserService userService;
-    
+
     //테스트
     @GetMapping("/")
     public String a(Model model, HttpServletRequest request) {
@@ -105,5 +105,20 @@ public class OrderController {
         System.out.println(av);
         model.addAttribute("addressList", av);
         return "order/address";
+    }
+
+    @GetMapping("/order")
+    public String order() {
+        return "/order/order";
+    }
+
+    @GetMapping("/orderProcess")
+    public String orderProcess() {
+        return "/order/orderProcess";
+    }
+
+    @GetMapping("/orderDetl")
+    public String orderDetl() {
+        return "/order/orderDetl";
     }
 }
