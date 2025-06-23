@@ -25,4 +25,27 @@
         where user_id = #{userId}
     </select>
 
+    <select id="insertUserReg" parameterType="com.tumblermall.user.dto.UserRegRequestDTO">
+        insert into modeling.users(email
+                                  , password
+                                  , phone
+                                  , gender_id
+                                  , job_id
+                                  , birth_date
+                                  , is_ad_recevie)
+        VALUES #{email}
+               , #{password}
+               , #{phone}
+               , #{gender_id}
+               , #{job_id}
+               , #{birth_date}
+               , #{is_ad_recevie}
+    </select>
+
+    <select id="selectUserEmail" parameterType="com.tumblermall.user.vo.UserRegVO" resultType="int">
+        select count(email)
+        from modeling.users
+        where email=#{userEmail}
+    </select>
+
 </mapper>
