@@ -12,9 +12,9 @@ public class CartSelectService {
     @Autowired
     CartMapper cartMapper;
 
+    // 나중에 예외 발생 시 예외처리 추가.
     public List<CartRequestVO> checkedCart(int userId) {
-        if(userId != null){
-            return checkedCart(userId);
-        }
+            return cartMapper.selectByUserCart(userId);
+
     }
 }
