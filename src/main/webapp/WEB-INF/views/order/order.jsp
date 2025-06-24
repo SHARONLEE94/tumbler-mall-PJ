@@ -41,7 +41,7 @@
 <main class="max-w-4xl mx-auto px-4 py-12">
     <h1 class="text-3xl font-light text-gray-900 mb-8">주문/결제</h1>
 
-    <form action="order-process.jsp" method="post" id="orderForm">
+    <form action="orderProcess" method="post" id="orderForm">
         <div class="grid lg:grid-cols-2 gap-8">
             <!-- 주문 정보 입력 -->
             <div class="space-y-6">
