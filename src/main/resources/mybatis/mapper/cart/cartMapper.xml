@@ -3,4 +3,43 @@
 
 <mapper namespace="com.tumblermall.user.mapper.UserMapper">
 
+    <resultMap id="selectCartVO" type="com.tumblermall.cart.vo.CartRequestVO">
+        <constructor>
+            <arg column="user_id" javaType="int"/>
+            <arg column="product_option_id" javaType="int"/>
+            <arg column="product_count" javaType="int"/>
+            <arg column="product_YN" javaType="String"/>
+            <arg column="product_color" javaType="String"/>
+            <arg column="product_size" javaType="String"/>
+            <arg column="final_price" javaType="int"/>
+            <arg column="product_name" javaType="String"/>
+        </constructor>
+    </resultMap>
+
+    <select id="selectCart" resultMap="selectCartVO">
+        SELECT c.user_id, c.product_option_id, c.product_count, c.product_YN,
+               o.product_color, o.product_size, p.product_price + o.additional_price AS final_price,
+               p.product_name
+        FROM user_shopping_cart c
+        JOIN product_option o ON c.product_option_id = o.product_option_id
+        JOIN product p ON o.product_id = p.product_id
+        WHERE user_id = #{user_id} and product_YN = 'Y'
+    </select>
+
+    <insert id="insertCart" parameterType="com.tumblermall.cart.dto.CartRequestDTO">
+        INSERT INTO user_shopping_cart (user_id, product_option_id, product_count, product_YN)
+        VALUES (#{userId}, #{productOptionId}, #{productCount}, #{productYN})
+    </insert>
+
+    <update id="updateCart" parameterType="com.tumblermall.cart.dto.CartRequestDTO">
+        UPDATE user_shopping_cart
+        SET product_count = #{productCount}
+        WHERE user_id = #{userId} AND product_option_id = #{productOptionId}
+    </update>
+
+    <delete id="deleteCart" parameterType="com.tumblermall.cart.dto.CartRequestDTO">
+        DELETE FROM user_shopping_cart
+        WHERE user_id = #{userId} AND product_option_id = #{productOptionId}
+    </delete>
+
 </mapper>

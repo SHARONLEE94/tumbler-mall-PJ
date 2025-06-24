@@ -1,6 +1,100 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.tumblermall.user.mapper.UserMapper">
+<mapper namespace="com.tumblermall.order.mapper.OrderMapper">
+    <resultMap id="adressInfo" type="com.tumblermall.order.vo.AdressVo">
+        <result property="adressBookId" column="address_book_id" />
+        <result property="adressName" column="address_name" />
+        <result property="recipientName" column="recipient_name" />
+        <result property="recipientPhone" column="recipient_phone" />
+        <result property="address" column="address" />
+        <result property="addressDetail" column="address_detail" />
+        <result property="postalCode" column="postal_code" />
+        <result property="isDefault" column="is_default" />
+    </resultMap>
+
+    <resultMap id="productInfo" type="com.tumblermall.order.vo.ProductVo">
+        <result property="productOptionId" column="productOptionId" />
+        <result property="productName" column="productName" />
+        <result property="price" column="price" />
+        <result property="color" column="color" />
+        <result property="size" column="sizes" />
+    </resultMap>
+
+
+    <resultMap id="userInfo" type="com.tumblermall.order.vo.userInfoVo">
+        <result property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+        <result property="userEmail" column="email" />
+        <result property="userPhone" column="phone" />
+        <result property="userPoint" column="points" />
+    </resultMap>
+
+    <select id="selectProduct" parameterType="int" resultMap="productInfo">
+        SELECT pdo.product_option_id AS productOptionId, pd.product_name AS productName, pd.product_base_price +pdo.additional_price AS  price,
+               color_cd.code_name AS color, size_cd.code_name AS  sizes
+        FROM modeling.product pd, modeling.product_option pdo
+            JOIN
+            modeling.code color_cd
+        ON pdo.product_color = color_cd.code_group_id AND pdo.color = color_cd.code_id
+            JOIN
+            modeling.code size_cd
+            ON pdo.product_size = size_cd.code_group_id AND pdo.size = size_cd.code_id
+        where pd.product_id = pdo.product_id
+        and pdo.product_option_id = #{productOptionId}
+    </select>
+
+    <select id="selectAdress" parameterType="int" resultMap="adressInfo">
+        select address_book_id,address_name,recipient_name,recipient_phone,
+               address,address_detail,postal_code,is_default
+        from modeling.delivery_address_book
+        where user_id = #{id}
+--           and is_default = 'Y'
+        ;
+    </select>
+
+    <select id="selectAdressDefault" parameterType="int" resultMap="adressInfo">
+        select address_book_id,address_name,recipient_name,recipient_phone,
+               address,address_detail,postal_code,is_default
+        from modeling.delivery_address_book
+        where user_id = #{id}
+          and is_default = 'Y'
+        ;
+    </select>
+
+    <delete id="delAddress" parameterType="int">
+        delete FROM modeling.delivery_address_book
+               where address_book_id = #{id}
+        ;
+    </delete>
+
+    <insert id="insertOrderAdress" >
+        INSERT INTO modeling.order_delivery (
+            address_name,
+            recipient_name,
+            phone_number,
+            address,
+            address_detail,
+            postal_code,
+            delivery_request
+        )
+        SELECT
+            address_name,
+            recipient_name,
+            recipient_phone,
+            address,
+            address_detail,
+            postal_code,
+            #{request}
+        FROM modeling.delivery_address_book
+        WHERE address_book_id = #{id};
+    </insert>
+
+    <select id="orderUserInfo" resultType="int" resultMap="userInfo">
+        SELECT user_id, email,user_name,phone,points
+        FROM modeling.users
+        where user_id =#{userId}
+        ;
+    </select>
 
 </mapper>

@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="/static/css/globals.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<%--<form>--%>
 <jsp:include page="../common/header.jsp" />
 <main class="max-w-4xl mx-auto px-4 py-12">
     <h1 class="text-3xl font-light text-gray-900 mb-8">장바구니</h1>
@@ -44,6 +44,8 @@
 
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
+
+                                    <!-- +, - 버튼 -->
                                     <button class="border border-beige-300 hover:bg-beige-100 w-8 h-8 rounded flex items-center justify-center" onclick="decreaseQuantity(1)">
                                         <i data-lucide="minus" class="h-4 w-4"></i>
                                     </button>
@@ -52,7 +54,9 @@
                                         <i data-lucide="plus" class="h-4 w-4"></i>
                                     </button>
                                 </div>
-                                <button class="text-red-500 hover:text-red-700 p-2">
+
+                                <!-- 휴지통 버튼 -->
+                                <button class="trash-btn text-red-500 hover:text-red-700 p-2">
                                     <i data-lucide="trash-2" class="h-4 w-4"></i>
                                 </button>
                             </div>
@@ -75,15 +79,19 @@
 
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
+
+                                    <!-- +, - 버튼 -->
                                     <button class="border border-beige-300 hover:bg-beige-100 w-8 h-8 rounded flex items-center justify-center" onclick="decreaseQuantity(2)">
                                         <i data-lucide="minus" class="h-4 w-4"></i>
                                     </button>
-                                    <span id="quantity-2" class="w-8 text-center">2</span>
+                                    <span id="quantity-2" class="w-8 text-center">2</span> <!-- 장바구니에 담은 제품 개수 -->
                                     <button class="border border-beige-300 hover:bg-beige-100 w-8 h-8 rounded flex items-center justify-center" onclick="increaseQuantity(2)">
                                         <i data-lucide="plus" class="h-4 w-4"></i>
                                     </button>
                                 </div>
-                                <button class="text-red-500 hover:text-red-700 p-2">
+
+                                <!-- 휴지통 value로 클릭이 되면 컨트롤러에서 제어-->
+                                <button onclick="deleteCart()" class="trash-btn text-red-500 hover:text-red-700 p-2">
                                     <i data-lucide="trash-2" class="h-4 w-4"></i>
                                 </button>
                             </div>
@@ -124,6 +132,44 @@
 </main>
 
 <script>
+
+    function deleteCart(){
+        const trashButtons = document.querySelectorAll(('.trash-btn'))
+
+        trashButtons.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('해당 제품이 삭제 되었습니다.');
+            })
+        })
+
+        const userId = "${userId}";
+        const productOptionId = "${productOptionId}";
+        sendDeleteCart(userId, productOptionId);
+    }
+
+    function sendDeleteCart(userId, productOptionId){
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/deleteCart';
+
+        const inputUserId = document.createElement('input');
+        inputUserId.type = 'hidden';
+        inputUserId.name = 'userId';
+        inputUserId.value = userId;
+
+        const inputProductOptionId = document.createElement('input');
+        inputProductOptionId.type = 'hidden';
+        inputProductOptionId.name = 'productOptionId';
+        inputProductOptionId.value = productOptionId;
+
+        form.appendChild(inputUserId);
+        form.appendChild(inputProductOptionId);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
     function increaseQuantity(itemId) {
         const quantityElement = document.getElementById('quantity-' + itemId);
         let quantity = parseInt(quantityElement.textContent);
@@ -159,5 +205,6 @@
     lucide.createIcons();
 </script>
 <jsp:include page="../common/footer.jsp" />
+<%--</form>--%>
 </body>
 </html>

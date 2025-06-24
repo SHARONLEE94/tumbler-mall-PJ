@@ -5,20 +5,25 @@
   Time: 오전 11:39
   To change this template use File | Settings | File Templates.
 --%>
-
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="false" %>
-<%
-    // 파라미터 받기 (상품 상세에서 바로 구매 시)
-    String productId = request.getParameter("productId");
-    String color = request.getParameter("color");
-    String size = request.getParameter("size");
-    String quantity = request.getParameter("quantity");
-
-    // 장바구니에서 온 경우와 바로 구매의 경우를 구분
-    boolean isDirectPurchase = (productId != null);
-%>
+<c:set var="totalPrice" value="0" />
+<c:set var="phone" value="${userInfo.userPhone}"/>
+<c:choose>
+    <c:when test="${phone != null && fn:length(phone) == 11}">
+        <c:set var="formattedPhone"
+               value="${fn:substring(phone, 0, 3)}-${fn:substring(phone, 3, 7)}-${fn:substring(phone, 7, 11)}"/>
+    </c:when>
+    <c:when test="${phone != null && fn:length(phone) == 10}">
+        <c:set var="formattedPhone"
+               value="${fn:substring(phone, 0, 3)}-${fn:substring(phone, 3, 6)}-${fn:substring(phone, 6, 10)}"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="formattedPhone" value="${phone}"/>
+    </c:otherwise>
+</c:choose>
 
 <html>
 <head>
@@ -32,11 +37,11 @@
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
-    <link rel="stylesheet" href="/static/css/globals.css" />
+    <link rel="stylesheet" href="/static/css/globals.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<jsp:include page="../common/header.jsp" />
+<jsp:include page="../common/header.jsp"/>
 
 <main class="max-w-4xl mx-auto px-4 py-12">
     <h1 class="text-3xl font-light text-gray-900 mb-8">주문/결제</h1>
@@ -54,19 +59,20 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label for="orderName" class="block text-gray-900 font-medium">이름 *</label>
-                                <input type="text" id="orderName" name="orderName" required
-                                       class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
+                                <h3 id="orderName"
+                                    class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">${userInfo.userName}</h3>
                             </div>
                             <div class="space-y-2">
                                 <label for="orderPhone" class="block text-gray-900 font-medium">전화번호 *</label>
-                                <input type="tel" id="orderPhone" name="orderPhone" placeholder="010-1234-5678" required
-                                       class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
+                                <h3 id="orderPhone"
+                                    class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
+                                    ${formattedPhone}
+                                </h3>
                             </div>
                         </div>
                         <div class="space-y-2">
                             <label for="orderEmail" class="block text-gray-900 font-medium">이메일 *</label>
-                            <input type="email" id="orderEmail" name="orderEmail" placeholder="your@email.com" required
-                                   class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
+                            <h3 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">${userInfo.userEmail}</h3>
                         </div>
                     </div>
                 </div>
@@ -76,6 +82,10 @@
                     <div class="p-6 border-b border-beige-100">
                         <div class="flex items-center justify-between">
                             <h2 class="text-xl font-medium text-gray-900">배송 정보</h2>
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" id="defaultAddress" onchange="defaultAddressInfo()">
+                                <span class="text-sm text-beige-600">기본 배송지로</span>
+                            </label>
                             <label class="flex items-center gap-2">
                                 <input type="checkbox" id="sameAsOrderer" onchange="copyOrdererInfo()">
                                 <span class="text-sm text-beige-600">주문자 정보와 동일</span>
@@ -91,7 +101,8 @@
                             </div>
                             <div class="space-y-2">
                                 <label for="receiverPhone" class="block text-gray-900 font-medium">전화번호 *</label>
-                                <input type="tel" id="receiverPhone" name="receiverPhone" placeholder="010-1234-5678" required
+                                <input type="tel" id="receiverPhone" name="receiverPhone" placeholder="010-1234-5678"
+                                       required
                                        class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
                             </div>
                         </div>
@@ -185,101 +196,38 @@
                         <h2 class="text-xl font-medium text-gray-900">주문 상품</h2>
                     </div>
                     <div class="p-6 space-y-4">
-                        <% if(isDirectPurchase) {
-                            // 바로 구매의 경우 - 단일 상품
-                            String productName = "";
-                            String productPrice = "";
-                            String productImage = "";
-
-                            switch(productId) {
-                                case "1":
-                                    productName = "스탠리 아이스플로우 에어로라이트 플립스트로 2.0 텀블러 473ml";
-                                    productPrice = "189,000";
-                                    productImage = "https://shop-phinf.pstatic.net/20250317_15/1742171755178UDtlA_JPEG/6974354318766909_716864716.jpg?type=m510";
-                                    break;
-                                case "2":
-                                    productName = "스탠리 퀜처 프로투어 플립 스트로 텀블러 887ml, 크림 로즈 골드";
-                                    productPrice = "89,000";
-                                    productImage = "https://shop-phinf.pstatic.net/20250520_123/1747726280043IgGAP_JPEG/61611558847384767_485628341.jpg?type=m510";
-                                    break;
-                                case "3":
-                                    productName = "스탠리 퀜처 H2.0 플로우스테이트 텀블러 887ml";
-                                    productPrice = "245,000";
-                                    productImage = "https://shop-phinf.pstatic.net/20250326_81/17429562177615fywk_JPEG/15253103457207392_1327903772.jpg?type=m510";
-                                    break;
-                                default:
-                                    productName = "스탠리 퀜처 H2.0 플로우스테이트 텀블러 591ml";
-                                    productPrice = "125,000";
-                                    productImage = "https://shop-phinf.pstatic.net/20250228_205/1740706975804d12PN_JPEG/147690168501764_683201606.jpg?type=m510";
-                                    break;
-                            }
-
-                            int qty = quantity != null ? Integer.parseInt(quantity) : 1;
-                            int price = Integer.parseInt(productPrice.replace(",", ""));
-                            int totalPrice = price * qty;
-                        %>
-                        <div class="flex gap-4 p-4 border border-beige-200 rounded-lg">
-                            <img src="<%= productImage %>" alt="<%= productName %>"
-                                 class="w-16 h-20 object-cover rounded">
-                            <div class="flex-1">
-                                <h3 class="font-medium text-gray-900 mb-1"><%= productName %></h3>
-                                <p class="text-sm text-beige-600 mb-1">색상: <%= color %> / 사이즈: <%= size %></p>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-sm text-beige-600">수량: <%= qty %>개</span>
-                                    <span class="font-medium text-gray-900">₩<%= String.format("%,d", totalPrice) %></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Hidden inputs for order processing -->
-                        <input type="hidden" name="orderType" value="direct">
-                        <input type="hidden" name="productId" value="<%= productId %>">
-                        <input type="hidden" name="color" value="<%= color %>">
-                        <input type="hidden" name="size" value="<%= size %>">
-                        <input type="hidden" name="quantity" value="<%= qty %>">
-
-                        <% } else {
-                            // 장바구니에서 온 경우 - 여러 상품 가능
-                            int totalPrice = 367000; // 임시 데이터
-                        %>
                         <div class="space-y-3">
-                            <div class="flex gap-4 p-4 border border-beige-200 rounded-lg">
-                                <img src="https://shop-phinf.pstatic.net/20250317_15/1742171755178UDtlA_JPEG/6974354318766909_716864716.jpg?type=m510"
-                                     alt="스탠리 아이스플로우 에어로라이트 플립스트로 2.0 텀블러 473ml" class="w-16 h-20 object-cover rounded">
-                                <div class="flex-1">
-                                    <h3 class="font-medium text-gray-900 mb-1">스탠리 아이스플로우 에어로라이트 플립스트로 2.0 텀블러 473ml</h3>
-                                    <p class="text-sm text-beige-600 mb-1">색상: 핑크베이지 / oz: 473ml</p>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm text-beige-600">수량: 1개</span>
-                                        <span class="font-medium text-gray-900">₩189,000</span>
+                            <c:forEach var="item" items="${productList}">
+                                <div class="flex gap-4 p-4 border border-beige-200 rounded-lg">
+                                    <img src="https://shop-phinf.pstatic.net/20250317_15/1742171755178UDtlA_JPEG/6974354318766909_716864716.jpg?type=m510"
+                                         alt="스탠리 아이스플로우 에어로라이트 플립스트로 2.0 텀블러 473ml"
+                                         class="w-16 h-20 object-cover rounded">
+                                    <div class="flex-1">
+                                        <h3 class="font-medium text-gray-900 mb-1">${item.productName}</h3>
+                                        <p class="text-sm text-beige-600 mb-1">색상: ${item.color} / 사이즈: ${item.size}</p>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm text-beige-600">수량: ${item.count}개</span>
+                                            <span class="font-medium text-gray-900">₩${item.count * item.price}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="flex gap-4 p-4 border border-beige-200 rounded-lg">
-                                <img src="https://shop-phinf.pstatic.net/20250228_205/1740706975804d12PN_JPEG/147690168501764_683201606.jpg?type=m510"
-                                     alt="스탠리 퀜처 H2.0 플로우스테이트 텀블러 591ml" class="w-16 h-20 object-cover rounded">
-                                <div class="flex-1">
-                                    <h3 class="font-medium text-gray-900 mb-1">스탠리 퀜처 H2.0 플로우스테이트 텀블러 591ml</h3>
-                                    <p class="text-sm text-beige-600 mb-1">색상: 하늘 / oz: 591ml</p>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm text-beige-600">수량: 2개</span>
-                                        <span class="font-medium text-gray-900">₩178,000</span>
-                                    </div>
-                                </div>
-                            </div>
+                                <!-- Hidden inputs for order processing -->
+                                <input type="hidden" name="productId" value="${item.productOptionId}">
+                                <input type="hidden" name="color" value="${item.color}">
+                                <input type="hidden" name="size" value="${item.size}">
+                                <input type="hidden" name="price" value="${item.price}">
+                                <input type="hidden" name="quantity" value="${item.count}">
+                                <c:set var="totalPrice" value="${totalPrice + item.count * item.price}" />
+                            </c:forEach>
                         </div>
-
-                        <input type="hidden" name="orderType" value="cart">
-                        <% } %>
-
                         <hr class="border-beige-200">
 
                         <!-- 결제 금액 계산 -->
                         <div class="space-y-2">
                             <div class="flex justify-between text-beige-600">
                                 <span>상품 금액</span>
-                                <span id="subtotal">₩367000</span>
+                                <span id="subtotal">${totalPrice}</span>
                             </div>
                             <div class="flex justify-between text-beige-600">
                                 <span>배송비</span>
@@ -296,7 +244,7 @@
                             <hr class="border-beige-200">
                             <div class="flex justify-between text-lg font-medium text-gray-900">
                                 <span>총 결제 금액</span>
-                                <span id="totalAmount">₩367000</span>
+                                <span id="totalAmount">₩${totalPrice + 3000 -3000 - 0}</span>
                             </div>
                         </div>
 
@@ -308,7 +256,8 @@
                                     <select class="flex-1 px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none text-sm">
                                         <option value="">사용 가능한 쿠폰이 없습니다</option>
                                     </select>
-                                    <button type="button" class="border border-beige-300 text-beige-700 px-3 py-2 rounded-lg text-sm hover:bg-beige-100">
+                                    <button type="button"
+                                            class="border border-beige-300 text-beige-700 px-3 py-2 rounded-lg text-sm hover:bg-beige-100">
                                         적용
                                     </button>
                                 </div>
@@ -317,13 +266,14 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-900 mb-2">적립금 사용</label>
                                 <div class="flex gap-2">
-                                    <input type="number" placeholder="0" min="0" max="5000"
+                                    <input type="number" placeholder="0" min="0" max="5000" id="point"
                                            class="flex-1 px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none text-sm">
-                                    <button type="button" class="border border-beige-300 text-beige-700 px-3 py-2 rounded-lg text-sm hover:bg-beige-100">
+                                    <button type="button" onclick="pointAll()"
+                                            class="border border-beige-300 text-beige-700 px-3 py-2 rounded-lg text-sm hover:bg-beige-100">
                                         전액사용
                                     </button>
                                 </div>
-                                <p class="text-xs text-beige-500 mt-1">사용 가능 적립금: 5,000원</p>
+                                <p class="text-xs text-beige-500 mt-1">사용 가능 적립금: ${userInfo.userPoint}원</p>
                             </div>
 
                             <!-- 주문 동의 및 결제 -->
@@ -355,8 +305,9 @@
                                         </label>
                                     </div>
 
-                                    <button type="submit" class="w-full bg-gray-900 hover:bg-beige-800 text-white py-4 rounded-lg text-lg font-medium transition-colors">
-                                        <span id="paymentAmount">₩367000</span> 결제하기
+                                    <button type="submit"
+                                            class="w-full bg-gray-900 hover:bg-beige-800 text-white py-4 rounded-lg text-lg font-medium transition-colors">
+                                        결제하기
                                     </button>
 
                                 </div>
@@ -375,14 +326,34 @@
     function copyOrdererInfo() {
         const checkbox = document.getElementById('sameAsOrderer');
         if (checkbox.checked) {
-            document.getElementById('receiverName').value = document.getElementById('orderName').value;
-            document.getElementById('receiverPhone').value = document.getElementById('orderPhone').value;
+            document.getElementById('receiverName').value = '${userInfo.userName}';
+            document.getElementById('receiverPhone').value = '${formattedPhone}';
         } else {
             document.getElementById('receiverName').value = '';
             document.getElementById('receiverPhone').value = '';
         }
     }
 
+    function defaultAddressInfo() {
+        const checkbox = document.getElementById('defaultAddress');
+        if (checkbox.checked) {
+            document.getElementById('receiverName').value = '${address.recipientName}';
+            document.getElementById('receiverPhone').value = '${address.recipientPhone}';
+            document.getElementById('zipcode').value = '${address.postalCode}';
+            document.getElementById('address').value = '${address.address}';
+            document.getElementById('detailAddress').value = '${address.addressDetail}';
+        } else {
+            document.getElementById('receiverName').value = '';
+            document.getElementById('receiverPhone').value = '';
+            document.getElementById('zipcode').value = '';
+            document.getElementById('address').value = '';
+            document.getElementById('detailAddress').value = '';
+        }
+    }
+
+    function pointAll(){
+        document.getElementById('point').value = '${userInfo.userPoint}';
+    }
     // 주소 검색 (실제로는 다음 우편번호 API 등을 사용)
     function searchAddress() {
         // 임시 주소 설정
@@ -392,7 +363,7 @@
     }
 
     // 배송 메모 직접 입력
-    document.getElementById('deliveryMemo').addEventListener('change', function() {
+    document.getElementById('deliveryMemo').addEventListener('change', function () {
         const customMemo = document.getElementById('customMemo');
         if (this.value === '직접입력') {
             customMemo.classList.remove('hidden');
@@ -403,7 +374,7 @@
     });
 
     // 폼 제출 처리
-    document.getElementById('orderForm').addEventListener('submit', function(e) {
+    document.getElementById('orderForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
         // 필수 항목 체크
@@ -444,6 +415,6 @@
     // Initialize Lucide icons
     lucide.createIcons();
 </script>
-<jsp:include page="../common/footer.jsp" />
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>
