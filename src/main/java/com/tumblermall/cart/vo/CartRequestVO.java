@@ -5,23 +5,29 @@ public class CartRequestVO {
     private Integer productOptionId;
     private Integer productCount;
     private String productYN;
-    private String productName;
     private String color;
     private String size;
     private int finalPrice;
+    private String productName;
 
-    public CartRequestVO(Integer userId, Integer productOptionId,
-                         Integer productCount, String productYN, String productName,
-                         String color, String size, int finalPrice) {
+    public CartRequestVO(Integer userId,
+                         Integer productOptionId,
+                         Integer productCount,
+                         String productYN,
+                         String color,
+                         String size,
+                         Integer finalPrice,
+                         String productName) {
         this.userId = userId;
         this.productOptionId = productOptionId;
         this.productCount = productCount;
         this.productYN = productYN;
-        this.productName = productName;
         this.color = color;
         this.size = size;
         this.finalPrice = finalPrice;
+        this.productName = productName;
     }
+
 
     // Getter & Setter
     public void setUserId(Integer userId) {

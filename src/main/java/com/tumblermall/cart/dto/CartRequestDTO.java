@@ -4,7 +4,7 @@ public class CartRequestDTO {
     private Integer userId;
     private Integer productOptionId;
     private Integer productCount;
-    private String productYN;
+    private Integer finalPrice;
 
     public Integer getUserId() {
         return userId;
@@ -30,11 +30,11 @@ public class CartRequestDTO {
         this.productCount = productCount;
     }
 
-    public String getProductYN() {
-        return productYN;
+    public Integer getFinalPrice() {
+        return finalPrice;
     }
 
-    public void setProductYN(String productYN) {
-        this.productYN = productYN;
+    public void setFinalPrice(Integer finalPrice) {
+        this.finalPrice = finalPrice;
     }
 }
