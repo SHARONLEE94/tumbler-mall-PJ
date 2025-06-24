@@ -57,11 +57,9 @@
             </button>
           </div>
         </div>
-
-
         <div class="space-y-2 mb-4">
           <label for="emailVerify" class="block text-gray-900 font-medium">인증번호<span class="text-red-500">*</span></label>
-          <input type="text" id="emailVerify" name="emailVerify"
+          <input type="text" id="emailVerify" name="emailVerifyCode"
                  class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none" required>
         </div>
         <div class="space-y-2 mb-4">
@@ -100,13 +98,13 @@
                  class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:outline-none focus:border-gray-900">
         </div>
 
-        <div class="space-y-2 mb-4">
-          <label for="sample6_extraAddress" class="block text-gray-900 font-medium">
-            참고항목
-          </label>
-          <input type="text" id="sample6_extraAddress" placeholder="참고항목" readonly
-                 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:outline-none focus:border-gray-900">
-        </div>
+<%--        <div class="space-y-2 mb-4">--%>
+<%--          <label for="sample6_extraAddress" class="block text-gray-900 font-medium">--%>
+<%--            참고항목--%>
+<%--          </label>--%>
+<%--          <input type="text" id="sample6_extraAddress" placeholder="참고항목" readonly--%>
+<%--                 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:outline-none focus:border-gray-900">--%>
+<%--        </div>--%>
 
           <div class="space-y-2 mb-4">
               <label for="sample6_detailAddress" class="block text-gray-900 font-medium">
@@ -115,8 +113,6 @@
               <input type="text" id="sample6_detailAddress" placeholder="상세주소"
                      class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:outline-none focus:border-gray-900">
           </div>
-
-
 
 
         <div class="space-y-2 mb-4">
@@ -129,7 +125,7 @@
         <label for="birth_date" class="block text-gray-900 font-medium">
           생년월일
         </label>
-        <input type="date" id="birth_date" name="userBirthDate"
+        <input type="date" id="birth_date" name="userBirthDate" required
                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-gray-900">
         </div>
 
@@ -155,22 +151,22 @@
         <label class="block text-gray-900 font-medium" >직업<span class="text-red-500">*</span></label>
         <div class="flex gap-4">
           <label class="flex items-center">
-            <input type="radio" name="job" value="1"
+            <input type="radio" name="userJobId" value="1"
                    class="text-gray-900 focus:ring-gray-900" required />
             <span class="ml-2">직원</span>
           </label>
           <label class="flex items-center">
-            <input type="radio" name="job" value="2"
+            <input type="radio" name="userJobId" value="2"
                    class="text-gray-900 focus:ring-gray-900" />
             <span class="ml-2">학생</span>
           </label>
           <label class="flex items-center">
-            <input type="radio" name="job" value="3"
+            <input type="radio" name="userJobId" value="3"
                    class="text-gray-900 focus:ring-gray-900" />
             <span class="ml-2">대학생</span>
           </label>
           <label class="flex items-center">
-            <input type="radio" name="job" value="4"
+            <input type="radio" name="userJobId" value="4"
                    class="text-gray-900 focus:ring-gray-900" />
             <span class="ml-2">직장인</span>
           </label>
@@ -178,7 +174,7 @@
         <br><br><br><br><br>
             <div class="space-y-2 mb-4">
                 <label class="flex items-center">
-                    <input type="checkbox" id="adAgree" name="adAgree"
+                    <input type="checkbox" id="adAgree" name="userIsAdReceive"
                            class="text-gray-900 focus:ring-gray-900 rounded">
                     <span class="ml-2 text-sm text-gray-700">(선택)광고 및 이벤트 수신에 동의합니다.</span>
                 </label>
@@ -199,10 +195,33 @@
   </div>
 </main>
 
-<jsp:include page="../common/footer.jsp" />
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-  function sample6_execDaumPostcode() {
+
+    function sendVerificationEmail() {
+        const email = document.getElementById('userEmail').value;
+
+        if (!email) {
+            alert("이메일을 입력해주세요.");
+            return;
+        }
+
+        fetch('/sendEmail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+
+            },
+            body: "userEmail=" + encodeURIComponent(email)
+        })
+            .then(res => res.text())
+            .then(data => alert(data))
+            .catch(err => alert("메일 전송 실패: " + err));
+    }
+
+
+    function sample6_execDaumPostcode() {
     new daum.Postcode({
       oncomplete: function(data) {
         // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -231,11 +250,11 @@
             extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
           }
           // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-          if(extraAddr !== ''){
-            extraAddr = ' (' + extraAddr + ')';
-          }
-          // 조합된 참고항목을 해당 필드에 넣는다.
-          document.getElementById("sample6_extraAddress").value = extraAddr;
+          // if(extraAddr !== ''){
+          //   extraAddr = ' (' + extraAddr + ')';
+          // }
+          // // 조합된 참고항목을 해당 필드에 넣는다.
+          // document.getElementById("sample6_extraAddress").value = extraAddr;
 
         } else {
           document.getElementById("sample6_extraAddress").value = '';
@@ -251,21 +270,8 @@
   }
 
 
-  function sendVerificationEmail() {
-      const email = document.getElementById('userEmail').value;
-
-      fetch('/sendEmail', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: `userEmail=${encodeURIComponent(email)}`
-      })
-          .then(res => res.text())
-          .then(data => alert(data));
-  }
-
 </script>
+<jsp:include page="../common/footer.jsp" />
 </body>
 </html>
 

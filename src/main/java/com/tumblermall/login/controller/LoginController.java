@@ -9,4 +9,5 @@ public class LoginController {
     public String write() {
         return "/login/login";
     }
+
 }

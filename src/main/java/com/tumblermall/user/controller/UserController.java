@@ -7,12 +7,11 @@ import com.tumblermall.user.service.UserService;
 import com.tumblermall.user.vo.UserInfoResponseVO;
 import com.tumblermall.user.vo.UserRegVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -83,18 +82,15 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(UserRegRequestDTO userRegRequestDTO) throws Exception {
-        userService.register(userRegRequestDTO);
-        userService.pwdEncoder(userRegRequestDTO);
-        System.out.println("TETSETSETSETSETESTSET"+userRegRequestDTO.getUserEmail());
-        System.out.println("TETSETSETSETSETESTSET"+userRegRequestDTO.getUserPwd());
 
 
-        return "/user/register";
+        return userService.register(userRegRequestDTO) ? "redirect:/main" : "/user/register";
     }
 
-    @PostMapping("/sendEmail")
-    public String sendEmail(){
+    @PostMapping(value="/sendEmail", produces = "text/plain; charset=UTF-8")
+    @ResponseBody
+    public ResponseEntity<String> sendEmail(@RequestParam String userEmail) throws Exception {
 
-
+    return userService.mailConfirm(userEmail) ? ResponseEntity.ok("이메일 전송 완료") : ResponseEntity.ok("이미 사용 중인 메일입니다.") ;
     }
 }
