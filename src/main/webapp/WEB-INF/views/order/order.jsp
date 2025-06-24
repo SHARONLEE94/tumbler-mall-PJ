@@ -8,8 +8,11 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
 <c:set var="totalPrice" value="0" />
+<c:set var="totalQuantity" value="0" />
+<c:set var="totalCount" value="0" />
 <c:set var="phone" value="${userInfo.userPhone}"/>
 <c:choose>
     <c:when test="${phone != null && fn:length(phone) == 11}">
@@ -46,7 +49,7 @@
 <main class="max-w-4xl mx-auto px-4 py-12">
     <h1 class="text-3xl font-light text-gray-900 mb-8">주문/결제</h1>
 
-    <form action="orderProcess" method="post" id="orderForm">
+    <form action="/orderProcess" method="post" id="orderForm" >
         <div class="grid lg:grid-cols-2 gap-8">
             <!-- 주문 정보 입력 -->
             <div class="space-y-6">
@@ -59,11 +62,13 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label for="orderName" class="block text-gray-900 font-medium">이름 *</label>
+                                <input type="hidden" name="orderName" id="orderName" required value="${userInfo.userName}">
                                 <h3 id="orderName"
                                     class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">${userInfo.userName}</h3>
                             </div>
                             <div class="space-y-2">
                                 <label for="orderPhone" class="block text-gray-900 font-medium">전화번호 *</label>
+                                <input type="hidden" name="orderPhone" id="orderPhone" required value="${formattedPhone}">
                                 <h3 id="orderPhone"
                                     class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
                                     ${formattedPhone}
@@ -72,6 +77,7 @@
                         </div>
                         <div class="space-y-2">
                             <label for="orderEmail" class="block text-gray-900 font-medium">이메일 *</label>
+                            <input type="hidden" name="orderEmail" id="orderEmail" required value="${userInfo.userEmail}">
                             <h3 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">${userInfo.userEmail}</h3>
                         </div>
                     </div>
@@ -95,22 +101,22 @@
                     <div class="p-6 space-y-4">
                         <div class="grid grid-cols-2 gap-4">
                             <div class="space-y-2">
-                                <label for="receiverName" class="block text-gray-900 font-medium">받는 분 *</label>
-                                <input type="text" id="receiverName" name="receiverName" required
+                                <label for="recipientName" class="block text-gray-900 font-medium">받는 분 *</label>
+                                <input type="text" id="recipientName" name="recipientName" required
                                        class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
                             </div>
                             <div class="space-y-2">
-                                <label for="receiverPhone" class="block text-gray-900 font-medium">전화번호 *</label>
-                                <input type="tel" id="receiverPhone" name="receiverPhone" placeholder="010-1234-5678"
+                                <label for="recipientPhone" class="block text-gray-900 font-medium">전화번호 *</label>
+                                <input type="tel" id="recipientPhone" name="recipientPhone" placeholder="010-1234-5678"
                                        required
                                        class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
                             </div>
                         </div>
 
                         <div class="space-y-2">
-                            <label for="zipcode" class="block text-gray-900 font-medium">우편번호 *</label>
+                            <label for="postalCode" class="block text-gray-900 font-medium">우편번호 *</label>
                             <div class="flex gap-2">
-                                <input type="text" id="zipcode" name="zipcode" readonly required
+                                <input type="text" id="postalCode" name="postalCode" readonly required
                                        class="flex-1 px-3 py-2 border border-beige-200 rounded-lg bg-beige-50">
                                 <button type="button" onclick="searchAddress()"
                                         class="bg-gray-900 hover:bg-beige-800 text-white px-4 py-2 rounded-lg transition-colors">
@@ -126,14 +132,14 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label for="detailAddress" class="block text-gray-900 font-medium">상세 주소 *</label>
-                            <input type="text" id="detailAddress" name="detailAddress" placeholder="아파트, 동/호수" required
+                            <label for="addressDetail" class="block text-gray-900 font-medium">상세 주소 *</label>
+                            <input type="text" id="addressDetail" name="addressDetail" placeholder="아파트, 동/호수" required
                                    class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
                         </div>
 
                         <div class="space-y-2">
-                            <label for="deliveryMemo" class="block text-gray-900 font-medium">배송 메모</label>
-                            <select id="deliveryMemo" name="deliveryMemo"
+                            <label for="deliveryRequest" class="block text-gray-900 font-medium">배송 메모</label>
+                            <select id="deliveryRequest" name="deliveryRequest"
                                     class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
                                 <option value="">배송 메모를 선택하세요</option>
                                 <option value="문 앞에 놓아주세요">문 앞에 놓아주세요</option>
@@ -207,19 +213,24 @@
                                         <p class="text-sm text-beige-600 mb-1">색상: ${item.color} / 사이즈: ${item.size}</p>
                                         <div class="flex justify-between items-center">
                                             <span class="text-sm text-beige-600">수량: ${item.count}개</span>
-                                            <span class="font-medium text-gray-900">₩${item.count * item.price}</span>
+                                            <span class="font-medium text-gray-900">
+                                            ₩<fmt:formatNumber value="${item.count * item.price}" type="number" groupingUsed="true"/>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Hidden inputs for order processing -->
                                 <input type="hidden" name="productId" value="${item.productOptionId}">
-                                <input type="hidden" name="color" value="${item.color}">
-                                <input type="hidden" name="size" value="${item.size}">
-                                <input type="hidden" name="price" value="${item.price}">
                                 <input type="hidden" name="quantity" value="${item.count}">
+                                <input type="hidden" name="price" value="${item.price}">
                                 <c:set var="totalPrice" value="${totalPrice + item.count * item.price}" />
+                                <c:set var="totalQuantity" value="${totalQuantity + item.count}" />
+                                <c:set var="totalCount" value="${totalCount +1}" />
                             </c:forEach>
+                            <input type="hidden" name="totalPrice" value="${totalPrice}" />
+                            <input type="hidden" name="totalQuantity" value="${totalQuantity}" />
+                            <input type="hidden" name="totalCount" value="${totalCount}" />
                         </div>
                         <hr class="border-beige-200">
 
@@ -227,11 +238,14 @@
                         <div class="space-y-2">
                             <div class="flex justify-between text-beige-600">
                                 <span>상품 금액</span>
-                                <span id="subtotal">${totalPrice}</span>
+                                <span id="subtotal">
+                                    ₩<fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true"/>
+                                </span>
                             </div>
                             <div class="flex justify-between text-beige-600">
                                 <span>배송비</span>
                                 <span id="shippingFee">₩3,000</span>
+                                <input type="hidden" name="shippingFee" value="0">
                             </div>
                             <div class="flex justify-between text-green-600">
                                 <span>배송비 할인</span>
@@ -240,11 +254,15 @@
                             <div class="flex justify-between text-beige-600">
                                 <span>할인 금액</span>
                                 <span id="discount">-₩0</span>
+                                <input type="hidden" name="discount" value="0">
                             </div>
                             <hr class="border-beige-200">
                             <div class="flex justify-between text-lg font-medium text-gray-900">
                                 <span>총 결제 금액</span>
-                                <span id="totalAmount">₩${totalPrice + 3000 -3000 - 0}</span>
+                                <span id="totalAmount">
+                                    ₩<fmt:formatNumber value="${totalPrice + 3000 -3000 - 0}" type="number" groupingUsed="true"/>
+                                </span>
+                                <input type="hidden" name="totalAmount" value="${totalPrice}">
                             </div>
                         </div>
 
@@ -266,7 +284,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-900 mb-2">적립금 사용</label>
                                 <div class="flex gap-2">
-                                    <input type="number" placeholder="0" min="0" max="5000" id="point"
+                                    <input type="number" placeholder="0" min="0" max="5000" id="point" name="pointUse" value="0"
                                            class="flex-1 px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none text-sm">
                                     <button type="button" onclick="pointAll()"
                                             class="border border-beige-300 text-beige-700 px-3 py-2 rounded-lg text-sm hover:bg-beige-100">
@@ -320,34 +338,36 @@
         </div>
     </form>
 </main>
+<%--우편주소API--%>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script>
     // 주문자 정보와 배송 정보 동일하게 설정
     function copyOrdererInfo() {
         const checkbox = document.getElementById('sameAsOrderer');
         if (checkbox.checked) {
-            document.getElementById('receiverName').value = '${userInfo.userName}';
-            document.getElementById('receiverPhone').value = '${formattedPhone}';
+            document.getElementById('recipientName').value = '${userInfo.userName}';
+            document.getElementById('recipientPhone').value = '${formattedPhone}';
         } else {
-            document.getElementById('receiverName').value = '';
-            document.getElementById('receiverPhone').value = '';
+            document.getElementById('recipientName').value = '';
+            document.getElementById('recipientPhone').value = '';
         }
     }
 
     function defaultAddressInfo() {
         const checkbox = document.getElementById('defaultAddress');
         if (checkbox.checked) {
-            document.getElementById('receiverName').value = '${address.recipientName}';
-            document.getElementById('receiverPhone').value = '${address.recipientPhone}';
-            document.getElementById('zipcode').value = '${address.postalCode}';
+            document.getElementById('recipientName').value = '${address.recipientName}';
+            document.getElementById('recipientPhone').value = '${address.recipientPhone}';
+            document.getElementById('postalCode').value = '${address.postalCode}';
             document.getElementById('address').value = '${address.address}';
-            document.getElementById('detailAddress').value = '${address.addressDetail}';
+            document.getElementById('addressDetail').value = '${address.addressDetail}';
         } else {
-            document.getElementById('receiverName').value = '';
-            document.getElementById('receiverPhone').value = '';
-            document.getElementById('zipcode').value = '';
+            document.getElementById('recipientName').value = '';
+            document.getElementById('recipientPhone').value = '';
+            document.getElementById('postalCode').value = '';
             document.getElementById('address').value = '';
-            document.getElementById('detailAddress').value = '';
+            document.getElementById('addressDetail').value = '';
         }
     }
 
@@ -356,14 +376,57 @@
     }
     // 주소 검색 (실제로는 다음 우편번호 API 등을 사용)
     function searchAddress() {
-        // 임시 주소 설정
-        document.getElementById('zipcode').value = '06292';
-        document.getElementById('address').value = '서울특별시 강남구 테헤란로 123';
-        document.getElementById('detailAddress').focus();
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    // document.getElementById("address").value = extraAddr;
+
+                } else {
+                    document.getElementById("address").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postalCode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("addressDetail").focus();
+            }
+        }).open();
+
+
     }
 
     // 배송 메모 직접 입력
-    document.getElementById('deliveryMemo').addEventListener('change', function () {
+    document.getElementById('deliveryRequest').addEventListener('change', function () {
         const customMemo = document.getElementById('customMemo');
         if (this.value === '직접입력') {
             customMemo.classList.remove('hidden');
@@ -378,11 +441,13 @@
         e.preventDefault();
 
         // 필수 항목 체크
-        const requiredFields = ['orderName', 'orderPhone', 'orderEmail', 'receiverName', 'receiverPhone', 'zipcode', 'address', 'detailAddress'];
+        const requiredFields = ['orderName', 'orderPhone', 'orderEmail', 'recipientName', 'recipientPhone', 'postalCode', 'address', 'addressDetail'];
         let isValid = true;
 
         requiredFields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
+            console.log(field);
+            console.log(field.value);
             if (!field.value.trim()) {
                 field.classList.add('border-red-500');
                 isValid = false;
@@ -404,12 +469,13 @@
 
             // 주문 처리 페이지로 이동
             alert('주문이 완료되었습니다.\n주문번호: ' + orderNumber);
-            window.location.href = 'order-detail.jsp?orderNumber=' + orderNumber;
+            this.submit();
+            // window.location.href = 'order-detail.jsp?orderNumber=' + orderNumber;
         } else {
             alert('필수 항목을 모두 입력해주세요.');
         }
 
-        window.location.href = `/orderProcess`;
+        // window.location.href = `/orderProcess`;
     });
 
     // Initialize Lucide icons

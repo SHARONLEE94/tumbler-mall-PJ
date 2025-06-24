@@ -43,16 +43,12 @@
         where pd.product_id = pdo.product_id
         and pdo.product_option_id = #{productOptionId}
     </select>
-
-    <select id="selectAdress" parameterType="int" resultMap="adressInfo">
-        select address_book_id,address_name,recipient_name,recipient_phone,
-               address,address_detail,postal_code,is_default
-        from modeling.delivery_address_book
-        where user_id = #{id}
---           and is_default = 'Y'
+    <select id="orderUserInfo" resultType="int" resultMap="userInfo">
+        SELECT user_id, email,user_name,phone,points
+        FROM modeling.users
+        where user_id =#{userId}
         ;
     </select>
-
     <select id="selectAdressDefault" parameterType="int" resultMap="adressInfo">
         select address_book_id,address_name,recipient_name,recipient_phone,
                address,address_detail,postal_code,is_default
@@ -67,8 +63,46 @@
                where address_book_id = #{id}
         ;
     </delete>
-
-    <insert id="insertOrderAdress" >
+    <insert id="insertOrder" parameterType="com.tumblermall.order.dto.OrderDto" useGeneratedKeys="true" keyProperty="orderId" keyColumn="order_id">
+        insert into modeling.order_master(
+              user_id,
+              order_summary_title,
+              total_amount,
+              delivery_fee,
+              coupon_discount,
+              product_type_count,
+              total_quantity,
+              point_used,
+              payment_method
+        )
+            VALUE (
+            #{userId},
+            '',
+            #{totalAmount},
+            #{shippingFee},
+            #{discount},
+            #{totalCount},
+            #{totalQuantity},
+            #{pointUse},
+            ''
+            )
+    </insert>
+    <insert id="insertOrderDetail" parameterType="com.tumblermall.order.dto.OrderDetailDto">
+        insert into modeling.order_detail (
+             order_id,
+             seq,
+             product_option_id,
+             order_price
+            )
+        values
+            (
+            #{orderId},
+             #{seq},
+             #{productId},
+             #{price}
+           );
+    </insert>
+    <insert id="insertOrderAdress" parameterType="com.tumblermall.order.dto.OrderDeliveryDto">
         INSERT INTO modeling.order_delivery (
             address_name,
             recipient_name,
@@ -78,23 +112,15 @@
             postal_code,
             delivery_request
         )
-        SELECT
-            address_name,
-            recipient_name,
-            recipient_phone,
-            address,
-            address_detail,
-            postal_code,
-            #{request}
-        FROM modeling.delivery_address_book
-        WHERE address_book_id = #{id};
-    </insert>
-
-    <select id="orderUserInfo" resultType="int" resultMap="userInfo">
-        SELECT user_id, email,user_name,phone,points
-        FROM modeling.users
-        where user_id =#{userId}
+        value(
+            '',
+            #{recipientName},
+            #{recipientPhone},
+            #{address},
+            #{addressDetail},
+            #{postalCode},
+            #{deliveryRequest}
+        )
         ;
-    </select>
-
+    </insert>
 </mapper>

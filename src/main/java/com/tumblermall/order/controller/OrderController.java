@@ -1,18 +1,17 @@
 package com.tumblermall.order.controller;
 
+import com.tumblermall.order.dto.OrderDeliveryDto;
+import com.tumblermall.order.dto.OrderDetailDto;
+import com.tumblermall.order.dto.OrderDto;
 import com.tumblermall.order.service.OrderService;
 import com.tumblermall.order.vo.AdressVo;
 import com.tumblermall.order.vo.ProductVo;
 import com.tumblermall.order.vo.userInfoVo;
-import com.tumblermall.products.service.ProductService;
-import com.tumblermall.user.dto.UserInfoRequestDTO;
 import com.tumblermall.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,15 +30,14 @@ public class OrderController {
 //    @GetMapping("/")
 //    public String a(Model model, HttpServletRequest request) {
 //        //임시
+//        model.addAttribute("userId",1);
 //        model.addAttribute("items","1:1");
-//        return "redirect:/orderTest";
+//        return "redirect:/order";
 //    }
     //주문/결제페이지
-    @GetMapping("/orderCart")
+    @GetMapping("/order")
     public String orderCart(HttpServletRequest request, @RequestParam("items") List<String> items, Model model) {
         String id = request.getParameter("userId");
-
-
         try {
             String userIdVal = request.getParameter("userId");
 
@@ -57,6 +55,7 @@ public class OrderController {
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
+            model.addAttribute("error",e.getMessage());
             return "/common/error";
         }
     }
@@ -89,7 +88,7 @@ public class OrderController {
     @PostMapping("/order")
     public String order(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         try {
-            orderService.orderInsert(request);
+//            orderService.orderInsert(request);
         }catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
@@ -104,14 +103,33 @@ public class OrderController {
         model.addAttribute("productList", pv);
         return "order/address";
     }
+    @PostMapping("/orderProcess")
+    public String orderProcess(HttpServletRequest request,
+                               @RequestParam("productId") List<Integer> productIds,
+                               @RequestParam("quantity")  List<Integer> quantities,
+                               @RequestParam("price")     List<Integer> prices,
+                               OrderDeliveryDto orderDeliveryDto,
+                               OrderDto orderDto,
+                               HttpServletResponse response, Model model) throws IOException {
+       //임시
+        int userId = 1;
 
-    @GetMapping("/order")
-    public String order() {
-        return "/order/order";
+
+        orderService.orderInsert(userId,orderDto,productIds,quantities,prices,orderDeliveryDto);
+        model.addAttribute("userId",1);
+        model.addAttribute("orderId",orderDto.getOrderId());
+        model.addAttribute("userName",request.getParameter("orderName"));
+        model.addAttribute("orderPhone",request.getParameter("orderPhone"));
+        model.addAttribute("orderEmail",request.getParameter("orderEmail"));
+        model.addAttribute("totalPrice",orderDto.getTotalPrice());
+        model.addAttribute("orderDeliveryDto",orderDeliveryDto);
+        return"/order/orderProcess";
     }
 
     @GetMapping("/orderProcess")
-    public String orderProcess() {
+    public String orderProcess(HttpServletRequest request) {
+        String address = request.getParameter("address");
+        System.out.println(address);
         return "/order/orderProcess";
     }
 
