@@ -14,6 +14,10 @@ public class ProductsController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping("/products")
+    public String products() {
+        return "/product/products";
+    }
     // 상품 상세 페이지
     @GetMapping("/productDetl")
     public String index(@RequestParam("productId") Long productId, Model model) {
