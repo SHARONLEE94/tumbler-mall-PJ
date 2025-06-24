@@ -1,29 +1,29 @@
-package com.tumblermall.order.vo;
+package com.tumblermall.order.dto;
 
-public class AdressVo {
-    private int adressBookId;
-    private String adressName;
+public class OrderDeliveryDto {
+    private  String deliveryAddressId;
     private String recipientName;
     private String recipientPhone;
     private String address;
     private String addressDetail;
     private String postalCode;
-    private char isDefault;
+    private String deliveryRequest;
 
-    public int getAdressBookId() {
-        return adressBookId;
+    public String getDeliveryAddressId() {
+        return deliveryAddressId;
     }
 
-    public void setAdressBookId(int adressBookId) {
-        this.adressBookId = adressBookId;
+    public void setDeliveryAddressId(String deliveryAddressId) {
+        this.deliveryAddressId = deliveryAddressId;
     }
 
-    public String getAdressName() {
-        return adressName;
+
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdressName(String adressName) {
-        this.adressName = adressName;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getRecipientName() {
@@ -42,14 +42,6 @@ public class AdressVo {
         this.recipientPhone = recipientPhone;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getAddressDetail() {
         return addressDetail;
     }
@@ -66,12 +58,11 @@ public class AdressVo {
         this.postalCode = postalCode;
     }
 
-    public char getIsDefault() {
-        return isDefault;
+    public String getDeliveryRequest() {
+        return deliveryRequest;
     }
 
-    public void setIsDefault(char isDefault) {
-        this.isDefault = isDefault;
+    public void setDeliveryRequest(String deliveryRequest) {
+        this.deliveryRequest = deliveryRequest;
     }
-
 }

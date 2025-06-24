@@ -1,8 +1,8 @@
 package com.tumblermall.order.mapper;
 
+import com.tumblermall.order.dto.*;
 import com.tumblermall.order.vo.*;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,11 +12,10 @@ public interface OrderMapper {
     List<AdressVo> selectAdress(int id);
     AdressVo selectAdressDefault(int id);
     ProductVo selectProduct(int productOptionId);
-    long selectLastInsertId();
     //insert
-    boolean insertOrder();
-    boolean insertOrderAdress(@Param("id") int id, @Param("request") String request);
-    boolean insertOrderdetail();
+    boolean insertOrderDetail(OrderDetailDto orderProductDto);
+    int insertOrder(OrderDto orderDto);
+    boolean insertOrderAdress(OrderDeliveryDto orderDeliveryDto);
     //update
 
     // delete

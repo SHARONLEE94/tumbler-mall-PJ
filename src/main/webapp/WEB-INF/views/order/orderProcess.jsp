@@ -9,7 +9,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
   // 주문 처리 결과
   boolean orderSuccess = true;
@@ -36,7 +36,7 @@
     <div class="grid md:grid-cols-3 gap-6 text-center">
       <div>
         <p class="text-sm text-beige-700 mb-2">주문번호</p>
-        <p class="text-xl font-medium text-gray-900"><%= orderNumber %></p>
+        <p class="text-xl font-medium text-gray-900">${orderId}</p>
       </div>
       <div>
         <p class="text-sm text-beige-700 mb-2">주문일시</p>
@@ -44,7 +44,9 @@
       </div>
       <div>
         <p class="text-sm text-beige-700 mb-2">결제금액</p>
-        <p class="text-2xl font-medium text-gray-900">₩123456789</p>
+        <p class="text-2xl font-medium text-gray-900">
+          ₩<fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true"/>
+        </p>
       </div>
     </div>
   </div>
@@ -68,7 +70,9 @@
               </p>
               <div class="flex justify-between items-center">
                 <span class="text-sm text-beige-600">수량: 14개</span>
-                <span class="font-medium text-gray-900">₩182000</span>
+                <span class="font-medium text-gray-900">
+                ₩<fmt:formatNumber value="182000000" type="number" groupingUsed="true"/>
+                </span>
               </div>
             </div>
           </div>
@@ -87,15 +91,15 @@
         <div class="p-6 space-y-3">
           <div class="flex justify-between">
             <span class="text-beige-600">이름</span>
-            <span class="text-gray-900">홍길동</span>
+            <span class="text-gray-900">${userName}</span>
           </div>
           <div class="flex justify-between">
             <span class="text-beige-600">전화번호</span>
-            <span class="text-gray-900">010123456789</span>
+            <span class="text-gray-900">${orderPhone}</span>
           </div>
           <div class="flex justify-between">
             <span class="text-beige-600">이메일</span>
-            <span class="text-gray-900">asdf@naver.com</span>
+            <span class="text-gray-900">${orderEmail}</span>
           </div>
         </div>
       </div>
@@ -108,23 +112,23 @@
         <div class="p-6 space-y-3">
           <div class="flex justify-between">
             <span class="text-beige-600">받는 분</span>
-            <span class="text-gray-900">고길동</span>
+            <span class="text-gray-900">${orderDeliveryDto.recipientName}</span>
           </div>
           <div class="flex justify-between">
             <span class="text-beige-600">전화번호</span>
-            <span class="text-gray-900">01077771111</span>
+            <span class="text-gray-900">${orderDeliveryDto.recipientPhone}</span>
           </div>
           <div>
             <p class="text-beige-600 mb-1">배송 주소</p>
             <div class="text-gray-900 text-sm">
-              <p>[12345]</p>
-              <p>광주광역시 북구 운암동</p>
-              <p>어쩌고 저쩌고</p>
+              <p>${orderDeliveryDto.postalCode}</p>
+              <p>${orderDeliveryDto.address}</p>
+              <p>${orderDeliveryDto.addressDetail}</p>
             </div>
           </div>
           <div class="flex justify-between">
             <span class="text-beige-600">배송 메모</span>
-            <span class="text-gray-900">알아서 잘 배달해주십쇼</span>
+            <span class="text-gray-900">${OrderDeliveryDto.deliveryRequest}</span>
           </div>
         </div>
       </div>
