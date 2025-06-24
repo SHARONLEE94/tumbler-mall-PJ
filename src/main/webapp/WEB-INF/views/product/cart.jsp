@@ -56,7 +56,7 @@
                                 </div>
 
                                 <!-- 휴지통 버튼 -->
-                                <button class="trash-btn text-red-500 hover:text-red-700 p-2">
+                                <button onclick="deleteCart()" class="trash-btn text-red-500 hover:text-red-700 p-2">
                                     <i data-lucide="trash-2" class="h-4 w-4"></i>
                                 </button>
                             </div>
@@ -139,19 +139,23 @@
         trashButtons.forEach((btn) => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
+
+                const userId = "${userId}";
+                const productOptionId = "${productOptionId}";
+                sendDeleteCart(userId, productOptionId);
+
                 alert('해당 제품이 삭제 되었습니다.');
             })
+
         })
 
-        const userId = "${userId}";
-        const productOptionId = "${productOptionId}";
-        sendDeleteCart(userId, productOptionId);
+
     }
 
     function sendDeleteCart(userId, productOptionId){
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '/deleteCart';
+        form.action = '/cart';
 
         const inputUserId = document.createElement('input');
         inputUserId.type = 'hidden';
