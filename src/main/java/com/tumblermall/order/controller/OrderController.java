@@ -24,13 +24,13 @@ public class OrderController {
     private UserService userService;
 
     //테스트
-    @GetMapping("/")
-    public String a(Model model, HttpServletRequest request) {
-        //임시
-        model.addAttribute("userId",1);
-        model.addAttribute("items","5:3");
-        return "redirect:/order";
-    }
+//    @GetMapping("/")
+//    public String a(Model model, HttpServletRequest request) {
+//        //임시
+//        model.addAttribute("userId",1);
+//        model.addAttribute("items","5:3");
+//        return "redirect:/order";
+//    }
     //주문/결제페이지
     @GetMapping("/order")
     public String orderCart(HttpServletRequest request, @RequestParam("items") List<String> items, Model model) {
