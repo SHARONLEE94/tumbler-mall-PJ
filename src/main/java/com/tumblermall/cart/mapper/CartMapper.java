@@ -12,5 +12,12 @@ public interface CartMapper {
 
     int deleteCart(@Param("userId") int userId, @Param("productOptionId") int productOptionId);
 
-    int updateCart(@Param("productCount") int productCount, @Param("userId") int userId, @Param("productOptionId") int productOptionId);
+    int updateCart(@Param("productCount") int productCount,
+                   @Param("totalPrice") int totalPrice,
+                   @Param("userId") int userId,
+                   @Param("productOptionId") int productOptionId);
+
+    int insertCart(@Param("userId") int userId,
+                   @Param("productOptionId") int productOptionId,
+                   @Param("productCount") int productCoun);
 }

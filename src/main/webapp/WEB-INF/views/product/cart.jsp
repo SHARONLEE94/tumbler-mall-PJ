@@ -7,155 +7,251 @@
 --%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
 <html>
 <head>
-    <title>Sha_Jang_Tumbler</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-VTmh+5lDQgxBgaA8cD3X2iKQk4YI3sYeEjwA0kaOK1Z3XM3+o2D4w9abEzoS4V6L"
-          crossorigin="anonymous"/>
+  <title>Sha_Jang_Tumbler</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-VTmh+5lDQgxBgaA8cD3X2iKQk4YI3sYeEjwA0kaOK1Z3XM3+o2D4w9abEzoS4V6L"
+        crossorigin="anonymous"/>
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
-    <link rel="stylesheet" href="/static/css/globals.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+  <link rel="stylesheet" href="/static/css/globals.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <%--<form>--%>
 <jsp:include page="../common/header.jsp" />
 <main class="max-w-4xl mx-auto px-4 py-12">
-    <h1 class="text-3xl font-light text-gray-900 mb-8">장바구니</h1>
+  <h1 class="text-3xl font-light text-gray-900 mb-8">장바구니</h1>
 
-    <div class="grid lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 space-y-4">
-            <!-- Cart Item 1 -->
-            <div class="bg-white border border-beige-200 rounded-lg">
-                <div class="p-6">
-                    <div class="flex gap-4">
-                        <img src="https://cncmall.kr/web/product/big/202502/2703456d68c31b25b956ed2b83c8d238.jpg"
-                             alt="스탠리 텀블러 887ml 퀜처 H2.0 플로우스테이트 대용량 손잡이 빨대 텀블러"
-                             class="w-24 h-32 object-cover rounded">
-                        <div class="flex-1">
-                            <h3 class="font-medium text-gray-900 mb-1">스탠리 텀블러 887ml 퀜처 H2.0 플로우스테이트 대용량 손잡이 빨대 텀블러</h3>
-                            <p class="text-sm text-beige-600 mb-2">색상: 베이지</p>
-                            <p class="text-lg font-light text-gray-900 mb-4">₩189,000</p>
 
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
+    <c:forEach var="items" items="${cartList}">
+        <p>상품명 : ${items.productName} ${items.color} ${items.size}</p>
+        <p>제품 가격 :
+                <fmt:formatNumber value="${items.finalPrice}" type="number" groupingUsed="true"/>원</p>
 
-                                    <!-- +, - 버튼 -->
-                                    <button class="border border-beige-300 hover:bg-beige-100 w-8 h-8 rounded flex items-center justify-center" onclick="decreaseQuantity(1)">
-                                        <i data-lucide="minus" class="h-4 w-4"></i>
-                                    </button>
-                                    <span id="quantity-1" class="w-8 text-center">1</span>
-                                    <button class="border border-beige-300 hover:bg-beige-100 w-8 h-8 rounded flex items-center justify-center" onclick="increaseQuantity(1)">
-                                        <i data-lucide="plus" class="h-4 w-4"></i>
-                                    </button>
-                                </div>
-
-                                <!-- 휴지통 버튼 -->
-                                <button onclick="deleteCart()" class="trash-btn text-red-500 hover:text-red-700 p-2">
-                                    <i data-lucide="trash-2" class="h-4 w-4"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cart Item 2 -->
-            <div class="bg-white border border-beige-200 rounded-lg">
-                <div class="p-6">
-                    <div class="flex gap-4">
-                        <img src="https://shop-phinf.pstatic.net/20211231_110/1640877930540k134U_JPEG/42013829253204192_839401201.jpg?type=m510"
-                             alt="스탠리 머그 컵 잔 텀블러 보온 진공 캠핑 머그컵 클래식"
-                             class="w-24 h-32 object-cover rounded">
-                        <div class="flex-1">
-                            <h3 class="font-medium text-gray-900 mb-1">스탠리 머그 컵 잔 텀블러 보온 진공 캠핑 머그컵 클래식</h3>
-                            <p class="text-sm text-beige-600 mb-2">색상: 블랙</p>
-                            <p class="text-lg font-light text-gray-900 mb-4">₩89,000</p>
-
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-
-                                    <!-- +, - 버튼 -->
-                                    <button class="border border-beige-300 hover:bg-beige-100 w-8 h-8 rounded flex items-center justify-center" onclick="decreaseQuantity(2)">
-                                        <i data-lucide="minus" class="h-4 w-4"></i>
-                                    </button>
-                                    <span id="quantity-2" class="w-8 text-center">2</span> <!-- 장바구니에 담은 제품 개수 -->
-                                    <button class="border border-beige-300 hover:bg-beige-100 w-8 h-8 rounded flex items-center justify-center" onclick="increaseQuantity(2)">
-                                        <i data-lucide="plus" class="h-4 w-4"></i>
-                                    </button>
-                                </div>
-
-                                <!-- 휴지통 value로 클릭이 되면 컨트롤러에서 제어-->
-                                <button onclick="deleteCart()" class="trash-btn text-red-500 hover:text-red-700 p-2">
-                                    <i data-lucide="trash-2" class="h-4 w-4"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- 체크박스 -->
+        <div class="cart-item">
+            <input type="checkbox"
+                   data-option-id="${items.productOptionId}"
+                   onclick="toggleItem(this, ${items.userId},
+                       ${items.productOptionId},
+                       ${items.productCount},
+                       ${items.finalPrice})" checked>
+<%--            <p>${items.productName} - ${items.finalPrice}원</p>--%>
+<%--            <input type="hidden" name="userId" value="${items.userId}" />--%>
+<%--            <input type="hidden" name="productOptionId" value="${items.productOptionId}" />--%>
+<%--            <input type="hidden" id="count-${items.productOptionId}" name="productCount" value="${items.productCount}"/>--%>
+<%--            <input type="hidden" id="price-${items.productOptionId}" value="${items.finalPrice}">--%>
         </div>
 
-        <div>
-            <div class="bg-white border border-beige-200 rounded-lg sticky top-24">
-                <div class="p-6">
-                    <h2 class="text-xl font-medium text-gray-900 mb-4">주문 요약</h2>
+        <!-- 수량 컨트롤 -->
+        <form method="POST" action="/cartupdate" style="display: flex; align-items: center; gap: 10px;">
+            <input type="hidden" name="userId" value="${items.userId}" />
+            <input type="hidden" name="productOptionId" value="${items.productOptionId}" />
+            <input type="hidden" id="count-${items.productOptionId}" name="productCount" value="${items.productCount}"/>
+            <input type="hidden" id="price-${items.productOptionId}" value="${items.finalPrice}">
 
-                    <div class="space-y-2 mb-4">
-                        <div class="flex justify-between text-beige-600">
-                            <span>상품 금액</span>
-                            <span id="subtotal">₩367,000</span>
-                        </div>
-                        <div class="flex justify-between text-beige-600">
-                            <span>배송비</span>
-                            <span>무료</span>
-                        </div>
-                        <hr class="border-beige-200">
-                        <div class="flex justify-between text-lg font-medium text-gray-900">
-                            <span>총 결제 금액</span>
-                            <span id="total">₩367,000</span>
-                        </div>
+            <button type="button" onclick="updateCount(${items.productOptionId}, -1)">-</button>
+            <span id="quantity-${items.productOptionId}">${items.productCount}</span>
+            <button type="button" onclick="updateCount(${items.productOptionId}, +1)">+</button>
+            <br>
+            <span id="item-total-${items.productOptionId}">
+                <fmt:formatNumber value="${items.finalPrice * items.productCount}" type="number" groupingUsed="true" />원
+            </span>
+        </form>
+        <!-- 삭제 버튼 -->
+        <button onclick="deleteCart(${items.userId}, ${items.productOptionId})">삭제</button>
+        <hr>
+
+
+    </c:forEach>
+
+
+<%--    <form id="orderForm" method="POST" action="/order">--%>
+        <div class="bg-white border border-beige-200 rounded-lg sticky top-24">
+            <div class="p-6">
+                <h2 class="text-xl font-medium text-gray-900 mb-4">주문 요약</h2>
+
+                <div class="space-y-2 mb-4">
+                    <div class="flex justify-between text-lg font-medium text-gray-900">
+                        <span>상품 금액</span>
+                        <span id="total">0</span>
                     </div>
-
-                    <a href="/order" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-3 rounded-lg transition-colors">
-                        주문하기
-                    </a>
+                    <div class="flex justify-between text-beige-600">
+                        <span>배송비</span>
+                        <span>무료</span>
+                    </div>
+                    <hr class="border-beige-200">
+                    <div class="flex justify-between text-lg font-medium text-gray-900">
+                        <span>총 결제 금액</span>
+                        <span id="total-price">0</span>
+                    </div>
                 </div>
+
+                <button type="submit" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-3 rounded-lg transition-colors">
+                    주문하기
+                </button>
             </div>
         </div>
-    </div>
+<%--    </form>--%>
 </main>
 
 <script>
 
-    function deleteCart(){
-        const trashButtons = document.querySelectorAll(('.trash-btn'))
+    function toggleItem(checkbox, userId, productOptionId, productCount, finalPrice) {
+        // const form = document.getElementById('orderForm');
 
-        trashButtons.forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
+        <%--if (checkbox.checked){--%>
+        <%--    const userInput = document.createElement('input');--%>
+        <%--    userInput.type = 'hidden';--%>
+        <%--    userInput.name = 'userId';--%>
+        <%--    userInput.value = userId;--%>
+        <%--    userInput.id = 'userId-${productOptionId}';--%>
+        <%--    form.appendChild(userInput);--%>
 
-                const userId = "${userId}";
-                const productOptionId = "${productOptionId}";
-                sendDeleteCart(userId, productOptionId);
+        <%--    const optionInput = document.createElement('input');--%>
+        <%--    optionInput.type = 'hidden';--%>
+        <%--    optionInput.name = 'productOptionId';--%>
+        <%--    optionInput.value = productOptionId;--%>
+        <%--    optionInput.id = 'productOptionId-${productOptionId}';--%>
+        <%--    form.appendChild(optionInput);--%>
 
-                alert('해당 제품이 삭제 되었습니다.');
-            })
-
-        })
-
-
+        <%--    const countInput = document.createElement('input');--%>
+        <%--    countInput.type = 'hidden';--%>
+        <%--    countInput.name = 'productCount';--%>
+        <%--    countInput.value = productCount;--%>
+        <%--    countInput.id = 'productCount-${productCount}';--%>
+        <%--    form.appendChild(countInput);--%>
+        <%--} else {--%>
+        <%--    document.getElementById('userId-${productOptionId}')?.remove();--%>
+        <%--    document.getElementById('productOptionId-${productOptionId}')?.remove();--%>
+        <%--    document.getElementById('count-${productOptionId}')?.remove();--%>
+        <%--}--%>
+        updateTotal();
     }
 
-    function sendDeleteCart(userId, productOptionId){
+    window.onload = function() {
+        updateTotal();
+    }
+
+    function updateCount(productOptionId, differential){
+        const quantitySpan = document.getElementById('quantity-' + productOptionId);
+        const countInput = document.getElementById('count-' + productOptionId);
+        const priceInput = document.getElementById('price-' + productOptionId);
+        const itemTotalSpan = document.getElementById('total-price-' + productOptionId);
+        const form = countInput.closest('form');
+
+        let count = parseInt(quantitySpan.textContent);
+        const price = parseInt(priceInput.value);
+        count = Math.max(1, count + differential);
+
+        quantitySpan.textContent = count;
+        countInput.value = count;
+
+        updateTotal();
+        //제품별 총합 가격
+        if(itemTotalSpan) {
+            itemTotalSpan.textContent = (count * price).toLocaleString() + '원';
+        }
+
+
+        form.submit();
+    }
+
+    function updateTotal() {
+        let total = 0;
+
+        const checkboxes = document.querySelectorAll('.cart-item input[type="checkbox"]');
+
+        checkboxes.forEach((checkbox) => {
+            if(checkbox.checked){
+                const productOptionId = checkbox.getAttribute('data-option-id');
+                const countInput = document.getElementById('count-' + productOptionId);
+                const priceInput = document.getElementById('price-' + productOptionId);
+
+                const count = parseInt(countInput.value);
+                const price = parseInt(priceInput.value);
+
+                total += count * price;
+            }
+        });
+
+        const totalElement = document.getElementById('total-price');
+        if(totalElement) {
+            totalElement.textContent = total.toLocaleString() + '원';
+        }
+        // for(let i = 0 ; i < forms.length ; i++){
+        //     const form = forms[i];
+        //     const productOptionInput = form.querySelector('input[name="productOptionId"]');
+        //     const productOptionId = productOptionInput.value;
+        //
+        //     const countInput = document.getElementById('count-' + productOptionId);
+        //     const priceInput = document.getElementById('price-' + productOptionId);
+        //
+        //     const count = parseInt(countInput.value);
+        //     const price = parseInt(priceInput.value);
+        //
+        //     total += count * price;
+
+        // }
+
+    }
+    // function increaseQuantity(productOptionId) {
+    //   const countStock = document.getElementById('quantity-' + productOptionId);
+    //   let count = parseInt(countStock.textContent);
+    //   count++;
+    //   countStock.textContent = count;
+    //
+    //   updateTotal(productOptionId, count);
+    // }
+    //
+    // function decreaseQuantity(productOptionId) {
+    //   const countStock = document.getElementById('quantity-' + productOptionId)
+    //   let count = parseInt(countStock.textContent);
+    //   if(count > 1) {
+    //     count--;
+    //     countStock.textContent = count;
+    //     updateTotal(productOptionId, count);
+    //   }
+    // }
+    //
+    // function updateTotal(productOptionId, count){
+    //   const form = document.createElement('form');
+    //   form.method = 'POST';
+    //   form.action = '/cartupdate';
+    //
+    //   const inputUserId = document.createElement('input');
+    //   inputUserId.type = 'hidden';
+    //   inputUserId.name = 'userId';
+    //   inputUserId.value = userId;
+    //
+    //   const inputProductOptionId = document.createElement('input');
+    //   inputProductOptionId.type = 'hidden';
+    //   inputProductOptionId.name = 'productOptionId';
+    //   inputProductOptionId.value = productOptionId;
+    //
+    //   const inputCount = document.createElement('input');
+    //   inputCount.type = 'hidden';
+    //   inputCount.name = 'productCount';
+    //   inputCount.value = productCount;
+    //
+    //   form.appendChild(inputUserId);
+    //   form.appendChild(inputProductOptionId);
+    //   form.appendChild(inputCount);
+    //
+    //   form.submit();
+    // }
+
+    function deleteCart(userId, productOptionId) {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '/cart';
+        form.action = '/cartdelete'
 
         const inputUserId = document.createElement('input');
         inputUserId.type = 'hidden';
@@ -173,42 +269,7 @@
         document.body.appendChild(form);
         form.submit();
     }
-
-    function increaseQuantity(itemId) {
-        const quantityElement = document.getElementById('quantity-' + itemId);
-        let quantity = parseInt(quantityElement.textContent);
-        quantity++;
-        quantityElement.textContent = quantity;
-        updateTotal();
-    }
-
-    function decreaseQuantity(itemId) {
-        const quantityElement = document.getElementById('quantity-' + itemId);
-        let quantity = parseInt(quantityElement.textContent);
-        if (quantity > 1) {
-            quantity--;
-            quantityElement.textContent = quantity;
-            updateTotal();
-        }
-    }
-
-    function updateTotal() {
-        const quantity1 = parseInt(document.getElementById('quantity-1').textContent);
-        const quantity2 = parseInt(document.getElementById('quantity-2').textContent);
-
-        const price1 = 189000;
-        const price2 = 89000;
-
-        const total = (price1 * quantity1) + (price2 * quantity2);
-
-        document.getElementById('subtotal').textContent = '₩' + total.toLocaleString();
-        document.getElementById('total').textContent = '₩' + total.toLocaleString();
-    }
-
-    // Initialize Lucide icons
-    lucide.createIcons();
-</script>
-<jsp:include page="../common/footer.jsp" />
+</script><jsp:include page="../common/footer.jsp" />
 <%--</form>--%>
 </body>
 </html>

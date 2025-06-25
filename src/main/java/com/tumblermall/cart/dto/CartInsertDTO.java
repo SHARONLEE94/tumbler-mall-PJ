@@ -1,13 +1,9 @@
 package com.tumblermall.cart.dto;
 
-import io.swagger.models.auth.In;
-
-public class CartRequestDTO {
+public class CartInsertDTO {
     private Integer userId;
     private Integer productOptionId;
     private Integer productCount;
-    private Integer finalPrice;
-    private Integer totalPrice;
 
     public Integer getUserId() {
         return userId;
@@ -31,21 +27,5 @@ public class CartRequestDTO {
 
     public void setProductCount(Integer productCount) {
         this.productCount = productCount;
-    }
-
-    public Integer getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(Integer finalPrice) {
-        this.finalPrice = finalPrice;
-    }
-
-    public Integer getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Integer totalPrice) {
-        this.totalPrice = totalPrice;
     }
 }
