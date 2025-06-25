@@ -2,8 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tumblermall.board.mapper.BoardMapper">
+    <select id="practice" resultType="String" parameterType="String">
+        select board_type_code, post_title, writer_id
+        from modeling.post
+        where post_id = #{toser}
+    </select>
 
     <resultMap id="boardList" type="com.tumblermall.board.dto.BoardMainDto">
+        <result property="postId" column="post_id"></result>
         <result property="boardType" column="board_type_code"></result>
         <result property="postTitle" column="post_title"></result>
         <result property="postWriter" column="writer_id"></result>
@@ -11,14 +17,8 @@
         <result property="viewCount" column="view_count"></result>
     </resultMap>
 
-    <select id="practice" resultType="String" parameterType="String">
-        select board_type_code, post_title, writer_id
-        from modeling.post
-        where post_id = #{toser}
-    </select>
-
     <select id="boardMain" parameterType="String" resultMap="boardList">
-        select p.board_type_code, p.post_title, p.writer_id, p.view_count, ph.post_write_history
+        select p.board_type_code, p.post_title, p.writer_id, p.view_count, ph.post_write_history, p.post_id
         from modeling.post p
                  join modeling.post_history ph
                       on p.post_id = ph.post_id
@@ -26,4 +26,22 @@
         order by ph.post_write_history desc
     </select>
 
+    <resultMap id="context" type="com.tumblermall.board.dto.BoardContextDto">
+        <result property="postId" column="post_id"></result>
+        <result property="postTitle" column="post_title"></result>
+        <result property="postWriter" column="writer_id"></result>
+        <result property="postAt" column="post_write_history"></result>
+        <result property="postContext" column="post_context"></result>
+        <result property="viewCount" column="view_count"></result>
+    </resultMap>
+
+    <select id="showContext" parameterType="Integer" resultMap="context">
+        select  p.post_id, p.post_title, p.writer_id, p.view_count, ph.post_write_history, pc.post_context
+        from modeling.post p
+                 join modeling.post_context_save pc
+                      on p.post_id = pc.post_id
+                 join modeling.post_history ph
+                      on ph.post_id = pc.post_id
+        where pc.post_id = #{postId};
+    </select>
 </mapper>
