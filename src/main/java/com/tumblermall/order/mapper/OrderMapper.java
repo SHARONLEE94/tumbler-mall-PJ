@@ -14,7 +14,7 @@ public interface OrderMapper {
     ProductVo selectProduct(int productOptionId);
     //insert
     boolean insertOrderDetail(OrderDetailDto orderProductDto);
-    int insertOrder(OrderDto orderDto);
+    boolean insertOrder(OrderDto orderDto);
     boolean insertOrderAdress(OrderDeliveryDto orderDeliveryDto);
     //update
 
@@ -22,4 +22,10 @@ public interface OrderMapper {
     boolean delAddress(int id);
 
     userInfoVo orderUserInfo(int userId);
+
+    List<OrderDetailVo> oderDetailSelect(int orderId);
+
+    OrderVo orderSelect(int orderId);
+
+    OrderDeliveryDto orderAddressSelect(int orderId);
 }

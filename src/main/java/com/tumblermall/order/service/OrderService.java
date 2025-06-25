@@ -39,8 +39,8 @@ public class OrderService {
                 throw new IllegalArgumentException("잘못된 항목 포맷: " + pair + " (올바른 형식은 '상품ID:수량' 형태여야 합니다.)");
             }
 
-            Integer productId;
-            Integer count;
+            int productId;
+            int count;
             try {
                 productId = Integer.valueOf(parts[0].trim());
                 count = Integer.valueOf(parts[1].trim());
@@ -79,14 +79,21 @@ public class OrderService {
     @Transactional
     public void orderInsert(int userId, OrderDto orderDto, List<Integer> productIds, List<Integer> quantities, List<Integer> prices, OrderDeliveryDto orderDeliveryDto) {
         orderDto.setUserId(userId);
-        orderMapper.insertOrder(orderDto);
-        boolean insertAddress = orderMapper.insertOrderAdress(orderDeliveryDto);
+        boolean insertOrder = orderMapper.insertOrder(orderDto);
+        if (!insertOrder) {
+            throw new IllegalArgumentException("order insert failed.");
+        }
         int orderId = orderDto.getOrderId();
+        orderDeliveryDto.setOrderId(orderId);
+        boolean insertAddress = orderMapper.insertOrderAdress(orderDeliveryDto);
+        if (!insertAddress) {
+            throw new IllegalArgumentException("orderAddress insert failed.");
+        }
         int n = productIds.size();
         if (quantities.size() != n || prices.size() != n) {
             throw new IllegalArgumentException("상품 정보 개수가 일치하지 않습니다.");
         }
-        int count = 0;
+        int count = 1;
         for (int i = 0; i < n; i++) {
             OrderDetailDto detailDto = new OrderDetailDto();
             detailDto.setOrderId(orderId);
@@ -94,7 +101,10 @@ public class OrderService {
             detailDto.setPrice(prices.get(i));
             for (int j =0 ; j <quantities.get(i); j++) {
                 detailDto.setSeq(count);
-                boolean a = orderMapper.insertOrderDetail(detailDto);
+                boolean orderDetail = orderMapper.insertOrderDetail(detailDto);
+                if (!orderDetail) {
+                    throw new IllegalArgumentException("orderDetail insert failed.");
+                }
                 count += 1;
             }
 //            detailDto.setQuantity(quantities.get(i));
@@ -103,5 +113,19 @@ public class OrderService {
 
     public userInfoVo userInfo(String userIdVal) {
         return orderMapper.orderUserInfo(Integer.parseInt(userIdVal));
+    }
+
+    public List<OrderDetailVo> oderDetailSelect(int orderId) {
+
+        return orderMapper.oderDetailSelect(orderId);
+    }
+
+    public OrderVo orderSelect(int orderId) {
+
+        return orderMapper.orderSelect(orderId);
+    }
+
+    public OrderDeliveryDto orderAddressSelect(int orderId) {
+        return orderMapper.orderAddressSelect(orderId);
     }
 }

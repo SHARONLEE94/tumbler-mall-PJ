@@ -1,6 +1,7 @@
 package com.tumblermall.order.dto;
 
 public class OrderDeliveryDto {
+    private int orderId;
     private  String deliveryAddressId;
     private String recipientName;
     private String recipientPhone;
@@ -8,6 +9,14 @@ public class OrderDeliveryDto {
     private String addressDetail;
     private String postalCode;
     private String deliveryRequest;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
     public String getDeliveryAddressId() {
         return deliveryAddressId;

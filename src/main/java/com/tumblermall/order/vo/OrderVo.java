@@ -1,16 +1,17 @@
-package com.tumblermall.order.dto;
+package com.tumblermall.order.vo;
 
-public class OrderDto {
+import java.util.Date;
+
+public class OrderVo {
     private int orderId;
     private int userId;
     private int shippingFee;
     private int totalAmount;
-    private int discount;
-    private int totalPrice;
-    private int totalQuantity;
-    private int totalCount;
+    private int couponDiscount;
     private int pointUse;
-
+    private int totalPrice;
+    private Date orderDate;
+    private String orderStatus;
     private String paymentMethod;
 
     public int getOrderId() {
@@ -45,12 +46,20 @@ public class OrderDto {
         this.totalAmount = totalAmount;
     }
 
-    public int getDiscount() {
-        return discount;
+    public int getCouponDiscount() {
+        return couponDiscount;
     }
 
-    public void setDiscount(int discount) {
-        this.discount = discount;
+    public void setCouponDiscount(int couponDiscount) {
+        this.couponDiscount = couponDiscount;
+    }
+
+    public int getPointUse() {
+        return pointUse;
+    }
+
+    public void setPointUse(int pointUse) {
+        this.pointUse = pointUse;
     }
 
     public int getTotalPrice() {
@@ -61,28 +70,20 @@ public class OrderDto {
         this.totalPrice = totalPrice;
     }
 
-    public int getTotalCount() {
-        return totalCount;
+    public Date getOrderDate() {
+        return orderDate;
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public int getTotalQuantity() {
-        return totalQuantity;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setTotalQuantity(int totalQuantity) {
-        this.totalQuantity = totalQuantity;
-    }
-
-    public int getPointUse() {
-        return pointUse;
-    }
-
-    public void setPointUse(int pointUse) {
-        this.pointUse = pointUse;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public String getPaymentMethod() {

@@ -13,6 +13,7 @@
 <c:set var="totalPrice" value="0" />
 <c:set var="totalQuantity" value="0" />
 <c:set var="totalCount" value="0" />
+<c:set var="test1234" value="3000" />
 <c:set var="phone" value="${userInfo.userPhone}"/>
 <c:choose>
     <c:when test="${phone != null && fn:length(phone) == 11}">
@@ -146,7 +147,7 @@
                                 <option value="경비실에 맡겨주세요">경비실에 맡겨주세요</option>
                                 <option value="택배함에 넣어주세요">택배함에 넣어주세요</option>
                                 <option value="부재 시 연락주세요">부재 시 연락주세요</option>
-                                <option value="직접입력">직접 입력</option>
+                                <option value="${customMemo}">직접 입력</option>
                             </select>
                             <textarea id="customMemo" name="customMemo" placeholder="직접 입력하세요" rows="2"
                                       class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none hidden"></textarea>
@@ -244,25 +245,36 @@
                             </div>
                             <div class="flex justify-between text-beige-600">
                                 <span>배송비</span>
-                                <span id="shippingFee">₩3,000</span>
-                                <input type="hidden" name="shippingFee" value="0">
+                                <span id="shippingFee">
+                                    ₩<fmt:formatNumber value="${test1234}" type="number" groupingUsed="true"/>
+                                </span>
+                                <input type="hidden" name="shippingFee" value="${test1234}">
                             </div>
                             <div class="flex justify-between text-green-600">
                                 <span>배송비 할인</span>
-                                <span id="shippingDiscount">-₩3,000</span>
+                                <span id="shippingDiscount">0</span>
                             </div>
                             <div class="flex justify-between text-beige-600">
                                 <span>할인 금액</span>
-                                <span id="discount">-₩0</span>
-                                <input type="hidden" name="discount" value="0">
+                                <span id="discount" name="discount">
+                                    ₩<fmt:formatNumber value="0" type="number" groupingUsed="true"/>
+                                </span>
+                                <input type="hidden" id="discountValue" name="discount" value="0">
+                            </div>
+                            <div class="flex justify-between text-beige-600">
+                                <span>포인트 금액</span>
+                                <span id="pointdis">
+                                    ₩<fmt:formatNumber value="0" type="number" groupingUsed="true"/>
+                                </span>
+                                <input type="hidden" id="pointValue" value="0">
                             </div>
                             <hr class="border-beige-200">
                             <div class="flex justify-between text-lg font-medium text-gray-900">
                                 <span>총 결제 금액</span>
-                                <span id="totalAmount">
-                                    ₩<fmt:formatNumber value="${totalPrice + 3000 -3000 - 0}" type="number" groupingUsed="true"/>
+                                <span id="totalAmountdis">
+                                    ₩<fmt:formatNumber value="${totalPrice + test1234}" type="number" groupingUsed="true"/>
                                 </span>
-                                <input type="hidden" name="totalAmount" value="${totalPrice}">
+                                <input type="hidden" id="totalAmount" name="totalAmount" value="${totalPrice + test1234}">
                             </div>
                         </div>
 
@@ -284,11 +296,15 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-900 mb-2">적립금 사용</label>
                                 <div class="flex gap-2">
-                                    <input type="number" placeholder="0" min="0" max="5000" id="point" name="pointUse" value="0"
+                                    <input type="number" placeholder="0" min="0" max="${userInfo.userPoint}" id="point" name="pointUse" value="0"
                                            class="flex-1 px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none text-sm">
                                     <button type="button" onclick="pointAll()"
                                             class="border border-beige-300 text-beige-700 px-3 py-2 rounded-lg text-sm hover:bg-beige-100">
                                         전액사용
+                                    </button>
+                                    <button type="button" onclick="pointUses()"
+                                            class="border border-beige-300 text-beige-700 px-3 py-2 rounded-lg text-sm hover:bg-beige-100">
+                                        포인트 사용
                                     </button>
                                 </div>
                                 <p class="text-xs text-beige-500 mt-1">사용 가능 적립금: ${userInfo.userPoint}원</p>
@@ -342,6 +358,9 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script>
+    const baseTotalPrice = Number(${totalPrice});
+    const totalDisplayEl = document.getElementById('totalAmountdis');// 예: 100000
+    const totalHiddenEl = document.getElementById('totalAmount');
     // 주문자 정보와 배송 정보 동일하게 설정
     function copyOrdererInfo() {
         const checkbox = document.getElementById('sameAsOrderer');
@@ -373,6 +392,34 @@
 
     function pointAll(){
         document.getElementById('point').value = '${userInfo.userPoint}';
+    }
+    function pointUses(){
+        const raw = document.getElementById('point').value;
+        // 빈 문자열이거나 숫자가 아닐 경우 0으로 처리하거나 예외 처리 가능
+        const num = Number(raw);
+        if (isNaN(num)) {
+            // 필요시 사용자에게 경고하거나 0으로 초기화
+            alert('입력값이 올바른 숫자가 아닙니다');
+            return;
+        }
+        else if (num> ${userInfo.userPoint}) {
+            alert('보유 적립금(${userInfo.userPoint}원)보다 많은 금액은 사용할 수 없습니다.');
+            return;
+        }
+        // toLocaleString으로 천 단위 콤마 적용. 'ko-KR' 로케일 사용.
+        const formatted = '₩' + num.toLocaleString('ko-KR');
+        // 필요하면 뒤에 '원'을 붙일 수도 있음: '₩' + ... + '원'
+        document.getElementById('pointValue').value = num;
+        document.getElementById('pointdis').textContent = formatted;
+        // 3) 총액 재계산: baseTotalPrice - num
+        let newTotal = baseTotalPrice - num + ${test1234};
+        if (newTotal < 0) {
+            newTotal = 0;
+        }
+        // 4) 화면에 표시: span#totalAmountDisplay
+        totalDisplayEl.textContent = '₩' + newTotal.toLocaleString('ko-KR');
+        // 5) 숨겨진 input#totalAmount 갱신
+        totalHiddenEl.value = newTotal;
     }
     // 주소 검색 (실제로는 다음 우편번호 API 등을 사용)
     function searchAddress() {
@@ -465,10 +512,10 @@
 
         if (isValid) {
             // 주문 번호 생성 (임시)
-            const orderNumber = 'ORD' + new Date().getTime();
+            // const orderNumber = 'ORD' + new Date().getTime();
 
             // 주문 처리 페이지로 이동
-            alert('주문이 완료되었습니다.\n주문번호: ' + orderNumber);
+            alert('주문이 완료되었습니다.');
             this.submit();
             // window.location.href = 'order-detail.jsp?orderNumber=' + orderNumber;
         } else {
