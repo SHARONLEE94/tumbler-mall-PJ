@@ -33,7 +33,12 @@
       <p class="text-beige-600">새 계정을 만들어 쇼핑을 시작하세요</p>
     </div>
     <div class="p-6 space-y-4">
-      <form action="/register" method="post">
+
+        <c:if test="${not empty errorMsg}">
+            <p style="color:red">${errorMsg}</p>
+        </c:if>
+
+      <form action="/register" method="post" id="register">
         <div class="space-y-2 mb-4">
           <label for="name" class="block text-gray-900 font-medium">이름<span class="text-red-500">*</span></label>
           <input type="text" id="name" name="userName" placeholder="홍길동"
@@ -60,7 +65,7 @@
         <div class="space-y-2 mb-4">
           <label for="emailVerify" class="block text-gray-900 font-medium">인증번호<span class="text-red-500">*</span></label>
           <input type="text" id="emailVerify" name="emailVerifyCode"
-                 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none" required>
+                 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none" >
         </div>
         <div class="space-y-2 mb-4">
           <label for="password" class="block text-gray-900 font-medium">비밀번호<span class="text-red-500">*</span></label>
@@ -108,9 +113,9 @@
 
           <div class="space-y-2 mb-4">
               <label for="sample6_detailAddress" class="block text-gray-900 font-medium">
-                  상세주소
+                  상세주소<span class="text-red-500">*</span>
               </label>
-              <input type="text" id="sample6_detailAddress" placeholder="상세주소"
+              <input type="text" id="sample6_detailAddress" placeholder="상세주소" required
                      class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:outline-none focus:border-gray-900">
           </div>
 
@@ -123,7 +128,7 @@
 
         <div class="space-y-2 mb-4">
         <label for="birth_date" class="block text-gray-900 font-medium">
-          생년월일
+          생년월일<span class="text-red-500">*</span>
         </label>
         <input type="date" id="birth_date" name="userBirthDate" required
                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-gray-900">
@@ -193,17 +198,52 @@
       </div>
     </div>
   </div>
+
 </main>
+
 
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
+    document.getElementById("register").addEventListener("submit", function (e) {
+        const pwd = document.getElementById("userPwd").value;
+        const pwdconfirm = document.getElementById("confirmPwd").value;
+        const emailverify = document.getElementById("emailVerify").value;
+        const phone = document.getElementById("phone").value;
+
+
+        if(pwd != pwdconfirm){
+            e.preventDefault(); // 서버로 폼 전송 막기
+            alert("비밀번호가 일치하지 않습니다."); return;
+        }
+
+        if(!emailverify.trim()){
+            e.preventDefault();
+            alert("인증번호를 입력해주세요"); return;
+        }
+
+        if (pwd.length < 8) {
+            e.preventDefault();
+            alert("비밀번호는 8자 이상이어야 합니다."); return;
+        }
+
+
+
+
+    });
+
+
+
+
     function sendVerificationEmail() {
         const email = document.getElementById('userEmail').value;
-
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!email) {
             alert("이메일을 입력해주세요.");
+            return;
+        } else if(!emailRegex.test(email)){
+            alert("유효한 이메일을 입력해주세요")
             return;
         }
 

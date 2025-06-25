@@ -115,7 +115,7 @@
                 <a href="/cart" class="text-gray-900 hover:bg-beige-100 p-2 rounded">
                     <i data-lucide="shopping-bag" class="h-5 w-5"></i>
                 </a>
-                <a href="/login" class="text-gray-900 hover:bg-beige-100 p-2 rounded">
+                <a href="/test" class="text-gray-900 hover:bg-beige-100 p-2 rounded">
                     <i data-lucide="user" class="h-5 w-5"></i>
                 </a>
             </div>
@@ -141,7 +141,7 @@
                 </div>
                 <a href="/board" class="text-gray-900 hover:text-beige-600 transition-colors">게시판</a>
                 <a href="/cart" class="text-gray-900 hover:text-beige-600 transition-colors">장바구니</a>
-                <a href="/login" class="text-gray-900 hover:text-beige-600 transition-colors">로그인</a>
+                <a href="/test" class="text-gray-900 hover:text-beige-600 transition-colors">로그인</a>
             </div>
         </div>
     </div>

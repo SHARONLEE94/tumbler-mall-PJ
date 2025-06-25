@@ -52,16 +52,14 @@
                                   , gender_id
                                   , job_id
                                   , birth_date
---                                   , is_ad_receive
         )
-        VALUES (#{userName}
+        VALUE (#{userName}
                ,#{userEmail}
                , #{userPwd}
                , #{userPhone}
                , #{userGenderId}
                , #{userJobId}
                , #{userBirthDate}
---                , #{userIsAdReceive}
                )
     </insert>
 

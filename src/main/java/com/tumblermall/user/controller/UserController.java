@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -81,10 +82,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(UserRegRequestDTO userRegRequestDTO) throws Exception {
+    public String register(UserRegRequestDTO userRegRequestDTO, RedirectAttributes redirectAttributes) throws Exception {
+        if(userService.register(userRegRequestDTO)){
+            return "redirect:/login";
+        }
+            redirectAttributes.addFlashAttribute("errorMsg", "인증번호를 확인해 주세요");
+            return "redirect:/register";
 
-
-        return userService.register(userRegRequestDTO) ? "redirect:/main" : "/user/register";
+//        return userService.register(userRegRequestDTO) ? "redirect:/main" : "redirect:/user/register";
     }
 
     @PostMapping(value="/sendEmail", produces = "text/plain; charset=UTF-8")
