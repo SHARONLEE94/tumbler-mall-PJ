@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-<<<<<<< HEAD
-    <data-source source="LOCAL" name="@mykakusi.tplinkdns.com" uuid="615f39e1-3709-4b53-b2c5-48f4b35a7295">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-=======
-    <data-source source="LOCAL" name="@mykakusi.tplinkdns.com" uuid="f6811a13-b6cf-430c-abd1-d02166af9079">
+    <data-source source="LOCAL" name="@mykakusi.tplinkdns.com" uuid="22d2655e-7def-47a6-a7be-e68d2d466b62">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
->>>>>>> feature/hy-prd
       <jdbc-url>jdbc:mysql://mykakusi.tplinkdns.com:3333</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />

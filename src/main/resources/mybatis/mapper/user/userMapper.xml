@@ -10,6 +10,25 @@
         <result property="remarks" column="remarks" />
     </resultMap>
 
+    <resultMap id="emailVerifyMap" type="com.tumblermall.user.vo.EmailVerifyVO">
+        <result property="email" column="email" />
+        <result property="token" column="token" />
+        <result property="expireAt" column="expire_at" />
+        <result property="verified" column="verified" />
+    </resultMap>
+
+    <resultMap id="userRegMap" type="com.tumblermall.user.dto.UserRegRequestDTO">
+        <result property="userName" column="user_name" />
+        <result property="userPwd" column="password" />
+        <result property="userPhone" column="phone" />
+        <result property="userEmail" column="email" />
+        <result property="userGenderId" column="gender_id" />
+        <result property="userJobId" column="job_id" />
+        <result property="userBirthDate" column="birth_date" />
+<!--        <result property="userIsAdReceive" column="is_ad_receive" />-->
+    </resultMap>
+
+
     <select id="selectUserId" resultType="String" parameterType="String">
         select user_name
           from modeling.users
@@ -24,4 +43,54 @@
         from modeling.users
         where user_id = #{userId}
     </select>
+
+    <insert id="insertUserReg" parameterType="com.tumblermall.user.dto.UserRegRequestDTO" >
+        insert into modeling.users(user_name
+                                  , email
+                                  , password
+                                  , phone
+                                  , gender_id
+                                  , job_id
+                                  , birth_date
+        )
+        VALUE (#{userName}
+               ,#{userEmail}
+               , #{userPwd}
+               , #{userPhone}
+               , #{userGenderId}
+               , #{userJobId}
+               , #{userBirthDate}
+               )
+    </insert>
+
+    <select id="selectUserEmail" parameterType="com.tumblermall.user.vo.UserRegVO" resultType="int">
+        select count(email)
+        from modeling.users
+        where email=#{userEmail}
+    </select>
+
+    <select id="insertEmailVerify" parameterType="com.tumblermall.user.vo.EmailVerifyVO" resultMap="emailVerifyMap">
+        insert into modeling.email_verification(email
+                                  , token
+                                  , expire_at
+                                  , verified)
+        VALUES (#{email}
+                , #{token}
+                , #{expireAt}
+                , #{verified})
+    </select>
+
+    <select id="delectEmailVerify" parameterType="String" >
+    DELETE FROM modeling.email_verification
+           WHERE email = #{email}
+    </select>
+    <select id="selectEmailVerify" parameterType="com.tumblermall.user.vo.EmailVerifyVO" >
+        select email
+               , token
+               , expire_at
+               , verified
+        from modeling.email_verification
+        where email = #{email}
+    </select>
+
 </mapper>

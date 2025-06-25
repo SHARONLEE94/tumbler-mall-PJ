@@ -34,17 +34,21 @@
       <p class="text-beige-600">계정에 로그인하여 쇼핑을 시작하세요</p>
     </div>
     <div class="p-6 space-y-4">
-      <form action="loginProcess.jsp" method="post">
+      <c:if test="${not empty errorMsg}">
+        <p style="color:red">${errorMsg}</p>
+      </c:if>
+      <form action="/login" method="post" id="login">
         <div class="space-y-2 mb-4">
           <label for="email" class="block text-gray-900 font-medium">이메일</label>
-          <input type="email" id="email" name="email" placeholder="your@email.com"
+          <input type="email" id="email" name="userEmail" placeholder="your@email.com"
                  class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
         </div>
         <div class="space-y-2 mb-6">
           <label for="password" class="block text-gray-900 font-medium">비밀번호</label>
-          <input type="password" id="password" name="password"
+          <input type="password" id="password" name="userPwd"
                  class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
         </div>
+
         <button type="submit" class="w-full bg-gray-900 hover:bg-beige-800 text-white py-3 rounded-lg transition-colors">
           로그인
         </button>
@@ -58,6 +62,24 @@
     </div>
   </div>
 </main>
+<script>
+  document.getElementById("login").addEventListener("submit", function (e) {
+    const email = document.getElementById("email").value;
+    const pwd = document.getElementById("password").value;
+
+    if(!email.trim()){
+      e.preventDefault();
+      alert("이메일을 입력해주세요."); return;
+    }
+    if(!pwd.trim()){
+      e.preventDefault();
+      alert("비밀번호를 입력해주세요."); return;
+    }
+
+  });
+</script>
+
+
 
 <jsp:include page="../common/footer.jsp" />
 </body>
