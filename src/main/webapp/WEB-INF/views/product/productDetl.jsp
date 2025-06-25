@@ -1,106 +1,72 @@
 <%--
-
-&lt;%&ndash;
+&lt;%&ndash;&lt;%&ndash;
   Created by IntelliJ IDEA.
   User: sharo
   Date: 2025-06-22
   Time: 오후 8:19
   To change this template use File | Settings | File Templates.
-&ndash;%&gt;
+&ndash;%&gt;&ndash;%&gt;--%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%
+
+
     String id = request.getParameter("id");
     if (id == null) id = "1";
 
     // 상품 정보 (실제로는 데이터베이스에서 가져와야 함)
-    String productName = "";
-    String productPrice = "";
-    String originalPrice = "";
     String productImage = "";
     String[] productImages = new String[3];
-    String[] colors = new String[3];
-    String[] sizes = {"S", "M", "L", "XL"};
-    String description = "";
     String[] details = new String[4];
     String rating = "";
-    boolean isNew = false;
-    boolean onSale = false;
 
     // ID에 따른 상품 정보 설정
     switch(id) {
         case "1":
-            productName = "[STANLEY] 퀜처 프로투어 플립 스트로 텀블러 591ml";
-            productPrice = "189,000";
-            originalPrice = "220,000";
             productImage = "https://cncmall.kr/web/product/big/202506/f6cab159c8853a578bca0de9f34b2996.jpg";
             productImages[0] = "\thttps://cncmall.kr/web/product/small/202506/3344f6807cf717fa2454476369dbb2e5.jpg";
             productImages[1] = "https://cncmall.kr/web/product/small/202506/4119f8423895ce30817f430843f7d3dc.jpg";
             productImages[2] = "https://cncmall.kr/web/product/extra/small/202504/daed2afbf8d16bca073001dba7b6d59a.jpg";
-            colors[0] = "체리 블로썸"; colors[1] = "포멜로"; colors[2] = "하이드렌지아";
-            description = "완벽 밀폐!  손잡이 달린 591ml. 많이 기다리셨던 그 조합, 드디어 완성! 가볍고 편해진 스탠리를 지금 경험해 보세요";
+
             details[0] = "고급 식품 용기 소재로 친환경과 프리미엄도 갖추었어요";
             details[1] = "이중벽 진공 단열";
             details[2] = "누수 방지 플립형 빨대 뚜껑";
             details[3] = "식기세척기 사용 가능";
             rating = "4.8";
-            isNew = true;
-            onSale = true;
             break;
         case "2":
-            productName = "[STANLEY] 퀜처 프로투어 플립 스트로 텀블러 591ml";
-            productPrice = "189,000";
-            originalPrice = "220,000";
             productImage = "https://cncmall.kr/web/product/big/202506/f6cab159c8853a578bca0de9f34b2996.jpg";
             productImages[0] = "\thttps://cncmall.kr/web/product/small/202506/3344f6807cf717fa2454476369dbb2e5.jpg";
             productImages[1] = "https://cncmall.kr/web/product/small/202506/4119f8423895ce30817f430843f7d3dc.jpg";
             productImages[2] = "https://cncmall.kr/web/product/extra/small/202504/daed2afbf8d16bca073001dba7b6d59a.jpg";
-            colors[0] = "체리 블로썸"; colors[1] = "포멜로"; colors[2] = "하이드렌지아";
-            description = "완벽 밀폐!  손잡이 달린 591ml. 많이 기다리셨던 그 조합, 드디어 완성! 가볍고 편해진 스탠리를 지금 경험해 보세요";
             details[0] = "고급 식품 용기 소재로 친환경과 프리미엄도 갖추었어요";
             details[1] = "이중벽 진공 단열";
             details[2] = "누수 방지 플립형 빨대 뚜껑";
             details[3] = "식기세척기 사용 가능";
             rating = "4.8";
-            isNew = false;
-            onSale = false;
             break;
         case "3":
-            productName = "[STANLEY] 퀜처 프로투어 플립 스트로 텀블러 591ml";
-            productPrice = "189,000";
-            originalPrice = "220,000";
             productImage = "https://cncmall.kr/web/product/big/202506/f6cab159c8853a578bca0de9f34b2996.jpg";
             productImages[0] = "\thttps://cncmall.kr/web/product/small/202506/3344f6807cf717fa2454476369dbb2e5.jpg";
             productImages[1] = "https://cncmall.kr/web/product/small/202506/4119f8423895ce30817f430843f7d3dc.jpg";
             productImages[2] = "https://cncmall.kr/web/product/extra/small/202504/daed2afbf8d16bca073001dba7b6d59a.jpg";
-            colors[0] = "체리 블로썸"; colors[1] = "포멜로"; colors[2] = "하이드렌지아";
-            description = "완벽 밀폐!  손잡이 달린 591ml. 많이 기다리셨던 그 조합, 드디어 완성! 가볍고 편해진 스탠리를 지금 경험해 보세요";
             details[0] = "고급 식품 용기 소재로 친환경과 프리미엄도 갖추었어요";
             details[1] = "이중벽 진공 단열";
             details[2] = "누수 방지 플립형 빨대 뚜껑";
             details[3] = "식기세척기 사용 가능";
             rating = "4.8";
-            isNew = false;
-            onSale = true;
             break;
         default:
-            productName = "[STANLEY] 퀜처 프로투어 플립 스트로 텀블러 591ml";
-            productPrice = "189,000";
-            originalPrice = "220,000";
             productImage = "https://cncmall.kr/web/product/big/202506/f6cab159c8853a578bca0de9f34b2996.jpg";
             productImages[0] = "\thttps://cncmall.kr/web/product/small/202506/3344f6807cf717fa2454476369dbb2e5.jpg";
             productImages[1] = "https://cncmall.kr/web/product/small/202506/4119f8423895ce30817f430843f7d3dc.jpg";
             productImages[2] = "https://cncmall.kr/web/product/extra/small/202504/daed2afbf8d16bca073001dba7b6d59a.jpg";
-            colors[0] = "체리 블로썸"; colors[1] = "포멜로"; colors[2] = "하이드렌지아";
-            description = "완벽 밀폐!  손잡이 달린 591ml. 많이 기다리셨던 그 조합, 드디어 완성! 가볍고 편해진 스탠리를 지금 경험해 보세요";
             details[0] = "고급 식품 용기 소재로 친환경과 프리미엄도 갖추었어요";
             details[1] = "이중벽 진공 단열";
             details[2] = "누수 방지 플립형 빨대 뚜껑";
             details[3] = "식기세척기 사용 가능";
             rating = "4.8";
-            isNew = true;
-            onSale = false;
             break;
     }
 %>
@@ -120,20 +86,30 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<c:forEach var="productResponse" items="${productResponse}">
+<c:forEach var="detail" items="${productResponse.productDetail}">
 <jsp:include page="../common/header.jsp" />
 <main class="max-w-7xl mx-auto px-4 py-12">
+    <form id="addToCartForm" action="/cart/add" method="post">
+        <input type="hidden" name="productId" value="${productResponse.product.id}">
+        <input type="hidden" id="selectedColorInput" name="color" value="">
+        <input type="hidden" id="selectedSizeInput" name="size" value="">
+        <input type="hidden" id="quantityInput" name="quantity" value="1">
+    </form>
+
+
     <div class="grid lg:grid-cols-2 gap-12">
         <!-- Product Images -->
         <div class="space-y-4">
             <div class="aspect-[3/4] relative overflow-hidden rounded-lg">
-                <img id="main-image" src="<%= productImage %>" alt="<%= productName %>"
+                <img id="main-image" src="<%= productImage %>" alt="${productResponse.product.name}"
                      class="w-full h-full object-cover">
             </div>
             <div class="grid grid-cols-3 gap-4">
                 <% for(int i = 0; i < productImages.length; i++) { %>
                 <div class="aspect-[3/4] relative overflow-hidden rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                      onclick="changeMainImage('<%= productImages[i] %>')">
-                    <img src="<%= productImages[i] %>" alt="<%= productName %> <%= i + 1 %>"
+                    <img src="<%= productImages[i] %>" alt="${productResponse.product.name} <%= i + 1 %>"
                          class="w-full h-full object-cover">
                 </div>
                 <% } %>
@@ -143,15 +119,9 @@
         <!-- Product Info -->
         <div class="space-y-6">
             <div>
-                <% if(isNew) { %>
-                <span class="bg-gray-900 text-white px-2 py-1 text-sm rounded mb-2 inline-block">NEW ARRIVAL</span>
-                <% } %>
-                <h1 class="text-3xl font-light text-gray-900 mb-2"><%= productName %></h1>
+                <h1 class="text-3xl font-light text-gray-900 mb-2">${productResponse.product.name}</h1>
                 <div class="flex items-center gap-4">
-                    <p class="text-3xl font-light text-gray-900">₩<%= productPrice %></p>
-                    <% if(onSale && originalPrice != null && !originalPrice.isEmpty()) { %>
-                    <p class="text-xl text-beige-500 line-through">₩<%= originalPrice %></p>
-                    <% } %>
+                    <p class="text-3xl font-light text-gray-900">₩ ${productResponse.product.price}</p>
                 </div>
                 <div class="flex items-center gap-2 mt-2">
                     <div class="flex items-center">
@@ -163,32 +133,34 @@
                 </div>
             </div>
 
-            <p class="text-beige-600 leading-relaxed"><%= description %></p>
+            <p class="text-beige-600 leading-relaxed">${detail.productStrengths}</p>
 
-            <!-- Color Selection -->
+            <!-- color -->
             <div>
                 <h3 class="text-lg font-medium text-gray-900 mb-3">색상</h3>
                 <div class="flex gap-2">
-                    <% for(String color : colors) {
-                        if(color != null && !color.isEmpty()) { %>
-                    <button class="color-btn border-2 border-beige-300 text-beige-700 hover:border-gray-900 px-4 py-2 rounded-lg transition-colors"
-                            onclick="selectColor(this, '<%= color %>')">
-                        <%= color %>
-                    </button>
-                    <% } } %>
+                    <c:forEach var="color" items="${productResponse.productDetail[0].color}">
+                        <button class="color-btn border-2 border-gray-300 text-gray-700 hover:border-gray-900 px-4 py-2 rounded-lg transition-colors"
+                                onclick="selectColor(this, '${color}')">
+                                ${color}
+                        </button>
+                    </c:forEach>
                 </div>
             </div>
 
-            <!-- Size Selection -->
+            <!-- size -->
             <div>
                 <h3 class="text-lg font-medium text-gray-900 mb-3">사이즈</h3>
                 <div class="flex gap-2">
-                    <% for(String size : sizes) { %>
-                    <button class="size-btn border border-beige-300 text-beige-700 hover:bg-beige-100 w-12 h-12 rounded-lg transition-colors"
-                            onclick="selectSize(this, '<%= size %>')">
-                        <%= size %>
-                    </button>
-                    <% } %>
+                    <c:forEach var="sizeOption" items="${productResponse.productDetail[0].sizeOptions}">
+                        <button class="size-btn border border-gray-300 text-gray-700 hover:bg-gray-100 w-24 h-12 rounded-lg transition-colors"
+                                onclick="selectSize(this, '${sizeOption.size}')">
+                                ${sizeOption.size}
+                            <c:if test="${not empty sizeOption.additionalPrice && sizeOption.additionalPrice ne '0'}">
+                                (+${sizeOption.additionalPrice})
+                            </c:if>
+                        </button>
+                    </c:forEach>
                 </div>
             </div>
 
@@ -211,7 +183,7 @@
             <!-- Actions -->
             <div class="flex gap-4">
                 <button onclick="addToCart()" class="flex-1 bg-gray-900 hover:bg-beige-800 text-white py-3 px-6 rounded-lg transition-colors">
-                    장바구니 담기
+                    장바구니
                 </button>
                 <button class="border border-beige-300 hover:bg-beige-100 p-3 rounded-lg transition-colors">
                     <i data-lucide="heart" class="h-5 w-5"></i>
@@ -223,7 +195,7 @@
 
             <!-- Buy Now Button -->
             <button onclick="buyNow()" class="w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white py-3 px-6 rounded-lg transition-colors">
-                바로 구매하기
+                구매하기
             </button>
 
             <!-- Product Details -->
@@ -286,7 +258,7 @@
             <div id="description-tab" class="tab-content">
                 <div class="prose max-w-none">
                     <h3 class="text-xl font-medium text-gray-900 mb-4">상품 상세 설명</h3>
-                    <p class="text-beige-600 leading-relaxed mb-6"><%= description %></p>
+                    <p class="text-beige-600 leading-relaxed mb-6">${details.productStrengths}</p>
 
                     <div class="grid md:grid-cols-2 gap-8 mb-8">
                         <div>
@@ -653,50 +625,32 @@
         document.getElementById('main-image').src = imageSrc;
     }
 
-    // Color selection
     function selectColor(button, color) {
-        // Remove active class from all color buttons
-        document.querySelectorAll('.color-btn').forEach(btn => {
-            btn.classList.remove('border-gray-900', 'bg-gray-900', 'text-white');
-            btn.classList.add('border-beige-300', 'text-beige-700');
-        });
-
-        // Add active class to selected button
-        button.classList.remove('border-beige-300', 'text-beige-700');
-        button.classList.add('border-gray-900', 'bg-gray-900', 'text-white');
-
+        document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('border-gray-900'));
+        button.classList.add('border-gray-900');
         selectedColor = color;
     }
 
-    // Size selection
     function selectSize(button, size) {
-        // Remove active class from all size buttons
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.classList.remove('bg-gray-900', 'text-white');
-            btn.classList.add('border-beige-300', 'text-beige-700');
-        });
-
-        // Add active class to selected button
-        button.classList.remove('border-beige-300', 'text-beige-700');
-        button.classList.add('bg-gray-900', 'text-white');
-
+        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('bg-gray-100'));
+        button.classList.add('bg-gray-100');
         selectedSize = size;
     }
 
-    // Quantity controls
     function increaseQuantity() {
         quantity++;
         document.getElementById('quantity').textContent = quantity;
+        document.getElementById('quantityInput').value = quantity;
     }
 
     function decreaseQuantity() {
         if (quantity > 1) {
             quantity--;
             document.getElementById('quantity').textContent = quantity;
+            document.getElementById('quantityInput').value = quantity;
         }
     }
 
-    // Add to cart
     function addToCart() {
         if (!selectedColor) {
             alert('색상을 선택해주세요.');
@@ -707,9 +661,13 @@
             return;
         }
 
-        alert(`장바구니에 추가되었습니다.\n상품: <%= productName %>\n색상: ${selectedColor}\n사이즈: ${selectedSize}\n수량: ${quantity}`);
+        // hidden input 값 설정
+        document.getElementById('selectedColorInput').value = selectedColor;
+        document.getElementById('selectedSizeInput').value = selectedSize;
+        document.getElementById('quantityInput').value = quantity;
 
-        window.location.href = `/cart`;
+        // 폼 제출
+        document.getElementById('addToCartForm').submit();
     }
 
     // Buy now
@@ -724,7 +682,7 @@
         }
 
         // Redirect to order page with product info
-        <%--window.location.href = `/order?productId=<%= id %>&color=${selectedColor}&size=${selectedSize}&quantity=${quantity}`;--%> // 가이드
+        &lt;%&ndash;window.location.href = `/order?productId=${productResponse.product.id}&color=${selectedColor}&size=${selectedSize}&quantity=${quantity}`;&ndash;%&gt; // 가이드
         window.location.href = `/order`;
     }
 
@@ -748,474 +706,12 @@
         event.target.classList.remove('border-transparent', 'text-beige-600');
         event.target.classList.add('border-gray-900', 'text-gray-900');
     }
-
     // Initialize Lucide icons
     lucide.createIcons();
 </script>
 
 <jsp:include page="../common/footer.jsp" />
 </body>
-</html>
-
---%>
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sha_Jang_Tumbler</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-VTmh+5lDQgxBgaA8cD3X2iKQk4YI3sYeEjwA0kaOK1Z3XM3+o2D4w9abEzoS4V6L" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/static/css/globals.css" />
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .nav { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #ddd; }
-        .nav a { color: #1a73e8; text-decoration: none; margin: 0 10px; }
-        .category { font-size: 14px; color: #666; margin: 10px 0; }
-        .product-title { font-size: 24px; font-weight: bold; margin: 10px 0; }
-        .product-info { display: flex; gap: 20px; }
-        .images { flex: 1; }
-        .images img { max-width: 200px; margin-bottom: 10px; border: 1px solid #ddd; }
-        .details { flex: 2; }
-        .price { font-size: 20px; color: #d32f2f; margin: 10px 0; }
-        .options { margin: 20px 0; }
-        .options h3 { font-size: 18px; margin-bottom: 10px; }
-        .options ul { list-style: none; padding: 0; }
-        .options ul li { margin: 5px 0; }
-        .buttons { margin-top: 20px; }
-        .buttons button { padding: 10px 20px; margin-right: 10px; background: #1a73e8; color: white; border: none; cursor: pointer; }
-        .buttons button:hover { background: #1557b0; }
-        .related { margin-top: 20px; }
-        .related h3 { font-size: 18px; margin-bottom: 10px; }
-        .related-images { display: flex; gap: 10px; }
-        .related-images img { max-width: 150px; border: 1px solid #ddd; }
-    </style>
-</head>
-<body>
-<jsp:include page="../common/header.jsp" />
-<main class="max-w-7xl mx-auto px-4 py-12">
-    <div class="grid lg:grid-cols-2 gap-12">
-        <!-- Product Images -->
-        <div class="space-y-4">
-            <div class="aspect-[3/4] relative overflow-hidden rounded-lg">
-                <img id="main-image" src="${product.imageUrl}" alt="${product.name}" class="w-full h-full object-cover">
-            </div>
-            <div class="grid grid-cols-3 gap-4">
-                <c:forEach var="image" items="${product.additionalImages}" varStatus="loop">
-                    <div class="aspect-[3/4] relative overflow-hidden rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
-                         onclick="changeMainImage('${image}')">
-                        <img src="${image}" alt="${product.name} ${loop.count}" class="w-full h-full object-cover">
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
-
-        <!-- Product Info -->
-        <div class="space-y-6">
-            <div>
-                <c:if test="${product.isNew}">
-                    <span class="bg-gray-900 text-white px-2 py-1 text-sm rounded mb-2 inline-block">NEW ARRIVAL</span>
-                </c:if>
-                <h1 class="text-3xl font-light text-gray-900 mb-2">${product.name}</h1>
-                <div class="flex items-center gap-4">
-                    <p class="text-3xl font-light text-gray-900">₩${product.price}</p>
-                    <c:if test="${product.onSale && not empty product.originalPrice}">
-                        <p class="text-xl text-beige-500 line-through">₩${product.originalPrice}</p>
-                    </c:if>
-                </div>
-                <div class="flex items-center gap-2 mt-2">
-                    <div class="flex items-center">
-                        <c:forEach var="i" begin="1" end="5">
-                            <i data-lucide="star" class="h-4 w-4 fill-yellow-400 text-yellow-400"></i>
-                        </c:forEach>
-                    </div>
-                    <span class="text-sm text-beige-600">(${product.rating})</span>
-                </div>
-            </div>
-
-            <p class="text-beige-600 leading-relaxed">${product.description}</p>
-
-            <!-- Color Selection -->
-            <div>
-                <h3 class="text-lg font-medium text-gray-900 mb-3">색상</h3>
-                <div class="flex gap-2">
-                    <c:forEach var="color" items="${product.colors}">
-                        <button class="color-btn border-2 border-beige-300 text-beige-700 hover:border-gray-900 px-4 py-2 rounded-lg transition-colors"
-                                onclick="selectColor(this, '${color}')">
-                                ${color}
-                        </button>
-                    </c:forEach>
-                </div>
-            </div>
-
-            <!-- Size Selection -->
-            <div>
-                <h3 class="text-lg font-medium text-gray-900 mb-3">사이즈</h3>
-                <div class="flex gap-2">
-                    <c:forEach var="size" items="${product.sizes}">
-                        <button class="size-btn border border-beige-300 text-beige-700 hover:bg-beige-100 w-12 h-12 rounded-lg transition-colors"
-                                onclick="selectSize(this, '${size}')">
-                                ${size}
-                        </button>
-                    </c:forEach>
-                </div>
-            </div>
-
-            <!-- Quantity -->
-            <div>
-                <h3 class="text-lg font-medium text-gray-900 mb-3">수량</h3>
-                <div class="flex items-center gap-2">
-                    <button class="border border-beige-300 hover:bg-beige-100 w-10 h-10 rounded-lg flex items-center justify-center transition-colors"
-                            onclick="decreaseQuantity()">
-                        <i data-lucide="minus" class="h-4 w-4"></i>
-                    </button>
-                    <span id="quantity" class="w-12 text-center text-gray-900 font-medium">1</span>
-                    <button class="border border-beige-300 hover:bg-beige-100 w-10 h-10 rounded-lg flex items-center justify-center transition-colors"
-                            onclick="increaseQuantity()">
-                        <i data-lucide="plus" class="h-4 w-4"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Actions -->
-            <div class="flex gap-4">
-                <button onclick="addToCart()" class="flex-1 bg-gray-900 hover:bg-beige-800 text-white py-3 px-6 rounded-lg transition-colors">
-                    장바구니 담기
-                </button>
-                <button class="border border-beige-300 hover:bg-beige-100 p-3 rounded-lg transition-colors">
-                    <i data-lucide="heart" class="h-5 w-5"></i>
-                </button>
-                <button class="border border-beige-300 hover:bg-beige-100 p-3 rounded-lg transition-colors">
-                    <i data-lucide="share-2" class="h-5 w-5"></i>
-                </button>
-            </div>
-
-            <!-- Buy Now Button -->
-            <button onclick="buyNow()" class="w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white py-3 px-6 rounded-lg transition-colors">
-                바로 구매하기
-            </button>
-
-            <!-- Product Details -->
-            <div class="bg-white border border-beige-200 rounded-lg p-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">상품 정보</h3>
-                <ul class="space-y-2">
-                    <c:forEach var="detail" items="${product.details}">
-                        <li class="text-beige-600">• ${detail}</li>
-                    </c:forEach>
-                </ul>
-            </div>
-
-            <!-- Shipping Info -->
-            <div class="bg-beige-50 border border-beige-200 rounded-lg p-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">배송 정보</h3>
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between">
-                        <span class="text-beige-600">배송비</span>
-                        <span class="text-gray-900">5만원 이상 무료배송</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-beige-600">배송기간</span>
-                        <span class="text-gray-900">주문 후 2-3일</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-beige-600">배송지역</span>
-                        <span class="text-gray-900">전국 (제주도 별도)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Product Tabs -->
-    <div class="mt-16">
-        <div class="border-b border-beige-200">
-            <nav class="flex space-x-8">
-                <button class="tab-btn py-4 px-1 border-b-2 border-gray-900 text-gray-900 font-medium"
-                        onclick="showTab('description')">
-                    상품 설명
-                </button>
-                <button class="tab-btn py-4 px-1 border-b-2 border-transparent text-beige-600 hover:text-gray-900 transition-colors"
-                        onclick="showTab('size-guide')">
-                    사이즈 가이드
-                </button>
-                <button class="tab-btn py-4 px-1 border-b-2 border-transparent text-beige-600 hover:text-gray-900 transition-colors"
-                        onclick="showTab('reviews')">
-                    리뷰 (${product.reviewCount})
-                </button>
-                <button class="tab-btn py-4 px-1 border-b-2 border-transparent text-beige-600 hover:text-gray-900 transition-colors"
-                        onclick="showTab('qna')">
-                    Q&A (${product.qnaCount})
-                </button>
-            </nav>
-        </div>
-
-        <!-- Tab Contents -->
-        <div class="py-8">
-            <!-- Description Tab -->
-            <div id="description-tab" class="tab-content">
-                <div class="prose max-w-none">
-                    <h3 class="text-xl font-medium text-gray-900 mb-4">상품 상세 설명</h3>
-                    <p class="text-beige-600 leading-relaxed mb-6">${product.description}</p>
-                    <div class="grid md:grid-cols-2 gap-8 mb-8">
-                        <div>
-                            <h4 class="font-medium text-gray-900 mb-3">특징</h4>
-                            <ul class="space-y-2 text-beige-600">
-                                <li>• 상쾌하고 깨끗하게</li>
-                                <li>• 우수한 살균효과</li>
-                                <li>• 100% 자연 친화적 성분</li>
-                                <li>• 쉽고 편리한 세척</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="font-medium text-gray-900 mb-3">관리 방법</h4>
-                            <ul class="space-y-2 text-beige-600">
-                                <li>• 용기에 따뜻한 물을 채우고 타블렛 하나를 넣어주세요</li>
-                                <li>• 15분정도 기다린 후 용기를 흔들어주세요</li>
-                                <li>• 용기의 물을 버리고 용기를 깨끗이 헹궈주세요</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Size Guide Tab -->
-            <div id="size-guide-tab" class="tab-content hidden">
-                <h3 class="text-xl font-medium text-gray-900 mb-6">사이즈 가이드</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full border-collapse border border-beige-200">
-                        <thead>
-                        <tr class="bg-beige-50">
-                            <th class="border border-beige-200 px-4 py-3 text-left font-medium text-gray-900">사이즈</th>
-                            <th class="border border-beige-200 px-4 py-3 text-left font-medium text-gray-900">총장</th>
-                            <th class="border border-beige-200 px-4 py-3 text-left font-medium text-gray-900">가슴둘레</th>
-                            <th class="border border-beige-200 px-4 py-3 text-left font-medium text-gray-900">소매길이</th>
-                            <th class="border border-beige-200 px-4 py-3 text-left font-medium text-gray-900">어깨너비</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="border border-beige-200 px-4 py-3 font-medium">S</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">60cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">88cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">58cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">40cm</td>
-                        </tr>
-                        <tr class="bg-beige-50">
-                            <td class="border border-beige-200 px-4 py-3 font-medium">M</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">62cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">92cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">59cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">42cm</td>
-                        </tr>
-                        <tr>
-                            <td class="border border-beige-200 px-4 py-3 font-medium">L</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">64cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">96cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">60cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">44cm</td>
-                        </tr>
-                        <tr class="bg-beige-50">
-                            <td class="border border-beige-200 px-4 py-3 font-medium">XL</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">66cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">100cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">61cm</td>
-                            <td class="border border-beige-200 px-4 py-3 text-beige-600">46cm</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <p class="text-sm text-yellow-800">
-                        <strong>측정 방법:</strong> 상품을 평평한 곳에 놓고 측정한 단면 치수입니다.
-                        측정 방법과 위치에 따라 1-3cm 오차가 있을 수 있습니다.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Reviews Tab -->
-            <div id="reviews-tab" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-medium text-gray-900">고객 리뷰 (${product.reviewCount})</h3>
-                    <button class="bg-gray-900 hover:bg-beige-800 text-white px-4 py-2 rounded-lg transition-colors">
-                        리뷰 작성
-                    </button>
-                </div>
-                <div class="space-y-6">
-                    <c:forEach var="review" items="${product.reviews}">
-                        <div class="border-b border-beige-200 pb-6">
-                            <div class="flex items-start gap-4">
-                                <div class="w-10 h-10 bg-beige-200 rounded-full flex items-center justify-center">
-                                    <span class="text-sm font-medium text-gray-900">${review.userName}</span>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <div class="flex items-center">
-                                            <c:forEach var="i" begin="1" end="${review.rating}">
-                                                <i data-lucide="star" class="h-3 w-3 fill-yellow-400 text-yellow-400"></i>
-                                            </c:forEach>
-                                            <c:forEach var="i" begin="${review.rating + 1}" end="5">
-                                                <i data-lucide="star" class="h-3 w-3 text-beige-300"></i>
-                                            </c:forEach>
-                                        </div>
-                                        <span class="text-sm text-beige-600">${review.date}</span>
-                                        <span class="text-sm text-beige-600">${review.productCode}</span>
-                                    </div>
-                                    <p class="text-gray-900 mb-3">${review.comment}</p>
-                                    <c:if test="${not empty review.images}">
-                                        <div class="flex gap-2">
-                                            <c:forEach var="image" items="${review.images}">
-                                                <img src="${image}" alt="리뷰 이미지" class="w-16 h-16 object-cover rounded">
-                                            </c:forEach>
-                                        </div>
-                                    </c:if>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
-                <div class="text-center mt-8">
-                    <button class="border border-beige-300 text-beige-700 hover:bg-beige-100 px-6 py-2 rounded-lg transition-colors">
-                        더 많은 리뷰 보기
-                    </button>
-                </div>
-            </div>
-
-            <!-- Q&A Tab -->
-            <div id="qna-tab" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-medium text-gray-900">상품 Q&A (${product.qnaCount})</h3>
-                    <button class="bg-gray-900 hover:bg-beige-800 text-white px-4 py-2 rounded-lg transition-colors">
-                        문의하기
-                    </button>
-                </div>
-                <div class="space-y-4">
-                    <c:forEach var="qna" items="${product.qnas}">
-                        <div class="bg-white border border-beige-200 rounded-lg p-6">
-                            <div class="flex items-start gap-4">
-                                <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-sm font-medium">
-                                    Q
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <span class="font-medium text-gray-900">${qna.userName}</span>
-                                        <span class="text-sm text-beige-600">${qna.date}</span>
-                                        <c:if test="${qna.status == 'pending'}">
-                                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 text-xs rounded">답변대기</span>
-                                        </c:if>
-                                    </div>
-                                    <p class="text-gray-900 mb-4">${qna.question}</p>
-                                    <c:if test="${not empty qna.answer}">
-                                        <div class="flex items-start gap-4 bg-beige-50 p-4 rounded-lg">
-                                            <div class="w-8 h-8 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-medium">
-                                                A
-                                            </div>
-                                            <div class="flex-1">
-                                                <div class="flex items-center gap-2 mb-2">
-                                                    <span class="font-medium text-gray-900">STANLEY</span>
-                                                    <span class="text-sm text-beige-600">${qna.answerDate}</span>
-                                                </div>
-                                                <p class="text-gray-900">${qna.answer}</p>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Related Products -->
-    <div class="mt-16">
-        <h2 class="text-2xl font-light text-gray-900 mb-8">관련 상품</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <c:forEach var="related" items="${relatedProducts}">
-                <div class="group bg-white border border-beige-200 shadow-sm hover:shadow-lg transition-all duration-300 rounded-lg overflow-hidden">
-                    <div class="relative overflow-hidden">
-                        <img src="${related.imageUrl}" alt="${related.name}" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-medium text-gray-900 mb-2">${related.name}</h3>
-                        <p class="text-lg font-light text-gray-900">₩${related.price}</p>
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-</main>
-
-<script>
-    let selectedColor = '';
-    let selectedSize = '';
-    let quantity = 1;
-
-    function changeMainImage(imageSrc) {
-        document.getElementById('main-image').src = imageSrc;
-    }
-
-    function selectColor(button, color) {
-        document.querySelectorAll('.color-btn').forEach(btn => {
-            btn.classList.remove('border-gray-900', 'bg-gray-900', 'text-white');
-            btn.classList.add('border-beige-300', 'text-beige-700');
-        });
-        button.classList.remove('border-beige-300', 'text-beige-700');
-        button.classList.add('border-gray-900', 'bg-gray-900', 'text-white');
-        selectedColor = color;
-    }
-
-    function selectSize(button, size) {
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.classList.remove('bg-gray-900', 'text-white');
-            btn.classList.add('border-beige-300', 'text-beige-700');
-        });
-        button.classList.remove('border-beige-300', 'text-beige-700');
-        button.classList.add('bg-gray-900', 'text-white');
-        selectedSize = size;
-    }
-
-    function increaseQuantity() {
-        quantity++;
-        document.getElementById('quantity').textContent = quantity;
-    }
-
-    function decreaseQuantity() {
-        if (quantity > 1) {
-            quantity--;
-            document.getElementById('quantity').textContent = quantity;
-        }
-    }
-
-    function addToCart() {
-        if (!selectedColor) { alert('색상을 선택해주세요.'); return; }
-        if (!selectedSize) { alert('사이즈를 선택해주세요.'); return; }
-        alert(`장바구니에 추가되었습니다.\n상품: ${product.name}\n색상: ${selectedColor}\n사이즈: ${selectedSize}\n수량: ${quantity}`);
-    }
-
-    function buyNow() {
-        if (!selectedColor) { alert('색상을 선택해주세요.'); return; }
-        if (!selectedSize) { alert('사이즈를 선택해주세요.'); return; }
-        window.location.href = `orders.jsp?productId=${product.id}&color=${selectedColor}&size=${selectedSize}&quantity=${quantity}`;
-    }
-
-    function showTab(tabName) {
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('border-gray-900', 'text-gray-900');
-            btn.classList.add('border-transparent', 'text-beige-600');
-        });
-        document.getElementById(tabName + '-tab').classList.remove('hidden');
-        event.target.classList.remove('border-transparent', 'text-beige-600');
-        event.target.classList.add('border-gray-900', 'text-gray-900');
-    }
-
-    lucide.createIcons();
-</script>
-
-<jsp:include page="../common/footer.jsp" />
+</c:forEach>
+</c:forEach>
 </html>

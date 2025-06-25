@@ -4,7 +4,7 @@
 
 <mapper namespace="com.tumblermall.products.mapper.ProductsMapper">
 
-    <select id="selectProductById" parameterType="long" resultType="com.tumblermall.products.dto.ProductRequestDTO">
+    <select id="selectProductById" parameterType="long" resultType="com.tumblermall.products.vo.ProductVO">
         SELECT
             product_id AS id,
             product_name AS name,
@@ -12,22 +12,22 @@
             release_date,
             discontinued_date,
             shipping_method_id,
-            shipping_method
+            shipping_method,
+            shipping_fee
         FROM modeling.product
         WHERE product_id = #{productId}
     </select>
 
-    <select id="selectOptionsByProductId" parameterType="long" resultType="com.tumblermall.products.vo.ProductRequestVO">
+    <select id="selectDetailsByProductId" parameterType="long" resultType="com.tumblermall.products.vo.ProductDetailVO">
         SELECT
             po.product_option_id AS id,
-            po.product_id,
+            po.product_id AS productId,
             po.product_color AS colorGroup,
             po.color,
             po.product_size AS sizeGroup,
             po.size,
             po.additional_price AS additionalPrice,
             po.is_deleted AS isDeleted,
-
             pd.made_in_country AS madeInCountry,
             pd.country,
             pd.material_id AS materialId,
@@ -45,8 +45,7 @@
             pd.product_strengths AS productStrengths
 
         FROM modeling.product_option po
-                 LEFT JOIN modeling.product_detail pd ON po.product_option_id = pd.product_option_id
+        LEFT JOIN modeling.product_detail pd ON po.product_option_id = pd.product_option_id
         WHERE po.product_id = #{productId}
     </select>
-
 </mapper>

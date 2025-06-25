@@ -1,6 +1,7 @@
 package com.tumblermall.user.controller;
 
 import com.tumblermall.user.dto.UserInfoRequestDTO;
+import com.tumblermall.user.dto.UserInfoResponseDTO;
 import com.tumblermall.user.service.UserService;
 import com.tumblermall.user.vo.UserInfoResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class UserController {
                 throw new Exception("userId is Null");
             }
 
-            List<UserInfoResponseVO> userInfoRes = userService.userInfo(userId);
+            UserInfoResponseDTO userInfoRes = userService.userInfo(userId);
 
             model.addAttribute("userInfoRes", userInfoRes);
             return "/user/userInfo";

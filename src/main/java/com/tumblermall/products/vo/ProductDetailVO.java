@@ -1,6 +1,6 @@
 package com.tumblermall.products.vo;
 
-public class ProductRequestVO {
+public class ProductDetailVO {
     private Long id;
     private Long productId;
     private String colorGroup;

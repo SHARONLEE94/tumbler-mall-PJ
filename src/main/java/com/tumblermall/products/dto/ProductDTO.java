@@ -1,10 +1,6 @@
 package com.tumblermall.products.dto;
 
-import com.tumblermall.products.vo.ProductRequestVO;
-
-import java.util.List;
-
-public class ProductRequestDTO {
+public class ProductDTO {
     private Long id;
     private String name;
     private Integer price;
@@ -12,7 +8,7 @@ public class ProductRequestDTO {
     private String discontinuedDate;
     private String shippingMethodId;
     private String shippingMethod;
-    private List<ProductRequestVO> options;
+    private String shipping_fee;
 
     public Long getId() {
         return id;
@@ -20,14 +16,6 @@ public class ProductRequestDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<ProductRequestVO> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<ProductRequestVO> options) {
-        this.options = options;
     }
 
     public String getShippingMethod() {
@@ -76,5 +64,13 @@ public class ProductRequestDTO {
 
     public void setShippingMethodId(String shippingMethodId) {
         this.shippingMethodId = shippingMethodId;
+    }
+
+    public String getShipping_fee() {
+        return shipping_fee;
+    }
+
+    public void setShipping_fee(String shipping_fee) {
+        this.shipping_fee = shipping_fee;
     }
 }
