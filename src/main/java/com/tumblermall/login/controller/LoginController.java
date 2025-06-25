@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -55,16 +54,11 @@ public class LoginController {
         return "redirect:/login";
 
     }
-
-    @GetMapping("/test")
-    public String test(HttpSession session) {
+    @GetMapping("/gopage")
+    public String goPage(HttpSession session) {
         if (session.getAttribute("userid") != null) {
             return "redirect:/mypage";
         }
-
         return "redirect:/login";
     }
-
-
-
 }
