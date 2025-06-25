@@ -21,7 +21,7 @@ public class CartUpdateController {
     public String showCart(Model model, CartRequestDTO requestDTO){
 
 
-        return "redirect:/cartTest";
+        return "redirect:/cart";
     }
 
     @PostMapping("/cartupdate")
@@ -31,6 +31,6 @@ public class CartUpdateController {
                                     requestDTO.getProductCount());
 
 
-        return "redirect:/cartTest";
+        return "redirect:/cart";
     }
 }

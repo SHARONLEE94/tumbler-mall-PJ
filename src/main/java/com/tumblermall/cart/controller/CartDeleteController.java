@@ -24,7 +24,7 @@ public class CartDeleteController {
 //        }
         deleteService.cartDeleteService(deleteDTO.getUserId(), deleteDTO.getProductOptionId());
 
-        return "redirect:/cartTest";
+        return "redirect:/cart";
 
     }
 }

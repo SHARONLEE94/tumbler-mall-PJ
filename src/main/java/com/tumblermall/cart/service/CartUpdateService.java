@@ -15,6 +15,6 @@ public class CartUpdateService {
 
 //        개별 제품 최종 가격 * 제품의 개수 = 장바구니의 총 가격
 //        int totalPrice = basePrice * productCount;
-        return mapper.updateCart(productCount, userId, productOptionId);
+        return mapper.updateCart(productCount, 0 , userId, productOptionId);
     }
 }
