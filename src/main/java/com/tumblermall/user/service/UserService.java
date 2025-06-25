@@ -1,5 +1,6 @@
 package com.tumblermall.user.service;
 
+import com.tumblermall.user.dto.UserInfoResponseDTO;
 import com.tumblermall.user.mapper.UserMapper;
 import com.tumblermall.user.vo.UserInfoResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,15 @@ public class UserService {
         return userMapper.selectUserId(userId);
     }
 
-    public List<UserInfoResponseVO> userInfo(String userId) throws Exception {
-
+    public UserInfoResponseDTO userInfo(String userId) throws Exception {
+        List<UserInfoResponseVO> userInfoRes = userMapper.selectUserInfo(userId);
         if(userMapper.selectUserId(userId) == null) {
             throw new Exception("userId is not exist - userInfo");
         }
 
-        return userMapper.selectUserInfo(userId);
+        UserInfoResponseDTO userInfoResDTO = new UserInfoResponseDTO();
+        userInfoResDTO.setName(userInfoRes.get(0).getName());
+
+        return userInfoResDTO;
     }
 }

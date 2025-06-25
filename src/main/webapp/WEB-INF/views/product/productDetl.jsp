@@ -1,104 +1,72 @@
 <%--
+&lt;%&ndash;&lt;%&ndash;
   Created by IntelliJ IDEA.
   User: sharo
   Date: 2025-06-22
   Time: 오후 8:19
   To change this template use File | Settings | File Templates.
---%>
+&ndash;%&gt;&ndash;%&gt;--%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%
+
+
     String id = request.getParameter("id");
     if (id == null) id = "1";
 
     // 상품 정보 (실제로는 데이터베이스에서 가져와야 함)
-    String productName = "";
-    String productPrice = "";
-    String originalPrice = "";
     String productImage = "";
     String[] productImages = new String[3];
-    String[] colors = new String[3];
-    String[] sizes = {"S", "M", "L", "XL"};
-    String description = "";
     String[] details = new String[4];
     String rating = "";
-    boolean isNew = false;
-    boolean onSale = false;
 
     // ID에 따른 상품 정보 설정
     switch(id) {
         case "1":
-            productName = "[STANLEY] 퀜처 프로투어 플립 스트로 텀블러 591ml";
-            productPrice = "189,000";
-            originalPrice = "220,000";
             productImage = "https://cncmall.kr/web/product/big/202506/f6cab159c8853a578bca0de9f34b2996.jpg";
             productImages[0] = "\thttps://cncmall.kr/web/product/small/202506/3344f6807cf717fa2454476369dbb2e5.jpg";
             productImages[1] = "https://cncmall.kr/web/product/small/202506/4119f8423895ce30817f430843f7d3dc.jpg";
             productImages[2] = "https://cncmall.kr/web/product/extra/small/202504/daed2afbf8d16bca073001dba7b6d59a.jpg";
-            colors[0] = "체리 블로썸"; colors[1] = "포멜로"; colors[2] = "하이드렌지아";
-            description = "완벽 밀폐!  손잡이 달린 591ml. 많이 기다리셨던 그 조합, 드디어 완성! 가볍고 편해진 스탠리를 지금 경험해 보세요";
+
             details[0] = "고급 식품 용기 소재로 친환경과 프리미엄도 갖추었어요";
             details[1] = "이중벽 진공 단열";
             details[2] = "누수 방지 플립형 빨대 뚜껑";
             details[3] = "식기세척기 사용 가능";
             rating = "4.8";
-            isNew = true;
-            onSale = true;
             break;
         case "2":
-            productName = "[STANLEY] 퀜처 프로투어 플립 스트로 텀블러 591ml";
-            productPrice = "189,000";
-            originalPrice = "220,000";
             productImage = "https://cncmall.kr/web/product/big/202506/f6cab159c8853a578bca0de9f34b2996.jpg";
             productImages[0] = "\thttps://cncmall.kr/web/product/small/202506/3344f6807cf717fa2454476369dbb2e5.jpg";
             productImages[1] = "https://cncmall.kr/web/product/small/202506/4119f8423895ce30817f430843f7d3dc.jpg";
             productImages[2] = "https://cncmall.kr/web/product/extra/small/202504/daed2afbf8d16bca073001dba7b6d59a.jpg";
-            colors[0] = "체리 블로썸"; colors[1] = "포멜로"; colors[2] = "하이드렌지아";
-            description = "완벽 밀폐!  손잡이 달린 591ml. 많이 기다리셨던 그 조합, 드디어 완성! 가볍고 편해진 스탠리를 지금 경험해 보세요";
             details[0] = "고급 식품 용기 소재로 친환경과 프리미엄도 갖추었어요";
             details[1] = "이중벽 진공 단열";
             details[2] = "누수 방지 플립형 빨대 뚜껑";
             details[3] = "식기세척기 사용 가능";
             rating = "4.8";
-            isNew = false;
-            onSale = false;
             break;
         case "3":
-            productName = "[STANLEY] 퀜처 프로투어 플립 스트로 텀블러 591ml";
-            productPrice = "189,000";
-            originalPrice = "220,000";
             productImage = "https://cncmall.kr/web/product/big/202506/f6cab159c8853a578bca0de9f34b2996.jpg";
             productImages[0] = "\thttps://cncmall.kr/web/product/small/202506/3344f6807cf717fa2454476369dbb2e5.jpg";
             productImages[1] = "https://cncmall.kr/web/product/small/202506/4119f8423895ce30817f430843f7d3dc.jpg";
             productImages[2] = "https://cncmall.kr/web/product/extra/small/202504/daed2afbf8d16bca073001dba7b6d59a.jpg";
-            colors[0] = "체리 블로썸"; colors[1] = "포멜로"; colors[2] = "하이드렌지아";
-            description = "완벽 밀폐!  손잡이 달린 591ml. 많이 기다리셨던 그 조합, 드디어 완성! 가볍고 편해진 스탠리를 지금 경험해 보세요";
             details[0] = "고급 식품 용기 소재로 친환경과 프리미엄도 갖추었어요";
             details[1] = "이중벽 진공 단열";
             details[2] = "누수 방지 플립형 빨대 뚜껑";
             details[3] = "식기세척기 사용 가능";
             rating = "4.8";
-            isNew = false;
-            onSale = true;
             break;
         default:
-            productName = "[STANLEY] 퀜처 프로투어 플립 스트로 텀블러 591ml";
-            productPrice = "189,000";
-            originalPrice = "220,000";
             productImage = "https://cncmall.kr/web/product/big/202506/f6cab159c8853a578bca0de9f34b2996.jpg";
             productImages[0] = "\thttps://cncmall.kr/web/product/small/202506/3344f6807cf717fa2454476369dbb2e5.jpg";
             productImages[1] = "https://cncmall.kr/web/product/small/202506/4119f8423895ce30817f430843f7d3dc.jpg";
             productImages[2] = "https://cncmall.kr/web/product/extra/small/202504/daed2afbf8d16bca073001dba7b6d59a.jpg";
-            colors[0] = "체리 블로썸"; colors[1] = "포멜로"; colors[2] = "하이드렌지아";
-            description = "완벽 밀폐!  손잡이 달린 591ml. 많이 기다리셨던 그 조합, 드디어 완성! 가볍고 편해진 스탠리를 지금 경험해 보세요";
             details[0] = "고급 식품 용기 소재로 친환경과 프리미엄도 갖추었어요";
             details[1] = "이중벽 진공 단열";
             details[2] = "누수 방지 플립형 빨대 뚜껑";
             details[3] = "식기세척기 사용 가능";
             rating = "4.8";
-            isNew = true;
-            onSale = false;
             break;
     }
 %>
@@ -118,20 +86,30 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<c:forEach var="productResponse" items="${productResponse}">
+<c:forEach var="detail" items="${productResponse.productDetail}">
 <jsp:include page="../common/header.jsp" />
 <main class="max-w-7xl mx-auto px-4 py-12">
+    <form id="addToCartForm" action="/cart/add" method="post">
+        <input type="hidden" name="productId" value="${productResponse.product.id}">
+        <input type="hidden" id="selectedColorInput" name="color" value="">
+        <input type="hidden" id="selectedSizeInput" name="size" value="">
+        <input type="hidden" id="quantityInput" name="quantity" value="1">
+    </form>
+
+
     <div class="grid lg:grid-cols-2 gap-12">
         <!-- Product Images -->
         <div class="space-y-4">
             <div class="aspect-[3/4] relative overflow-hidden rounded-lg">
-                <img id="main-image" src="<%= productImage %>" alt="<%= productName %>"
+                <img id="main-image" src="<%= productImage %>" alt="${productResponse.product.name}"
                      class="w-full h-full object-cover">
             </div>
             <div class="grid grid-cols-3 gap-4">
                 <% for(int i = 0; i < productImages.length; i++) { %>
                 <div class="aspect-[3/4] relative overflow-hidden rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                      onclick="changeMainImage('<%= productImages[i] %>')">
-                    <img src="<%= productImages[i] %>" alt="<%= productName %> <%= i + 1 %>"
+                    <img src="<%= productImages[i] %>" alt="${productResponse.product.name} <%= i + 1 %>"
                          class="w-full h-full object-cover">
                 </div>
                 <% } %>
@@ -141,15 +119,9 @@
         <!-- Product Info -->
         <div class="space-y-6">
             <div>
-                <% if(isNew) { %>
-                <span class="bg-gray-900 text-white px-2 py-1 text-sm rounded mb-2 inline-block">NEW ARRIVAL</span>
-                <% } %>
-                <h1 class="text-3xl font-light text-gray-900 mb-2"><%= productName %></h1>
+                <h1 class="text-3xl font-light text-gray-900 mb-2">${productResponse.product.name}</h1>
                 <div class="flex items-center gap-4">
-                    <p class="text-3xl font-light text-gray-900">₩<%= productPrice %></p>
-                    <% if(onSale && originalPrice != null && !originalPrice.isEmpty()) { %>
-                    <p class="text-xl text-beige-500 line-through">₩<%= originalPrice %></p>
-                    <% } %>
+                    <p class="text-3xl font-light text-gray-900">₩ ${productResponse.product.price}</p>
                 </div>
                 <div class="flex items-center gap-2 mt-2">
                     <div class="flex items-center">
@@ -161,32 +133,34 @@
                 </div>
             </div>
 
-            <p class="text-beige-600 leading-relaxed"><%= description %></p>
+            <p class="text-beige-600 leading-relaxed">${detail.productStrengths}</p>
 
-            <!-- Color Selection -->
+            <!-- color -->
             <div>
                 <h3 class="text-lg font-medium text-gray-900 mb-3">색상</h3>
                 <div class="flex gap-2">
-                    <% for(String color : colors) {
-                        if(color != null && !color.isEmpty()) { %>
-                    <button class="color-btn border-2 border-beige-300 text-beige-700 hover:border-gray-900 px-4 py-2 rounded-lg transition-colors"
-                            onclick="selectColor(this, '<%= color %>')">
-                        <%= color %>
-                    </button>
-                    <% } } %>
+                    <c:forEach var="color" items="${productResponse.productDetail[0].color}">
+                        <button class="color-btn border-2 border-gray-300 text-gray-700 hover:border-gray-900 px-4 py-2 rounded-lg transition-colors"
+                                onclick="selectColor(this, '${color}')">
+                                ${color}
+                        </button>
+                    </c:forEach>
                 </div>
             </div>
 
-            <!-- Size Selection -->
+            <!-- size -->
             <div>
                 <h3 class="text-lg font-medium text-gray-900 mb-3">사이즈</h3>
                 <div class="flex gap-2">
-                    <% for(String size : sizes) { %>
-                    <button class="size-btn border border-beige-300 text-beige-700 hover:bg-beige-100 w-12 h-12 rounded-lg transition-colors"
-                            onclick="selectSize(this, '<%= size %>')">
-                        <%= size %>
-                    </button>
-                    <% } %>
+                    <c:forEach var="sizeOption" items="${productResponse.productDetail[0].sizeOptions}">
+                        <button class="size-btn border border-gray-300 text-gray-700 hover:bg-gray-100 w-24 h-12 rounded-lg transition-colors"
+                                onclick="selectSize(this, '${sizeOption.size}')">
+                                ${sizeOption.size}
+                            <c:if test="${not empty sizeOption.additionalPrice && sizeOption.additionalPrice ne '0'}">
+                                (+${sizeOption.additionalPrice})
+                            </c:if>
+                        </button>
+                    </c:forEach>
                 </div>
             </div>
 
@@ -209,7 +183,7 @@
             <!-- Actions -->
             <div class="flex gap-4">
                 <button onclick="addToCart()" class="flex-1 bg-gray-900 hover:bg-beige-800 text-white py-3 px-6 rounded-lg transition-colors">
-                    장바구니 담기
+                    장바구니
                 </button>
                 <button class="border border-beige-300 hover:bg-beige-100 p-3 rounded-lg transition-colors">
                     <i data-lucide="heart" class="h-5 w-5"></i>
@@ -221,7 +195,7 @@
 
             <!-- Buy Now Button -->
             <button onclick="buyNow()" class="w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white py-3 px-6 rounded-lg transition-colors">
-                바로 구매하기
+                구매하기
             </button>
 
             <!-- Product Details -->
@@ -284,7 +258,7 @@
             <div id="description-tab" class="tab-content">
                 <div class="prose max-w-none">
                     <h3 class="text-xl font-medium text-gray-900 mb-4">상품 상세 설명</h3>
-                    <p class="text-beige-600 leading-relaxed mb-6"><%= description %></p>
+                    <p class="text-beige-600 leading-relaxed mb-6">${details.productStrengths}</p>
 
                     <div class="grid md:grid-cols-2 gap-8 mb-8">
                         <div>
@@ -651,50 +625,32 @@
         document.getElementById('main-image').src = imageSrc;
     }
 
-    // Color selection
     function selectColor(button, color) {
-        // Remove active class from all color buttons
-        document.querySelectorAll('.color-btn').forEach(btn => {
-            btn.classList.remove('border-gray-900', 'bg-gray-900', 'text-white');
-            btn.classList.add('border-beige-300', 'text-beige-700');
-        });
-
-        // Add active class to selected button
-        button.classList.remove('border-beige-300', 'text-beige-700');
-        button.classList.add('border-gray-900', 'bg-gray-900', 'text-white');
-
+        document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('border-gray-900'));
+        button.classList.add('border-gray-900');
         selectedColor = color;
     }
 
-    // Size selection
     function selectSize(button, size) {
-        // Remove active class from all size buttons
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.classList.remove('bg-gray-900', 'text-white');
-            btn.classList.add('border-beige-300', 'text-beige-700');
-        });
-
-        // Add active class to selected button
-        button.classList.remove('border-beige-300', 'text-beige-700');
-        button.classList.add('bg-gray-900', 'text-white');
-
+        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('bg-gray-100'));
+        button.classList.add('bg-gray-100');
         selectedSize = size;
     }
 
-    // Quantity controls
     function increaseQuantity() {
         quantity++;
         document.getElementById('quantity').textContent = quantity;
+        document.getElementById('quantityInput').value = quantity;
     }
 
     function decreaseQuantity() {
         if (quantity > 1) {
             quantity--;
             document.getElementById('quantity').textContent = quantity;
+            document.getElementById('quantityInput').value = quantity;
         }
     }
 
-    // Add to cart
     function addToCart() {
         if (!selectedColor) {
             alert('색상을 선택해주세요.');
@@ -705,9 +661,13 @@
             return;
         }
 
-        alert(`장바구니에 추가되었습니다.\n상품: <%= productName %>\n색상: ${selectedColor}\n사이즈: ${selectedSize}\n수량: ${quantity}`);
+        // hidden input 값 설정
+        document.getElementById('selectedColorInput').value = selectedColor;
+        document.getElementById('selectedSizeInput').value = selectedSize;
+        document.getElementById('quantityInput').value = quantity;
 
-        window.location.href = `/cart`;
+        // 폼 제출
+        document.getElementById('addToCartForm').submit();
     }
 
     // Buy now
@@ -722,7 +682,7 @@
         }
 
         // Redirect to order page with product info
-        <%--window.location.href = `/order?productId=<%= id %>&color=${selectedColor}&size=${selectedSize}&quantity=${quantity}`;--%> // 가이드
+        &lt;%&ndash;window.location.href = `/order?productId=${productResponse.product.id}&color=${selectedColor}&size=${selectedSize}&quantity=${quantity}`;&ndash;%&gt; // 가이드
         window.location.href = `/order`;
     }
 
@@ -746,12 +706,12 @@
         event.target.classList.remove('border-transparent', 'text-beige-600');
         event.target.classList.add('border-gray-900', 'text-gray-900');
     }
-
     // Initialize Lucide icons
     lucide.createIcons();
 </script>
 
 <jsp:include page="../common/footer.jsp" />
 </body>
+</c:forEach>
+</c:forEach>
 </html>
-
