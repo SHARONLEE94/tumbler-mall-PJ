@@ -4,6 +4,8 @@ import com.tumblermall.cart.dto.CartInsertDTO;
 import com.tumblermall.cart.dto.CartRequestDTO;
 import com.tumblermall.cart.mapper.CartMapper;
 import com.tumblermall.cart.service.CartInsertService;
+import com.tumblermall.order.vo.ProductVo;
+import com.tumblermall.products.dto.ProductDetailDTO;
 import com.tumblermall.products.dto.ProductResponseDTO;
 import com.tumblermall.products.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
     private CartInsertService cartInsertService;
     private CartRequestDTO cartRequestDTO;
 
@@ -77,9 +81,17 @@ public class ProductController {
             @RequestParam("quantity") int quantity,
             Model m
     ){
+        ProductDetailDTO detailDTO = new ProductDetailDTO();
+        ProductVo productVo = new ProductVo();
+
         String sanitizedColor = sanitize(color);
         String sanitizedSize = sanitize(size);
         int sanitizedQuantity = Math.max(1, quantity);
+        int basePrice = productVo.getPrice();
+        int additionalPrice = productVo.getPrice();
+        int totalPrice = (basePrice + additionalPrice) * sanitizedQuantity;
+
+        cartRequestDTO.setTotalPrice(totalPrice);
 
         String productOptionId = productService.getProductOptionId(productId, sanitizedColor, sanitizedSize);
 

@@ -30,6 +30,8 @@
     <insert id="insertCart" parameterType="com.tumblermall.cart.dto.CartRequestDTO">
         INSERT INTO modeling.user_shopping_cart (user_id, product_option_id, product_count)
         VALUES (#{userId}, #{productOptionId}, #{productCount})
+        ON DUPLICATE KEY UPDATE
+            product_count = product_count + VALUES(product_count)
     </insert>
 
     <update id="updateCart" parameterType="com.tumblermall.cart.dto.CartRequestDTO">

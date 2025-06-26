@@ -11,10 +11,10 @@ public class CartInsertService {
     @Autowired
     CartMapper cartMapper;
 
-    public int goInsert(CartRequestDTO insertDTO){
+    public int goInsert(CartRequestDTO requestDTO){
 
-        return cartMapper.insertCart(insertDTO.getUserId(),
-                                     insertDTO.getProductOptionId(),
-                                     insertDTO.getProductCount());
+        return cartMapper.insertCart(requestDTO.getUserId(),
+                                     requestDTO.getProductOptionId(),
+                                     requestDTO.getProductCount());
     }
 }
