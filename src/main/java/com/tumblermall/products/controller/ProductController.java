@@ -83,14 +83,19 @@ public class ProductController {
         int userId = (Integer) session.getAttribute("userId");
         m.addAttribute("userId",userId);
 
+        ProductDetailDTO detailDTO = new ProductDetailDTO();
+        ProductVo productVo = new ProductVo();
+        CartRequestDTO cartRequestDTO = new CartRequestDTO();
+
         // 입력 값 정제
         String sanitizedColor = sanitize(color);
         String sanitizedSize = sanitize(size);
         int sanitizedQuantity = Math.max(1, quantity);
+        int basePrice = productVo.getPrice();
+        int additionalPrice = productVo.getPrice();
+        int totalPrice = (basePrice + additionalPrice) * sanitizedQuantity;
 
         String productOptionId = productService.getProductOptionId(productId, sanitizedColor, sanitizedSize);
-
-        CartRequestDTO cartRequestDTO = new CartRequestDTO();
 
         cartRequestDTO.setUserId(userId);
         cartRequestDTO.setProductOptionId(Integer.parseInt(productOptionId));
@@ -109,17 +114,9 @@ public class ProductController {
             @RequestParam("quantity") int quantity,
             Model m
     ){
-        ProductDetailDTO detailDTO = new ProductDetailDTO();
-        ProductVo productVo = new ProductVo();
-
         String sanitizedColor = sanitize(color);
         String sanitizedSize = sanitize(size);
         int sanitizedQuantity = Math.max(1, quantity);
-        int basePrice = productVo.getPrice();
-        int additionalPrice = productVo.getPrice();
-        int totalPrice = (basePrice + additionalPrice) * sanitizedQuantity;
-
-        cartRequestDTO.setTotalPrice(totalPrice);
 
         String productOptionId = productService.getProductOptionId(productId, sanitizedColor, sanitizedSize);
 
