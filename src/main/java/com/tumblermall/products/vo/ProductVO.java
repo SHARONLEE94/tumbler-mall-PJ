@@ -73,4 +73,5 @@ public class ProductVO {
     public void setShipping_fee(String shipping_fee) {
         this.shipping_fee = shipping_fee;
     }
+
 }

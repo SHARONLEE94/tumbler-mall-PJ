@@ -20,7 +20,7 @@ public interface CartMapper {
 
     int insertCart(@Param("userId") int userId,
                    @Param("productOptionId") int productOptionId,
-                   @Param("productCount") int productCoun);
+                   @Param("productCount") int productCount);
 
     int updateCartCheckbox(CartRequestDTO dto);
 }

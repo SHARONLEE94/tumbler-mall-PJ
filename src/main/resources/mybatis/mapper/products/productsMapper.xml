@@ -6,16 +6,22 @@
 
     <select id="selectProductById" parameterType="long" resultType="com.tumblermall.products.vo.ProductVO">
         SELECT
-            product_id AS id,
+            pd.product_id AS id,
             product_name AS name,
             product_base_price AS price,
             release_date,
             discontinued_date,
             shipping_method_id,
             shipping_method,
-            shipping_fee
-        FROM modeling.product
-        WHERE product_id = #{productId}
+            shipping_fee,
+            f.file_name AS filePath
+        FROM modeling.product pd
+                 JOIN modeling.product_file pf
+                      ON pf.product_id = pd.product_id
+                 JOIN modeling.fileTable f
+                      ON pf.file_id = f.file_id
+        WHERE pd.product_id = #{productId}
+        ;
     </select>
 
     <select id="selectDetailsByProductId" parameterType="long" resultType="com.tumblermall.products.vo.ProductDetailVO">
@@ -48,4 +54,5 @@
         LEFT JOIN modeling.product_detail pd ON po.product_option_id = pd.product_option_id
         WHERE po.product_id = #{productId}
     </select>
+
 </mapper>
