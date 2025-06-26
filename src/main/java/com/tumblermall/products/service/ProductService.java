@@ -1,6 +1,5 @@
 package com.tumblermall.products.service;
 
-import com.tumblermall.cart.service.CartUpdateService;
 import com.tumblermall.products.dto.ProductDTO;
 import com.tumblermall.products.dto.ProductDetailDTO;
 import com.tumblermall.products.dto.ProductResponseDTO;
@@ -107,5 +106,12 @@ public class ProductService {
         throw new IllegalArgumentException("Invalid option: color=" + color + ", size=" + size);
     }
 
+    public List<ProductVO> getProductsByCategoryId(String categoryId) {
+        return productsMapper.selectProductsByCategoryId(categoryId);
+    }
+
+    public List<ProductVO> getProductsBySeriesId(String seriesId) {
+        return productsMapper.selectProductsBySeriesId(seriesId);
+    }
 }
 

@@ -146,7 +146,6 @@
         </div>
     </div>
 </nav>
-
 <script>
     let dropdownTimeout;
 
