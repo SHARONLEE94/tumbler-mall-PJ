@@ -13,6 +13,12 @@ public class UserRegRequestDTO {
     String userIsAdReceive;
     int emailVerifyCode;
 
+    private int userId;
+    String recipientName;
+    String userAddress;
+    String userAddressDetail;
+    String userPostalCode;
+    String isDefault;
 
     public String getUserName() {
         return userName;
@@ -83,5 +89,46 @@ public class UserRegRequestDTO {
     }
     public void setEmailVerifyCode(int emailVerifyCode) {
         this.emailVerifyCode = emailVerifyCode;
+    }
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public String getUserAddressDetail() {
+        return userAddressDetail;
+    }
+
+    public void setUserAddressDetail(String userAddressDetail) {
+        this.userAddressDetail = userAddressDetail;
+    }
+
+    public String getUserPostalCode() {
+        return userPostalCode;
+    }
+
+    public void setUserPostalCode(String userPostalCode) {
+        this.userPostalCode = userPostalCode;
+    }
+
+    public String getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(String isDefault) {
+        this.isDefault = isDefault;
     }
 }

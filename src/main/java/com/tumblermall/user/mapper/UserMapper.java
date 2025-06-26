@@ -11,13 +11,17 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    int insertUserReg(UserRegRequestDTO userRegRequestDTO);
-    int selectUserEmail(UserRegVO email);
-
-    void delectEmailVerify(String email);
     int insertEmailVerify(EmailVerifyVO emailverifyVO);
+    int insertUserReg(UserRegRequestDTO userRegRequestDTO);
+    void insertDelivery(UserRegRequestDTO userRegRequestDTO);
+
+    int selectUserEmail(UserRegVO email);
+    int selectVerifyEmail(String email);
     EmailVerifyVO selectEmailVerify(String email);
     String selectUserId(String userId);
-
     List<UserInfoResponseVO> selectUserInfo(String userId);
+
+    void updateVerify(EmailVerifyVO email);
+    void delectEmailVerify(String email);
+
 }

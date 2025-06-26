@@ -47,7 +47,7 @@ public class LoginController {
 
     @GetMapping("/mypage")
     public String mypage(HttpSession session) {
-        if (session.getAttribute("userid") != null) {
+        if (session.getAttribute("userId") != null) {
 
             return "/login/my";
     }
@@ -56,7 +56,7 @@ public class LoginController {
     }
     @GetMapping("/gopage")
     public String goPage(HttpSession session) {
-        if (session.getAttribute("userid") != null) {
+        if (session.getAttribute("userId") != null) {
             return "redirect:/mypage";
         }
         return "redirect:/login";
