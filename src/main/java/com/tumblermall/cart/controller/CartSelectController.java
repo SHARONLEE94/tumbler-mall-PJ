@@ -28,7 +28,7 @@ public class CartSelectController {
 ////        if(userId == null) {
 ////            return "login/login";
 ////
-//
+
         //로그인이 되어있다면 userId (cart 테이블에 user_id의 정보를 가져와서 list에 저장
         List<CartRequestVO> cartRequestVOList = selectService.checkedCart(userId);
 
@@ -38,8 +38,11 @@ public class CartSelectController {
         return "/product/cart";
     }
 
-//    @PostMapping("/cart")
-//    public String showCart(){
-//        return "redirect:/login/login";
-//    }
+
+    //체크박스 확인
+    @PostMapping("/cartCheckboxUpdate")
+    public String showCartCheckbox(CartRequestDTO dto){
+        selectService.updateCheckbox(dto);
+        return "redirect:/cart";
+    }
 }

@@ -42,7 +42,7 @@
                    onclick="toggleItem(this, ${items.userId},
                        ${items.productOptionId},
                        ${items.productCount},
-                       ${items.finalPrice})" checked>
+                       ${items.finalPrice})" ${items.cartCheckbox ? 'checked' : ''}>
 <%--            <p>${items.productName} - ${items.finalPrice}원</p>--%>
 <%--            <input type="hidden" name="userId" value="${items.userId}" />--%>
 <%--            <input type="hidden" name="productOptionId" value="${items.productOptionId}" />--%>
@@ -105,35 +105,33 @@
 <script>
 
     function toggleItem(checkbox, userId, productOptionId, productCount, finalPrice) {
-        // const form = document.getElementById('orderForm');
-
-        <%--if (checkbox.checked){--%>
-        <%--    const userInput = document.createElement('input');--%>
-        <%--    userInput.type = 'hidden';--%>
-        <%--    userInput.name = 'userId';--%>
-        <%--    userInput.value = userId;--%>
-        <%--    userInput.id = 'userId-${productOptionId}';--%>
-        <%--    form.appendChild(userInput);--%>
-
-        <%--    const optionInput = document.createElement('input');--%>
-        <%--    optionInput.type = 'hidden';--%>
-        <%--    optionInput.name = 'productOptionId';--%>
-        <%--    optionInput.value = productOptionId;--%>
-        <%--    optionInput.id = 'productOptionId-${productOptionId}';--%>
-        <%--    form.appendChild(optionInput);--%>
-
-        <%--    const countInput = document.createElement('input');--%>
-        <%--    countInput.type = 'hidden';--%>
-        <%--    countInput.name = 'productCount';--%>
-        <%--    countInput.value = productCount;--%>
-        <%--    countInput.id = 'productCount-${productCount}';--%>
-        <%--    form.appendChild(countInput);--%>
-        <%--} else {--%>
-        <%--    document.getElementById('userId-${productOptionId}')?.remove();--%>
-        <%--    document.getElementById('productOptionId-${productOptionId}')?.remove();--%>
-        <%--    document.getElementById('count-${productOptionId}')?.remove();--%>
-        <%--}--%>
         updateTotal();
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/cartCheckboxUpdate';
+
+        const inputUserId = document.createElement('input');
+        inputUserId.type = 'hidden';
+        inputUserId.name = 'userId';
+        inputUserId.value = userId;
+
+        const inputProductOptionId = document.createElement('input');
+        inputProductOptionId.type = 'hidden';
+        inputProductOptionId.name = 'productOptionId';
+        inputProductOptionId.value = productOptionId;
+
+        const inputCheck = document.createElement('input');
+        inputCheck.type = 'hidden';
+        inputCheck.name = 'cartCheckbox';
+        inputCheck.value = checkbox.checked;
+
+        form.appendChild(inputUserId);
+        form.appendChild(inputProductOptionId);
+        form.appendChild(inputCheck);
+
+        document.body.appendChild(form);
+        form.submit();
     }
 
     window.onload = function() {
@@ -144,6 +142,7 @@
         const quantitySpan = document.getElementById('quantity-' + productOptionId);
         const countInput = document.getElementById('count-' + productOptionId);
         const priceInput = document.getElementById('price-' + productOptionId);
+        const totalSpan = document.getElementById('total-' + productOptionId);
         const itemTotalSpan = document.getElementById('total-price-' + productOptionId);
         const form = countInput.closest('form');
 
@@ -156,10 +155,13 @@
 
         updateTotal();
         //제품별 총합 가격
+        if(totalSpan){
+            totalSpan.textContent = (count * price).toLocaleString() + '원';
+        }
+
         if(itemTotalSpan) {
             itemTotalSpan.textContent = (count * price).toLocaleString() + '원';
         }
-
 
         form.submit();
     }
@@ -181,10 +183,15 @@
                 total += count * price;
             }
         });
+        const totalElement = document.getElementById('total');
+        const totalPriceElement = document.getElementById('total-price');
 
-        const totalElement = document.getElementById('total-price');
         if(totalElement) {
             totalElement.textContent = total.toLocaleString() + '원';
+        }
+
+        if(totalPriceElement) {
+            totalPriceElement.textContent = total.toLocaleString() + '원';
         }
         // for(let i = 0 ; i < forms.length ; i++){
         //     const form = forms[i];
