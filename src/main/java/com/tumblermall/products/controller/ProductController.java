@@ -1,13 +1,13 @@
 package com.tumblermall.products.controller;
 
-import com.tumblermall.cart.dto.CartInsertDTO;
+
 import com.tumblermall.cart.dto.CartRequestDTO;
-import com.tumblermall.cart.mapper.CartMapper;
 import com.tumblermall.cart.service.CartInsertService;
 import com.tumblermall.order.vo.ProductVo;
 import com.tumblermall.products.dto.ProductDetailDTO;
 import com.tumblermall.products.dto.ProductResponseDTO;
 import com.tumblermall.products.service.ProductService;
+import com.tumblermall.products.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,15 +33,42 @@ public class ProductController {
     public String products() {
         return "/product/products";
     }
+    // todo
+    /*@GetMapping("/products")
+    public String getProductsByCategory(@RequestParam("category") String categoryId, Model model) {
+        System.out.println("\n\n\ncategoryId\n\n\n" + categoryId);
+        List<ProductVO> products = productService.getProductsByCategoryId(categoryId);
+        System.out.println(products);
+        model.addAttribute("products", products);
+        return "product/products";
+    }
+
+    @GetMapping("/series")
+    public String getProductsBySeries(@RequestParam("seriesId") String seriesId, Model model) {
+        List<ProductVO> products = productService.getProductsBySeriesId(seriesId);
+        model.addAttribute("products", products);
+        return "product/products";
+    }*/
+
+
+
+
+
 
     @GetMapping("/productDetl")
     public String index(@RequestParam("productId") Long productId, Model model) {
-
         List<ProductResponseDTO> productResponse = productService.getProductResponse(productId);
         model.addAttribute("productResponse", productResponse);
 
         return "/product/productDetl";
     }
+
+
+
+
+
+
+
 
     @PostMapping("/prdDetlCartUpdate")
     public String addToCart(

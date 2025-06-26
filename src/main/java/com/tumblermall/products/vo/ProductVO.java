@@ -4,11 +4,22 @@ public class ProductVO {
     private Long id;
     private String name;
     private Integer price;
-    private String releaseDate; // Date 타입으로 해도 무방
+    private String releaseDate;
     private String discontinuedDate;
     private String shippingMethodId;
     private String shippingMethod;
     private String shipping_fee;
+    private String categoryId;
+    private String seriesId;
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Long getId() {
         return id;
@@ -74,4 +85,19 @@ public class ProductVO {
         this.shipping_fee = shipping_fee;
     }
 
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getSeriesId() {
+        return seriesId;
+    }
+
+    public void setSeriesId(String seriesId) {
+        this.seriesId = seriesId;
+    }
 }

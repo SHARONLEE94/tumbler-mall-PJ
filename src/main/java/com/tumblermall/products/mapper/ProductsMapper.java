@@ -12,4 +12,8 @@ public interface ProductsMapper {
     List<ProductVO> selectProductById(@Param("productId") Long productId);
 
     List<ProductDetailVO> selectDetailsByProductId(@Param("productId") Long productId);
+
+    List<ProductVO> selectProductsByCategoryId(@Param("categoryId") String categoryId);
+
+    List<ProductVO> selectProductsBySeriesId(@Param("seriesId") String seriesId);
 }

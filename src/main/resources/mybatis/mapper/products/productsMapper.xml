@@ -4,55 +4,91 @@
 
 <mapper namespace="com.tumblermall.products.mapper.ProductsMapper">
 
+    <!-- 상품 단건 조회 -->
     <select id="selectProductById" parameterType="long" resultType="com.tumblermall.products.vo.ProductVO">
         SELECT
             pd.product_id AS id,
-            product_name AS name,
-            product_base_price AS price,
-            release_date,
-            discontinued_date,
-            shipping_method_id,
-            shipping_method,
-            shipping_fee,
-            f.file_name AS filePath
+            pd.product_name AS name,
+            pd.product_base_price AS price,
+            pd.release_date AS releaseDate,
+            pd.discontinued_date AS discontinuedDate,
+            pd.shipping_method_id AS shippingMethodId,
+            pd.shipping_method AS shippingMethod,
+            pd.shipping_fee AS shippingFee,
+            f.file_name AS image
         FROM modeling.product pd
-                 JOIN modeling.product_file pf
-                      ON pf.product_id = pd.product_id
-                 JOIN modeling.fileTable f
-                      ON pf.file_id = f.file_id
+                 JOIN modeling.product_file pf ON pf.product_id = pd.product_id
+                 JOIN modeling.fileTable f ON pf.file_id = f.file_id
         WHERE pd.product_id = #{productId}
-        ;
     </select>
 
+    <!-- 상품 옵션/상세 정보 -->
     <select id="selectDetailsByProductId" parameterType="long" resultType="com.tumblermall.products.vo.ProductDetailVO">
         SELECT
             po.product_option_id AS id,
             po.product_id AS productId,
             po.product_color AS colorGroup,
-            po.color,
+            color_cd.code_name   AS color,
+            size_cd.code_name    AS size,
             po.product_size AS sizeGroup,
-            po.size,
             po.additional_price AS additionalPrice,
             po.is_deleted AS isDeleted,
             pd.made_in_country AS madeInCountry,
-            pd.country,
+            pd.country AS country,
             pd.material_id AS materialId,
-            pd.material,
-            pd.weight,
-            pd.dimensions,
+            pd.material AS material,
+            pd.weight AS weight,
+            pd.dimensions AS dimensions,
             pd.heat_retention_time AS heatRetentionTime,
             pd.cold_retention_time AS coldRetentionTime,
             pd.ice_retention_time AS iceRetentionTime,
             pd.is_sealed AS isSealed,
-            pd.components,
+            pd.components AS components,
             pd.as_available AS asAvailable,
             pd.as_period AS asPeriod,
             pd.care_note_id AS careNoteId,
             pd.product_strengths AS productStrengths
-
         FROM modeling.product_option po
-        LEFT JOIN modeling.product_detail pd ON po.product_option_id = pd.product_option_id
+                 LEFT JOIN modeling.product_detail pd ON po.product_option_id = pd.product_option_id
+                 JOIN modeling.code color_cd
+                      ON po.product_color = color_cd.code_group_id
+                          AND po.color = color_cd.code_id
+                 JOIN modeling.code size_cd
+                      ON po.product_size = size_cd.code_group_id
+                          AND po.size = size_cd.code_id
         WHERE po.product_id = #{productId}
+    </select>
+
+    <!-- 카테고리별 제품 조회 -->
+    <select id="selectProductsByCategoryId" parameterType="string" resultType="com.tumblermall.products.vo.ProductVO">
+        SELECT
+            p.product_id AS id,
+            p.product_name AS name,
+            p.product_base_price AS price,
+            f.file_name AS image,
+            pc.product_category_id AS categoryId
+        FROM modeling.product p
+                 JOIN modeling.product_category_map pcm ON p.product_id = pcm.product_id
+                 JOIN modeling.product_category pc ON pcm.product_category_id = pc.product_category_id
+                 LEFT JOIN modeling.product_file pf ON pf.product_id = p.product_id
+                 LEFT JOIN modeling.fileTable f ON pf.file_id = f.file_id
+        WHERE pc.product_category_id = 'TUMBLER'
+    </select>
+
+    <!-- 시리즈별 제품 조회 -->
+    <select id="selectProductsBySeriesId" parameterType="string" resultType="com.tumblermall.products.vo.ProductVO">
+        SELECT
+            p.product_id AS id,
+            p.product_name AS name,
+            p.product_base_price AS price,
+            f.file_name AS image,
+            ps.product_series_id AS seriesId
+        FROM modeling.product p
+                 JOIN modeling.product_series_map psm ON p.product_id = psm.product_id
+                 JOIN modeling.product_series ps ON psm.product_series_id = ps.product_series_id
+                 LEFT JOIN modeling.product_file pf ON pf.product_id = p.product_id
+                 LEFT JOIN modeling.fileTable f ON pf.file_id = f.file_id
+        WHERE ps.product_series_id = #{seriesId}
     </select>
 
 </mapper>

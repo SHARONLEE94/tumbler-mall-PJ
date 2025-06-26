@@ -9,6 +9,27 @@ public class ProductDTO {
     private String shippingMethodId;
     private String shippingMethod;
     private String shipping_fee;
+    private String categoryId;
+    private String seriesId;
+    private String image;
+
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 
     public Long getId() {
         return id;
@@ -72,5 +93,13 @@ public class ProductDTO {
 
     public void setShipping_fee(String shipping_fee) {
         this.shipping_fee = shipping_fee;
+    }
+
+    public String getSeriesId() {
+        return seriesId;
+    }
+
+    public void setSeriesId(String seriesId) {
+        this.seriesId = seriesId;
     }
 }
