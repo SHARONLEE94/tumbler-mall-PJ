@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -72,14 +73,14 @@ public class ProductController {
 
     @PostMapping("/prdDetlCartUpdate")
     public String addToCart(
+            HttpSession session,
             @RequestParam("productId") String productId,
             @RequestParam("color") String color,
             @RequestParam("size") String size,
             @RequestParam("quantity") int quantity,
-            //HttpSession session
             Model m
     ) {
-        int userId = 1;
+        int userId = (Integer) session.getAttribute("userId");
         m.addAttribute("userId",userId);
 
         // 입력 값 정제
