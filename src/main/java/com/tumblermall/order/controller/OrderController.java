@@ -4,6 +4,9 @@ import com.tumblermall.order.dto.*;
 import com.tumblermall.order.service.OrderService;
 import com.tumblermall.order.vo.*;
 import com.tumblermall.user.service.UserService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +27,10 @@ public class OrderController {
     //주문/결제페이지
     @GetMapping("/order")
     public String orderCart(HttpServletRequest request, HttpSession session, @RequestParam(value = "items", required = false) List<String> items, Model model) {
-        if (session.getAttribute("userid") == null) {
+        if (session.getAttribute("userId") == null) {
             return "redirect:/login";
         }
-        int uesrId = (Integer) session.getAttribute("userid");
+        int uesrId = (Integer) session.getAttribute("userId");
         try {
             userInfoVo userInfo = orderService.userInfo(uesrId);
             List<ProductVo> pv = null;
@@ -35,7 +38,7 @@ public class OrderController {
                 pv = orderService.selectProduct(items);
             } else {
                 pv = orderService.cartSelect(uesrId);
-                if (pv.size() ==  0) {
+                if (pv.size() == 0) {
                     return "redirect:/main";
                 }
             }
@@ -58,14 +61,14 @@ public class OrderController {
                                @RequestParam("quantity") List<Integer> quantities,
                                @RequestParam("price") List<Integer> prices,
                                OrderDeliveryDto orderDeliveryDto,
-                               userInfoVo  userInfo,
+                               userInfoVo userInfo,
                                OrderDto orderDto,
                                HttpServletResponse response, Model model) throws IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("userid") == null) {
+        if (session.getAttribute("userId") == null) {
             return "redirect:/login";
         }
-        int userId = (Integer) session.getAttribute("userid");
+        int userId = (Integer) session.getAttribute("userId");
         String payMethod = "";
         String paymentMethodDisplay;
         List<OrderDetailVo> orderDetailVoList = new ArrayList<>();
@@ -114,10 +117,10 @@ public class OrderController {
     @GetMapping("/orderDetl")
     public String orderDetl(HttpServletRequest request, @RequestParam("orderNumber") int orderId, Model model) throws IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("userid") == null) {
+        if (session.getAttribute("userId") == null) {
             return "redirect:/login";
         }
-        int userId = (Integer) session.getAttribute("userid");
+        int userId = (Integer) session.getAttribute("userId");
         if (orderService.orderUserSelect(userId, orderId) == 0) {
 //            throw new RuntimeException("당사자가아님");
             return "redirect:/main";
@@ -135,11 +138,11 @@ public class OrderController {
     public String orderList(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         int userId = 0;
-        if (session.getAttribute("userid") == null) {
+        if (session.getAttribute("userId") == null) {
             return "redirect:/login";
         }
         try {
-            userId = (Integer) session.getAttribute("userid");
+            userId = (Integer) session.getAttribute("userId");
         } catch (Exception e) {
             return "redirect:/login";
         }

@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-                <form id="orderForm" method="POST" action="/cartOrder">
+                <form id="orderForm" method="get" action="/order">
                     <button type="submit" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-3 rounded-lg transition-colors">
                         주문하기
                     </button>
