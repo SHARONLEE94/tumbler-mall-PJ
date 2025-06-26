@@ -13,39 +13,43 @@
             <arg column="size" javaType="String"/>
             <arg column="final_price" javaType="int"/>
             <arg column="product_name" javaType="String"/>
+            <arg column="cartCheckbox" javaType="boolean"/>
         </constructor>
     </resultMap>
 
     <select id="selectCart" resultMap="selectCartVO">
         SELECT c.user_id, c.product_option_id, c.product_count, c.product_YN,
                o.color, o.size, p.product_base_price + o.additional_price AS final_price,
-               p.product_name
-        FROM user_shopping_cart c
-        JOIN product_option o ON c.product_option_id = o.product_option_id
-        JOIN product p ON o.product_id = p.product_id
-        WHERE user_id = #{userId} and product_YN = 'Y'
+               p.product_name, c.cartCheckbox
+        FROM modeling.user_shopping_cart c
+                 JOIN modeling.product_option o ON c.product_option_id = o.product_option_id
+                 JOIN modeling.product p ON o.product_id = p.product_id
+        WHERE c.user_id = #{userId} and c.product_YN = 'Y'
     </select>
 
-
     <insert id="insertCart" parameterType="com.tumblermall.cart.dto.CartRequestDTO">
-        INSERT INTO user_shopping_cart (user_id, product_option_id, product_count)
+        INSERT INTO modeling.user_shopping_cart (user_id, product_option_id, product_count)
         VALUES (#{userId}, #{productOptionId}, #{productCount})
     </insert>
 
     <update id="updateCart" parameterType="com.tumblermall.cart.dto.CartRequestDTO">
-        UPDATE user_shopping_cart c
-        JOIN product_option po ON c.product_option_id = po.product_option_id
-        JOIN product p ON po.product_id = p.product_id
-
-        SET
-            c.product_count = #{productCount},
-            c.total_price = #{productCount} * (po.additional_price + p.product_base_price)
+        UPDATE modeling.user_shopping_cart c
+            JOIN modeling.product_option po ON c.product_option_id = po.product_option_id
+            JOIN modeling.product p ON po.product_id = p.product_id
+            SET
+                c.product_count = #{productCount},
+                c.total_price = #{productCount} * (po.additional_price + p.product_base_price)
         WHERE c.user_id = #{userId} AND c.product_option_id = #{productOptionId}
     </update>
 
     <delete id="deleteCart" parameterType="com.tumblermall.cart.dto.CartRequestDTO">
-        DELETE FROM user_shopping_cart
+        DELETE FROM modeling.user_shopping_cart
         WHERE user_id = #{userId} AND product_option_id = #{productOptionId}
     </delete>
 
+    <update id="updateCartCheckbox" parameterType="com.tumblermall.cart.dto.CartRequestDTO">
+        UPDATE modeling.user_shopping_cart
+        SET cartCheckbox = #{cartCheckbox}
+        WHERE user_id = #{userId} AND product_option_id = #{productOptionId}
+    </update>
 </mapper>

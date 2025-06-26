@@ -24,6 +24,7 @@ public class ProductDetailVO {
     private Integer asPeriod;
     private Integer careNoteId;
     private String productStrengths;
+    private String filePath;
 
     public Long getId() {
         return id;
@@ -207,5 +208,13 @@ public class ProductDetailVO {
 
     public void setProductStrengths(String productStrengths) {
         this.productStrengths = productStrengths;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

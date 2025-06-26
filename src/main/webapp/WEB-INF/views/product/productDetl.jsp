@@ -90,12 +90,21 @@
 <c:forEach var="detail" items="${productResponse.productDetail}">
 <jsp:include page="../common/header.jsp" />
 <main class="max-w-7xl mx-auto px-4 py-12">
-    <form id="addToCartForm" action="/cart/add" method="post">
+
+    <form id="addToCartForm" action="/prdDetlCartUpdate" method="post">
         <input type="hidden" name="productId" value="${productResponse.product.id}">
-        <input type="hidden" id="selectedColorInput" name="color" value="">
-        <input type="hidden" id="selectedSizeInput" name="size" value="">
-        <input type="hidden" id="quantityInput" name="quantity" value="1">
+        <input type="hidden" id="cartSelectedColorInput" name="color" value="">
+        <input type="hidden" id="cartSelectedSizeInput" name="size" value="">
+        <input type="hidden" id="cartQuantityInput" name="quantity" value="1">
     </form>
+
+    <form id="addToOrderForm" action="/order1" method="post">
+        <input type="hidden" name="productId" value="${productResponse.product.id}">
+        <input type="hidden" id="orderSelectedColorInput" name="color" value="">
+        <input type="hidden" id="orderSelectedSizeInput" name="size" value="">
+        <input type="hidden" id="orderQuantityInput" name="quantity" value="1">
+    </form>
+
 
 
     <div class="grid lg:grid-cols-2 gap-12">
@@ -141,7 +150,7 @@
                 <div class="flex gap-2">
                     <c:forEach var="color" items="${productResponse.productDetail[0].color}">
                         <button class="color-btn border-2 border-gray-300 text-gray-700 hover:border-gray-900 px-4 py-2 rounded-lg transition-colors"
-                                onclick="selectColor(this, '${color}')">
+                                onclick='selectColor(this, "${color}")'>
                                 ${color}
                         </button>
                     </c:forEach>
@@ -153,8 +162,8 @@
                 <h3 class="text-lg font-medium text-gray-900 mb-3">사이즈</h3>
                 <div class="flex gap-2">
                     <c:forEach var="sizeOption" items="${productResponse.productDetail[0].sizeOptions}">
-                        <button class="size-btn border border-gray-300 text-gray-700 hover:bg-gray-100 w-24 h-12 rounded-lg transition-colors"
-                                onclick="selectSize(this, '${sizeOption.size}')">
+                        <button class="size-btn border-2 border-gray-300 text-gray-700 hover:border-gray-900 px-4 py-2 rounded-lg transition-colors"
+                                onclick='selectSize(this, "${sizeOption.size}")'>
                                 ${sizeOption.size}
                             <c:if test="${not empty sizeOption.additionalPrice && sizeOption.additionalPrice ne '0'}">
                                 (+${sizeOption.additionalPrice})
@@ -194,7 +203,7 @@
             </div>
 
             <!-- Buy Now Button -->
-            <button onclick="buyNow()" class="w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white py-3 px-6 rounded-lg transition-colors">
+            <button onclick="buyNow()" class="w-full border-2 border-gray-900 text-gray-900 hover:bg-beige-900 hover:text-white py-3 px-6 rounded-lg transition-colors">
                 구매하기
             </button>
 
@@ -629,12 +638,14 @@
         document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('border-gray-900'));
         button.classList.add('border-gray-900');
         selectedColor = color;
+        console.log('selectedColor set to:', selectedColor);
     }
 
     function selectSize(button, size) {
         document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('bg-gray-100'));
         button.classList.add('bg-gray-100');
         selectedSize = size;
+        console.log('selectedSize set to:', selectedSize);
     }
 
     function increaseQuantity() {
@@ -661,16 +672,12 @@
             return;
         }
 
-        // hidden input 값 설정
-        document.getElementById('selectedColorInput').value = selectedColor;
-        document.getElementById('selectedSizeInput').value = selectedSize;
-        document.getElementById('quantityInput').value = quantity;
-
-        // 폼 제출
+        document.getElementById('cartSelectedColorInput').value = selectedColor;
+        document.getElementById('cartSelectedSizeInput').value = selectedSize;
+        document.getElementById('cartQuantityInput').value = quantity;
         document.getElementById('addToCartForm').submit();
     }
 
-    // Buy now
     function buyNow() {
         if (!selectedColor) {
             alert('색상을 선택해주세요.');
@@ -681,10 +688,12 @@
             return;
         }
 
-        // Redirect to order page with product info
-        &lt;%&ndash;window.location.href = `/order?productId=${productResponse.product.id}&color=${selectedColor}&size=${selectedSize}&quantity=${quantity}`;&ndash;%&gt; // 가이드
-        window.location.href = `/order`;
+        document.getElementById('orderSelectedColorInput').value = selectedColor;
+        document.getElementById('orderSelectedSizeInput').value = selectedSize;
+        document.getElementById('orderQuantityInput').value = quantity;
+        document.getElementById('addToOrderForm').submit();
     }
+
 
     // Tab functionality
     function showTab(tabName) {
