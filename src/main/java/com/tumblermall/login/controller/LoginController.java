@@ -32,7 +32,7 @@ public class LoginController {
             return "redirect:/login";
         }
         LoginVO VO = loginService.logininfo(LoginRequestDTO.getUserEmail());
-        session.setAttribute("userid",VO.getUserId());
+        session.setAttribute("userId",VO.getUserId());
         session.setAttribute("admin",VO.getIsAdmin());
 
         return "redirect:/main";
@@ -47,7 +47,7 @@ public class LoginController {
 
     @GetMapping("/mypage")
     public String mypage(HttpSession session) {
-        if (session.getAttribute("userid") != null) {
+        if (session.getAttribute("userId") != null) {
 
             return "/login/my";
     }
@@ -56,7 +56,7 @@ public class LoginController {
     }
     @GetMapping("/gopage")
     public String goPage(HttpSession session) {
-        if (session.getAttribute("userid") != null) {
+        if (session.getAttribute("userId") != null) {
             return "redirect:/mypage";
         }
         return "redirect:/login";

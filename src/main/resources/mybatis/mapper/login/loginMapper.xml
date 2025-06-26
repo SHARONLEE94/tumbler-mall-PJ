@@ -12,4 +12,10 @@
         where email = #{userEmail}
     </select>
 
+    <select id="selectLoginEmail" parameterType="com.tumblermall.login.dto.LoginRequestDTO" resultType="int">
+        select count(email)
+        from modeling.users
+        where email=#{userEmail}
+    </select>
+
 </mapper>

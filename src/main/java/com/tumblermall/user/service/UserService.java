@@ -6,6 +6,7 @@ import com.tumblermall.user.vo.UserInfoResponseVO;
 import com.tumblermall.user.vo.UserRegVO;
 import com.tumblermall.user.vo.EmailVerifyVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,27 +47,26 @@ public class UserService {
         return userMapper.selectUserInfo(userId);
     }
 
-
+    // 패스워드 암호화
     public void pwdEncoder(UserRegRequestDTO userRegRequestDTO) throws Exception {
         String pwd = pwdEncoder.encode(userRegRequestDTO.getUserPwd());
         userRegRequestDTO.setUserPwd(pwd);
 
     }
+
     // 이메일, 인증코드 검증
     public boolean register(UserRegRequestDTO userRegRequestDTO) {
         try {
             EmailVerifyVO emailverifyVO = new EmailVerifyVO();
             emailverifyVO.setEmail(userRegRequestDTO.getUserEmail());
-            System.out.println("나는 이동재. 바보입니다 =>" + userRegRequestDTO.getUserEmail());
             EmailVerifyVO verifyData = userMapper.selectEmailVerify(emailverifyVO.getEmail());
 
             if (userRegRequestDTO.getEmailVerifyCode() == verifyData.getToken()) {
                 pwdEncoder(userRegRequestDTO);
+                userRegRequestDTO.setIsDefault("Y");
                 userMapper.insertUserReg(userRegRequestDTO);
-               userMapper.delectEmailVerify(verifyData.getEmail());
-               // delete가 안됐으면?????????
-               // return이 무조건 타는거야 이거 주의해야해
-                // 어떻게해야 무조건 타지 않을 수 있는지 고민해봐야
+                userMapper.insertDelivery(userRegRequestDTO);
+                userMapper.delectEmailVerify(verifyData.getEmail());
                return true;
             }
 
@@ -80,60 +80,60 @@ public class UserService {
 
     // 이메일 중복검사 및 인증코드 전송
     public boolean mailConfirm(String email) throws Exception {
-        System.out.println("mailConfirm!@#!@#+++++++++++++++++");
         UserRegVO userRegVO = new UserRegVO();
         userRegVO.setUserEmail(email);
 
         int emailCount = userMapper.selectUserEmail(userRegVO);
 
-        System.out.println("emailcount"+emailCount);
-
         if(emailCount == 0){
             // 중복없음. 생성가능, 인증메일 전송
-            System.out.println("@@@@@ verify true @@@@@@@");
-
             mailAuthCode(email);
             SimpleMailMessage message = new SimpleMailMessage();
-            System.out.println("@@@@@ verify true222222 @@@@@@@");
 
             message.setTo(email);
             message.setSubject("가입 인증번호");
             message.setText("인증번호 : "+ token);
             message.setFrom("djae8888@gmail.com"); // 보내는 이메일 주소
 
-            mailSender.send(message);
+            try {
+                mailSender.send(message);
+            } catch (MailException e) {
 
+            }
             return true;
         }
         else {
-            System.out.println("@@@@@ verify false @@@@@@@");
             //성성불가, 인증 전송x
         return  false;
         }
     }
 
-    // 인증코드 생성, 인증정보 insert
+    // 인증코드 생성, 인증정보 insert,
+    // if인증 정보가 있으면 update, 없으면 insert?
     public void mailAuthCode(String email)  {
-
-        System.out.println("mailAuthCode ====@!@#!@#@@@!#!@#!@# ");
 
         try {
             this.token = new Random().nextInt(900000) + 100000;
             EmailVerifyVO verifyVO = new EmailVerifyVO();
             Timestamp expireAt = Timestamp.valueOf(LocalDateTime.now().plusMinutes(5));
 
+            int verifyEmail = userMapper.selectVerifyEmail(email);
+
             verifyVO.setEmail(email);
             verifyVO.setToken(token);
             verifyVO.setExpireAt(expireAt);
             verifyVO.setVerified(false);
 
-            userMapper.insertEmailVerify(verifyVO);
-
+            if(verifyEmail == 0 ){
+                userMapper.insertEmailVerify(verifyVO);
+            } else{
+                this.token = new Random().nextInt(900000) + 100000;
+                verifyVO.setToken(token);
+                userMapper.updateVerify(verifyVO);
+            }
         }
         catch (Exception e){
-            System.out.println("에에에에에에ㅔ엥에에엥에에sefefkrjweklfjoawdfjlaksfjlakef");
+
         }
-
     }
-
 }

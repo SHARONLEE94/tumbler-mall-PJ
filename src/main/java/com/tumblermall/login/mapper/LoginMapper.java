@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface LoginMapper {
 
     LoginVO selectLogin(String userEmail);
+    int selectLoginEmail(String userEmail);
 }

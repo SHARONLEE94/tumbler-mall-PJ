@@ -42,7 +42,7 @@
         <div class="space-y-2 mb-4">
           <label for="name" class="block text-gray-900 font-medium">이름<span class="text-red-500">*</span></label>
           <input type="text" id="name" name="userName" placeholder="홍길동"
-                 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none" required>
+                 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none" >
         </div>
 <%--        <div class="space-y-2 mb-4">--%>
 <%--          <label for="email" class="block text-gray-900 font-medium">이메일<span class="text-red-500">*</span></label>--%>
@@ -54,7 +54,7 @@
             이메일 <span class="text-red-500">*</span>
           </label>
           <div class="flex gap-2">
-            <input type="email" id="userEmail" name="userEmail" placeholder="your@email.com" required
+            <input type="email" id="userEmail" name="userEmail" placeholder="your@email.com"
                    class="flex-1 px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
             <button type="button" onclick="sendVerificationEmail()"
                     class="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800">
@@ -70,7 +70,7 @@
         <div class="space-y-2 mb-4">
           <label for="password" class="block text-gray-900 font-medium">비밀번호<span class="text-red-500">*</span></label>
           <input type="password" id="userPwd" name="userPwd"
-                 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none" required>
+                 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none" >
         </div>
         <div class="space-y-2 mb-6">
           <label for="confirmPassword" class="block text-gray-900 font-medium">비밀번호 확인<span class="text-red-500">*</span></label>
@@ -84,7 +84,7 @@
           </label>
           <div class="flex gap-2">
             <!-- 우편번호 input: 고정 너비로 축소 -->
-            <input type="text" id="sample6_postcode" placeholder="우편번호" readonly
+            <input type="text" id="sample6_postcode" name="userPostalCode" placeholder="우편번호" readonly
                    class="w-[200px] px-3 py-2 border border-beige-200 rounded-lg focus:outline-none focus:border-gray-900">
 
             <!-- 버튼: 남는 공간 활용 (자동 확장) -->
@@ -99,7 +99,7 @@
           <label for="sample6_address" class="block text-gray-900 font-medium">
             주소 <span class="text-red-500">*</span>
           </label>
-          <input type="text" id="sample6_address" placeholder="주소" readonly
+          <input type="text" id="sample6_address" name="userAddress" placeholder="주소" readonly
                  class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:outline-none focus:border-gray-900">
         </div>
 
@@ -115,13 +115,13 @@
               <label for="sample6_detailAddress" class="block text-gray-900 font-medium">
                   상세주소<span class="text-red-500">*</span>
               </label>
-              <input type="text" id="sample6_detailAddress" placeholder="상세주소" required
+              <input type="text" id="sample6_detailAddress" name="userAddressDetail" placeholder="상세주소"
                      class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:outline-none focus:border-gray-900">
           </div>
 
 
         <div class="space-y-2 mb-4">
-          <label for="phone" class="block text-gray-900 font-medium">연락처</label>
+          <label for="phone" class="block text-gray-900 font-medium">연락처<span class="text-red-500">*</span></label>
           <input type="tel" id="phone" name="userPhone" placeholder="010-1234-5678"
                  class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
         </div>
@@ -211,11 +211,18 @@
         const pwdconfirm = document.getElementById("confirmPwd").value;
         const emailverify = document.getElementById("emailVerify").value;
         const phone = document.getElementById("phone").value;
+        const name = document.getElementById("name").value;
+        const detailAddress = document.getElementById("sample6_detailAddress").value;
+
+        if(!name.trim()){
+            e.preventDefault();
+            alert("이름을 입력해주세요"); return;
+        }
 
 
-        if(pwd != pwdconfirm){
-            e.preventDefault(); // 서버로 폼 전송 막기
-            alert("비밀번호가 일치하지 않습니다."); return;
+        if(!pwd.trim()){
+            e.preventDefault();
+            alert("비밀번호를 입력해주세요"); return;
         }
 
         if(!emailverify.trim()){
@@ -223,28 +230,39 @@
             alert("인증번호를 입력해주세요"); return;
         }
 
+        if(!detailAddress.trim()){
+            e.preventDefault();
+            alert("상세주소를 입력해주세요"); return;
+        }
+
+
+        if(!phone.trim()){
+            e.preventDefault();
+            alert("연락처를 입력해주세요"); return;
+        }
+
+
+        if(pwd != pwdconfirm){
+            e.preventDefault(); // 서버로 폼 전송 막기
+            alert("비밀번호가 일치하지 않습니다."); return;
+        }
+
         if (pwd.length < 8) {
             e.preventDefault();
             alert("비밀번호는 8자 이상이어야 합니다."); return;
         }
-
-
-
-
     });
-
-
-
 
     function sendVerificationEmail() {
         const email = document.getElementById('userEmail').value;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!email) {
             alert("이메일을 입력해주세요.");
             return;
         } else if(!emailRegex.test(email)){
             alert("유효한 이메일을 입력해주세요")
             return;
+
         }
 
         fetch('/sendEmail', {

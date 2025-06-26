@@ -28,18 +28,19 @@
 <main class="max-w-md mx-auto px-4 py-16">
     <div class="bg-white border border-beige-200 shadow-lg rounded-lg">
         <div class="text-center p-6 border-b border-beige-100">
-            <h1 class="text-2xl font-light text-gray-900 mb-2">마이페이지랍니다</h1>
+            <h1 class="text-2xl font-light text-gray-900 mb-2">마이페이지</h1>
             <p class="text-beige-600">아아아아아아아ㅏ이이에에에에에</p>
         </div>
         <div class="p-6 space-y-4">
             <form action="/login" method="post">
-                <div class="space-y-2 mb-4">
-                    <label for="email" class="block text-gray-900 font-medium">이메일</label>
+<%--                <div class="space-y-2 mb-4">--%>
+<%--                    <label for="email" class="block text-gray-900 font-medium">이메일</label>--%>
 <%--                    <input type="email" id="email" name="userEmail" placeholder="your@email.com"--%>
 <%--                           class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">--%>
-                </div>
+<%--                </div>--%>
                 <div class="space-y-2 mb-6">
-                    <label for="password" class="block text-gray-900 font-medium">비밀번호</label>
+<%--                    <label for="password" class="block text-gray-900 font-medium">비밀번호</label>--%>
+                    <a href="/orderList" class="block text-gray-900 font-medium">주문내역</a>
 <%--                    <input type="password" id="password" name="userPwd"--%>
 <%--                           class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">--%>
                 </div>

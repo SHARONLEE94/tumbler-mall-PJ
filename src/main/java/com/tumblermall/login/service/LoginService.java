@@ -22,6 +22,10 @@ public class LoginService {
     public boolean loginCheck(LoginRequestDTO LoginRequestDTO) {
         LoginVO LoginVO = loginMapper.selectLogin(LoginRequestDTO.getUserEmail());
 
-        return passwordEncoder.matches(LoginRequestDTO.getUserPwd(),  LoginVO.getUserPwd());
+        if (loginMapper.selectLoginEmail(LoginRequestDTO.getUserEmail()) !=0){
+
+           return passwordEncoder.matches(LoginRequestDTO.getUserPwd(),  LoginVO.getUserPwd());
+        };
+        return false;
     }
 }

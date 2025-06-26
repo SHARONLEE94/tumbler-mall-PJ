@@ -44,7 +44,7 @@
         where user_id = #{userId}
     </select>
 
-    <insert id="insertUserReg" parameterType="com.tumblermall.user.dto.UserRegRequestDTO" >
+    <insert id="insertUserReg" parameterType="com.tumblermall.user.dto.UserRegRequestDTO" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
         insert into modeling.users(user_name
                                   , email
                                   , password
@@ -66,6 +66,12 @@
     <select id="selectUserEmail" parameterType="com.tumblermall.user.vo.UserRegVO" resultType="int">
         select count(email)
         from modeling.users
+        where email=#{userEmail}
+    </select>
+
+    <select id="selectVerifyEmail" parameterType="com.tumblermall.user.vo.EmailVerifyVO" resultType="int">
+        select count(email)
+        from modeling.email_verification
         where email=#{userEmail}
     </select>
 
@@ -91,6 +97,29 @@
                , verified
         from modeling.email_verification
         where email = #{email}
+    </select>
+
+    <select id="updateVerify" parameterType="com.tumblermall.user.vo.EmailVerifyVO">
+        UPDATE modeling.email_verification
+        SET token = #{token}
+            WHERE email = #{email};
+    </select>
+
+    <select id="insertDelivery" parameterType="com.tumblermall.user.dto.UserRegRequestDTO" >
+        insert into modeling.delivery_address_book(user_id
+        , recipient_name
+        , recipient_phone
+        , address
+        , address_detail
+        , postal_code
+        , is_default)
+        VALUES (#{userId}
+            , #{userName}
+               , #{userPhone}
+               , #{userAddress}
+               , #{userAddressDetail}
+               , #{userPostalCode}
+               , #{isDefault})
     </select>
 
 </mapper>

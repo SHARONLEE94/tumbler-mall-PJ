@@ -62,7 +62,6 @@ public class UserController {
             if (userId == null) {
                 throw new Exception("userId is Null");
             }
-
             List<UserInfoResponseVO> userInfoRes = userService.userInfo(userId);
 
             model.addAttribute("userInfoRes", userInfoRes);
@@ -85,11 +84,10 @@ public class UserController {
     public String register(UserRegRequestDTO userRegRequestDTO, RedirectAttributes redirectAttributes) throws Exception {
         if(userService.register(userRegRequestDTO)){
             return "redirect:/login";
-        }
+        }else {
             redirectAttributes.addFlashAttribute("errorMsg", "인증번호를 확인해 주세요");
             return "redirect:/register";
-
-//        return userService.register(userRegRequestDTO) ? "redirect:/main" : "redirect:/user/register";
+        }
     }
 
     @PostMapping(value="/sendEmail", produces = "text/plain; charset=UTF-8")
