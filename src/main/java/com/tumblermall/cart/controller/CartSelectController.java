@@ -18,31 +18,32 @@ public class CartSelectController {
     CartSelectService selectService;
 
     @GetMapping("/cart")
-    public String goCart(HttpSession session, Model model){
-        int userId = 1;
+    public String goCart(HttpSession session, Model model) {
+//        int userId = 1;
 
-//        //userId 변수에 세션 (userId)를 가져옴
-//        Integer userId = (Integer) session.getAttribute("userId");
-//
-//        //로그인이 되어있지 않다면 로그인 창으로 이동
-////        if(userId == null) {
-////            return "login/login";
-////
+        //userId 변수에 세션 (userId)를 가져옴
+        Integer userId = (Integer) session.getAttribute("userId");
 
-        //로그인이 되어있다면 userId (cart 테이블에 user_id의 정보를 가져와서 list에 저장
+        //로그인이 되어있지 않다면 로그인 창으로 이동
+        if (userId == null) {
+            model.addAttribute("cartloginMessage", "로그인이 필요합니다.");
+            return "login/login";
+        }
+            //로그인이 되어있다면 userId (cart 테이블에 user_id의 정보를 가져와서 list에 저장
         List<CartRequestVO> cartRequestVOList = selectService.checkedCart(userId);
 
-        //list의 정보를 model 객체에 저장하여 view로 전달
+            //list의 정보를 model 객체에 저장하여 view로 전달
         model.addAttribute("cartList", cartRequestVOList);
 
         return "/product/cart";
     }
 
 
-    //체크박스 확인
-    @PostMapping("/cartCheckboxUpdate")
-    public String showCartCheckbox(CartRequestDTO dto){
-        selectService.updateCheckbox(dto);
-        return "redirect:/cart";
-    }
+
+        //체크박스 확인
+        @PostMapping("/cartCheckboxUpdate")
+        public String showCartCheckbox (CartRequestDTO dto) {
+            selectService.updateCheckbox(dto);
+            return "redirect:/cart";
+        }
 }

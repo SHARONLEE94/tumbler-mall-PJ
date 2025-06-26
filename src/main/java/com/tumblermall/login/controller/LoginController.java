@@ -32,7 +32,7 @@ public class LoginController {
             return "redirect:/login";
         }
         LoginVO VO = loginService.logininfo(LoginRequestDTO.getUserEmail());
-        session.setAttribute("userid",VO.getUserId());
+        session.setAttribute("userId",VO.getUserId());
         session.setAttribute("admin",VO.getIsAdmin());
 
         return "redirect:/main";

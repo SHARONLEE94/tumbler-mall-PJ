@@ -19,8 +19,11 @@ public class CartInsertController {
 
     @PostMapping("/cartinsert")
     public String showCart(CartRequestDTO requestDTO){
-
-        insertService.goInsert(requestDTO);
+        try {
+            insertService.goInsert(requestDTO);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         return "redirect:/cart";
     }
 

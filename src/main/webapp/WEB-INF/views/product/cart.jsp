@@ -94,9 +94,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-3 rounded-lg transition-colors">
-                    주문하기
-                </button>
+                <form id="orderForm" method="POST" action="/cartOrder">
+                    <button type="submit" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-3 rounded-lg transition-colors">
+                        주문하기
+                    </button>
+                </form>
+
             </div>
         </div>
 <%--    </form>--%>
