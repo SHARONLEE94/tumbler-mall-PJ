@@ -22,7 +22,11 @@ public class CartDeleteController {
 //        if((Integer)deleteDTO.getUserId() == null){
 //            return null;
 //        }
-        deleteService.cartDeleteService(deleteDTO.getUserId(), deleteDTO.getProductOptionId());
+        try {
+            deleteService.cartDeleteService(deleteDTO.getUserId(), deleteDTO.getProductOptionId());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         return "redirect:/cart";
 

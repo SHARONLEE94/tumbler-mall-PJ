@@ -12,13 +12,12 @@ import java.util.List;
 public class CartSelectService {
     @Autowired
     CartMapper cartMapper;
-
-    // 나중에 예외 발생 시 예외처리 추가.
-    public List<CartRequestVO> checkedCart(int userId) {
+                // 나중에 예외 발생 시 예외처리 추가.
+        public List<CartRequestVO> checkedCart ( int userId){
             return cartMapper.selectCart(userId);
-    }
+        }
 
-    public void updateCheckbox(CartRequestDTO dto){
-        cartMapper.updateCartCheckbox(dto);
-    }
+        public void updateCheckbox (CartRequestDTO dto) {
+            cartMapper.updateCartCheckbox(dto);
+        }
 }

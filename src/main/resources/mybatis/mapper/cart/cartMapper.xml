@@ -19,11 +19,19 @@
 
     <select id="selectCart" resultMap="selectCartVO">
         SELECT c.user_id, c.product_option_id, c.product_count, c.product_YN,
-               o.color, o.size, p.product_base_price + o.additional_price AS final_price,
+               color_cd.code_name AS color,
+               size_cd.code_name AS size,
+               p.product_base_price + o.additional_price AS final_price,
                p.product_name, c.cartCheckbox
         FROM modeling.user_shopping_cart c
                  JOIN modeling.product_option o ON c.product_option_id = o.product_option_id
                  JOIN modeling.product p ON o.product_id = p.product_id
+                 JOIN modeling.code color_cd
+                      ON o.product_color = color_cd.code_group_id
+                          AND o.color = color_cd.code_id
+                 JOIN modeling.code size_cd
+                      ON o.product_size = size_cd.code_group_id
+                          AND o.size = size_cd.code_id
         WHERE c.user_id = #{userId} and c.product_YN = 'Y'
     </select>
 

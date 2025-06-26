@@ -26,10 +26,13 @@ public class CartUpdateController {
 
     @PostMapping("/cartupdate")
     public String updateCart(CartRequestDTO requestDTO, Model model) {
-        updateService.checkedUpdate(requestDTO.getUserId(),
-                                    requestDTO.getProductOptionId(),
-                                    requestDTO.getProductCount());
-
+        try {
+            updateService.checkedUpdate(requestDTO.getUserId(),
+                    requestDTO.getProductOptionId(),
+                    requestDTO.getProductCount());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         return "redirect:/cart";
     }
