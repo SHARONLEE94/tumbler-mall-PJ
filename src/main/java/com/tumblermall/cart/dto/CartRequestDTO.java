@@ -8,6 +8,7 @@ public class CartRequestDTO {
     private Integer productCount;
     private Integer finalPrice;
     private Integer totalPrice;
+    private Boolean cartCheckbox;
 
     public Integer getUserId() {
         return userId;
@@ -47,5 +48,13 @@ public class CartRequestDTO {
 
     public void setTotalPrice(Integer totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public Boolean getCartCheckbox() {
+        return cartCheckbox;
+    }
+
+    public void setCartCheckbox(Boolean cartCheckbox) {
+        this.cartCheckbox = cartCheckbox;
     }
 }

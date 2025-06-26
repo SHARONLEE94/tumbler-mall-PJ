@@ -9,6 +9,7 @@ public class BoardMainDto {
     private String postWriter;
     private Date writeAt;
     private Integer viewCount;
+    private String isPinned;
 
     public String getBoardType() {return boardType;}
 
@@ -31,4 +32,12 @@ public class BoardMainDto {
     public void setViewCount(Integer viewCount) {this.viewCount = viewCount;}
     public Integer getPostId() {return postId;}
     public void setPostId(Integer postId) {this.postId = postId;}
+
+    public String getIsPinned() {
+        return isPinned;
+    }
+
+    public void setIsPinned(String isPinned) {
+        this.isPinned = isPinned;
+    }
 }

@@ -68,7 +68,26 @@
             <div class="flex items-start justify-between">
                 <div class="flex-1">
                     <div class="flex items-center gap-2 mb-2">
-                        <span class="bg-red-100 text-red-700 px-2 py-1 text-xs rounded">${post.boardType}</span>
+                        <c:choose>
+                            <c:when test="${post.boardType eq 'QNA'}">
+                                <span class="bg-yellow-100 text-yellow-700 px-2 py-1 text-xs rounded">${post.boardType}</span>
+                            </c:when>
+                            <c:when test="${post.boardType eq 'EVN'}">
+                                <span class="bg-blue-100 text-blue-700 px-2 py-1 text-xs rounded">${post.boardType}</span>
+                            </c:when>
+                            <c:when test="${post.boardType eq 'REV'}">
+                                <span class="bg-green-100 text-blue-700 px-2 py-1 text-xs rounded">${post.boardType}</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span class="bg-red-100 text-gray-700 px-2 py-1 text-xs rounded">${post.boardType}
+                                    <c:if test="${post.isPinned == \"Y\"}">
+                                        <span> 📌 </span>
+                                    </c:if>
+                                </span>
+                            </c:otherwise>
+                        </c:choose>
+<%--                        --%>
+<%--                        <span class="bg-red-100 text-red-700 px-2 py-1 text-xs rounded">${post.boardType}</span>--%>
                     </div>
                     <a href="/postContext/${post.postId}" class="block">
                             ${post.postTitle}
@@ -82,7 +101,23 @@
             </div>
         </div>
     </c:forEach>
+        <!-- Pagination -->
+        <div class="flex justify-center mt-8">
+            <div class="flex gap-2">
+                <button class="border border-beige-300 px-3 py-2 rounded hover:bg-beige-100">이전</button>
+                <button class="bg-gray-900 text-white px-3 py-2 rounded">1</button>
+                <button class="border border-beige-300 px-3 py-2 rounded hover:bg-beige-100">2</button>
+                <button class="border border-beige-300 px-3 py-2 rounded hover:bg-beige-100">3</button>
+                <button class="border border-beige-300 px-3 py-2 rounded hover:bg-beige-100">다음</button>
+            </div>
+        </div>
 </main>
+
+<%--<script>--%>
+<%--    // Initialize Lucide icons--%>
+<%--    lucide.createIcons();--%>
+<%--</script>--%>
+<%--<jsp:include page="../common/footer.jsp" />--%>
 </body>
 </html>
 

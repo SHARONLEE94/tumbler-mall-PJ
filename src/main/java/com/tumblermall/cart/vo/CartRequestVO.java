@@ -9,6 +9,7 @@ public class CartRequestVO {
     private String size;
     private int finalPrice;
     private String productName;
+    private Boolean cartCheckbox;
 
     public CartRequestVO(Integer userId,
                          Integer productOptionId,
@@ -17,7 +18,8 @@ public class CartRequestVO {
                          String color,
                          String size,
                          Integer finalPrice,
-                         String productName) {
+                         String productName,
+                         Boolean cartCheckbox) {
         this.userId = userId;
         this.productOptionId = productOptionId;
         this.productCount = productCount;
@@ -26,6 +28,7 @@ public class CartRequestVO {
         this.size = size;
         this.finalPrice = finalPrice;
         this.productName = productName;
+        this.cartCheckbox = cartCheckbox;
     }
 
 
@@ -92,5 +95,13 @@ public class CartRequestVO {
 
     public Integer getFinalPrice() {
         return finalPrice;
+    }
+
+    public Boolean getCartCheckbox() {
+        return cartCheckbox;
+    }
+
+    public void setCartCheckbox(Boolean cartCheckbox) {
+        this.cartCheckbox = cartCheckbox;
     }
 }

@@ -1,5 +1,6 @@
 package com.tumblermall.products.service;
 
+import com.tumblermall.cart.service.CartUpdateService;
 import com.tumblermall.products.dto.ProductDTO;
 import com.tumblermall.products.dto.ProductDetailDTO;
 import com.tumblermall.products.dto.ProductResponseDTO;
@@ -95,5 +96,16 @@ public class ProductService {
         ProductResponseDTO responseDTO = new ProductResponseDTO(productDTO, List.of(detailDTO));
         return List.of(responseDTO);
     }
+
+    public String getProductOptionId(String productId, String color, String size) {
+        List<ProductDetailVO> details = productsMapper.selectDetailsByProductId(Long.parseLong(productId));
+        for (ProductDetailVO detail : details) {
+            if (detail.getColor().equals(color) && detail.getSize().equals(size)) {
+                return String.valueOf(detail.getId());
+            }
+        }
+        throw new IllegalArgumentException("Invalid option: color=" + color + ", size=" + size);
+    }
+
 }
 

@@ -1,6 +1,6 @@
 package com.tumblermall.cart.controller;
 
-import com.tumblermall.cart.dto.CartInsertDTO;
+import com.tumblermall.cart.dto.CartRequestDTO;
 import com.tumblermall.cart.service.CartInsertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +18,9 @@ public class CartInsertController {
     }
 
     @PostMapping("/cartinsert")
-    public String showCart(CartInsertDTO insertDTO){
+    public String showCart(CartRequestDTO requestDTO){
 
-        insertService.goInsert(insertDTO);
+        insertService.goInsert(requestDTO);
         return "redirect:/cart";
     }
 
