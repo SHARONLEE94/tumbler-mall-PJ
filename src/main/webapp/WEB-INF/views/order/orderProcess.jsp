@@ -94,15 +94,15 @@
                 <div class="p-6 space-y-3">
                     <div class="flex justify-between">
                         <span class="text-beige-600">이름</span>
-                        <span class="text-gray-900">${userName}</span>
+                        <span class="text-gray-900">${userInfo.userName}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-beige-600">전화번호</span>
-                        <span class="text-gray-900">${orderPhone}</span>
+                        <span class="text-gray-900">${userInfo.userPhone}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-beige-600">이메일</span>
-                        <span class="text-gray-900">${orderEmail}</span>
+                        <span class="text-gray-900">${userInfo.userEmail}</span>
                     </div>
                 </div>
             </div>

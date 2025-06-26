@@ -3,11 +3,13 @@ package com.tumblermall.order.vo;
 
 public class OrderDetailVo {
     private int productOptionId;
+    private int productId;
     private int quantities;
     private int prices;
     private String productName;
     private String color;
     private String sizes;
+    private String filePath;
 
     public int getProductOptionId() {
         return productOptionId;
@@ -55,5 +57,21 @@ public class OrderDetailVo {
 
     public void setSizes(String sizes) {
         this.sizes = sizes;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

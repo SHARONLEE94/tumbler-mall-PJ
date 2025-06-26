@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,9 +23,8 @@ public class OrderService {
         return orderMapper.selectAdress(id);
     }
 
-    public AdressVo selectAdressDefault(String i) {
-        int id = Integer.parseInt(i);
-        return orderMapper.selectAdressDefault(id);
+    public AdressVo selectAdressDefault(int i) {
+        return orderMapper.selectAdressDefault(i);
     }
 
     public List<ProductVo> selectProduct(List<String> items) {
@@ -59,7 +59,7 @@ public class OrderService {
             if (p == null) {
                 throw new IllegalStateException("해당 상품을 찾을 수 없습니다. 상품 ID: " + productId);
             }
-            p.setCount(count);
+            p.setQuantity(count);
             products.add(p);
 
             // 추가 처리 로직이 있다면 여기에...
@@ -76,8 +76,8 @@ public class OrderService {
         return result;
     }
 
-    @Transactional
-    public void orderInsert(int userId, OrderDto orderDto, List<Integer> productIds, List<Integer> quantities, List<Integer> prices, OrderDeliveryDto orderDeliveryDto) {
+    @Transactional(rollbackFor = Exception.class)
+    public void orderInsert(int userId, OrderDto orderDto, List<Integer> productIds, List<Integer> quantities, List<Integer> prices, OrderDeliveryDto orderDeliveryDto) throws Exception {
         orderDto.setUserId(userId);
         boolean insertOrder = orderMapper.insertOrder(orderDto);
         if (!insertOrder) {
@@ -93,26 +93,30 @@ public class OrderService {
         if (quantities.size() != n || prices.size() != n) {
             throw new IllegalArgumentException("상품 정보 개수가 일치하지 않습니다.");
         }
+
+        List<OrderDetailDto> batchList = new ArrayList<>();
         int count = 1;
         for (int i = 0; i < n; i++) {
-            OrderDetailDto detailDto = new OrderDetailDto();
-            detailDto.setOrderId(orderId);
-            detailDto.setProductId(productIds.get(i));
-            detailDto.setPrice(prices.get(i));
+            int productOptionId = productIds.get(i);
+            int price           = prices.get(i);
             for (int j =0 ; j <quantities.get(i); j++) {
-                detailDto.setSeq(count);
-                boolean orderDetail = orderMapper.insertOrderDetail(detailDto);
-                if (!orderDetail) {
-                    throw new IllegalArgumentException("orderDetail insert failed.");
-                }
-                count += 1;
+                OrderDetailDto dto = new OrderDetailDto();
+                dto.setOrderId(orderId);
+                dto.setProductId(productOptionId);
+                dto.setPrice(price);
+                dto.setSeq(count++);
+                batchList.add(dto);
             }
 //            detailDto.setQuantity(quantities.get(i));
         }
+        boolean orderDetail = orderMapper.insertOrderDetail(batchList);
+        if (!orderDetail) {
+            throw new IllegalArgumentException("orderDetail insert failed.");
+        }
     }
 
-    public userInfoVo userInfo(String userIdVal) {
-        return orderMapper.orderUserInfo(Integer.parseInt(userIdVal));
+    public userInfoVo userInfo(int userIdVal) {
+        return orderMapper.orderUserInfo(userIdVal);
     }
 
     public List<OrderDetailVo> oderDetailSelect(int orderId) {
@@ -127,5 +131,18 @@ public class OrderService {
 
     public OrderDeliveryDto orderAddressSelect(int orderId) {
         return orderMapper.orderAddressSelect(orderId);
+    }
+
+    public int orderUserSelect(int userId,int orderId) {
+        return orderMapper.orderUserSelect(userId,orderId);
+    }
+
+    public List<OrderVo> orderListSelect(int userId) {
+        return orderMapper.orderListSelect(userId);
+    }
+
+    public List<ProductVo> cartSelect(int userId) {
+
+        return orderMapper.cartSelect(userId);
     }
 }

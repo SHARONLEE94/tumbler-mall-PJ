@@ -88,7 +88,7 @@
                     <div class="space-y-4">
                         <c:forEach var="item" items="${orderDetailList}">
                             <div class="flex gap-4 p-4 border border-beige-200 rounded-lg">
-                                <img src="https://shop-phinf.pstatic.net/20250317_15/1742171755178UDtlA_JPEG/6974354318766909_716864716.jpg?type=m510"
+                                <img src="${item.filePath}"
                                      alt="스탠리 아이스플로우 에어로라이트 플립스트로 2.0 텀블러 473ml"
                                      class="w-16 h-20 object-cover rounded">
                                 <div class="flex-1">
@@ -102,9 +102,12 @@
                                             <button class="text-sm border border-beige-300 text-beige-700 hover:bg-beige-100 px-3 py-1 rounded transition-colors">
                                                 리뷰 작성
                                             </button>
-                                            <button class="text-sm border border-beige-300 text-beige-700 hover:bg-beige-100 px-3 py-1 rounded transition-colors">
+                                            <a href="/productDetl?productId=${item.productId}" class="text-sm border border-beige-300 text-beige-700 hover:bg-beige-100 px-3 py-1 rounded transition-colors">
                                                 재주문
-                                            </button>
+                                            </a>
+<%--                                            <button  class="text-sm border border-beige-300 text-beige-700 hover:bg-beige-100 px-3 py-1 rounded transition-colors">--%>
+<%--                                                재주문--%>
+<%--                                            </button>--%>
                                         </div>
                                         <span class="font-medium text-gray-900">
                                             ₩<fmt:formatNumber value="${item.prices}" type="number"
@@ -338,9 +341,9 @@
            class="flex-1 bg-gray-900 hover:bg-beige-800 text-white text-center py-3 rounded-lg transition-colors">
             쇼핑 계속하기
         </a>
-        <a href="order"
+        <a href="orderList"
            class="flex-1 border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white text-center py-3 rounded-lg transition-colors">
-            주문 내역 보기
+            주문 목록 보기
         </a>
     </div>
 </main>

@@ -62,23 +62,23 @@
                     <div class="p-6 space-y-4">
                         <div class="grid grid-cols-2 gap-4">
                             <div class="space-y-2">
-                                <label for="orderName" class="block text-gray-900 font-medium">이름 *</label>
-                                <input type="hidden" name="orderName" id="orderName" required value="${userInfo.userName}">
-                                <h3 id="orderName"
+                                <label for="userName" class="block text-gray-900 font-medium">이름 *</label>
+                                <input type="hidden" name="userName" id="userName" required value="${userInfo.userName}">
+                                <h3 id="userName"
                                     class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">${userInfo.userName}</h3>
                             </div>
                             <div class="space-y-2">
-                                <label for="orderPhone" class="block text-gray-900 font-medium">전화번호 *</label>
-                                <input type="hidden" name="orderPhone" id="orderPhone" required value="${formattedPhone}">
-                                <h3 id="orderPhone"
+                                <label for="userPhone" class="block text-gray-900 font-medium">전화번호 *</label>
+                                <input type="hidden" name="userPhone" id="userPhone" required value="${formattedPhone}">
+                                <h3 id="userPhone"
                                     class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">
                                     ${formattedPhone}
                                 </h3>
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label for="orderEmail" class="block text-gray-900 font-medium">이메일 *</label>
-                            <input type="hidden" name="orderEmail" id="orderEmail" required value="${userInfo.userEmail}">
+                            <label for="userEmail" class="block text-gray-900 font-medium">이메일 *</label>
+                            <input type="hidden" name="userEmail" id="userEmail" required value="${userInfo.userEmail}">
                             <h3 class="w-full px-3 py-2 border border-beige-200 rounded-lg focus:border-gray-900 focus:outline-none">${userInfo.userEmail}</h3>
                         </div>
                     </div>
@@ -206,16 +206,16 @@
                         <div class="space-y-3">
                             <c:forEach var="item" items="${productList}">
                                 <div class="flex gap-4 p-4 border border-beige-200 rounded-lg">
-                                    <img src="https://shop-phinf.pstatic.net/20250317_15/1742171755178UDtlA_JPEG/6974354318766909_716864716.jpg?type=m510"
-                                         alt="스탠리 아이스플로우 에어로라이트 플립스트로 2.0 텀블러 473ml"
+                                    <img src="${item.filePath}"
+                                         alt=">${item.productName}"
                                          class="w-16 h-20 object-cover rounded">
                                     <div class="flex-1">
                                         <h3 class="font-medium text-gray-900 mb-1">${item.productName}</h3>
                                         <p class="text-sm text-beige-600 mb-1">색상: ${item.color} / 사이즈: ${item.size}</p>
                                         <div class="flex justify-between items-center">
-                                            <span class="text-sm text-beige-600">수량: ${item.count}개</span>
+                                            <span class="text-sm text-beige-600">수량: ${item.quantity}개</span>
                                             <span class="font-medium text-gray-900">
-                                            ₩<fmt:formatNumber value="${item.count * item.price}" type="number" groupingUsed="true"/>
+                                            ₩<fmt:formatNumber value="${item.quantity * item.price}" type="number" groupingUsed="true"/>
                                             </span>
                                         </div>
                                     </div>
@@ -223,10 +223,10 @@
 
                                 <!-- Hidden inputs for order processing -->
                                 <input type="hidden" name="productId" value="${item.productOptionId}">
-                                <input type="hidden" name="quantity" value="${item.count}">
+                                <input type="hidden" name="quantity" value="${item.quantity}">
                                 <input type="hidden" name="price" value="${item.price}">
-                                <c:set var="totalPrice" value="${totalPrice + item.count * item.price}" />
-                                <c:set var="totalQuantity" value="${totalQuantity + item.count}" />
+                                <c:set var="totalPrice" value="${totalPrice + item.quantity * item.price}" />
+                                <c:set var="totalQuantity" value="${totalQuantity + item.quantity}" />
                                 <c:set var="totalCount" value="${totalCount +1}" />
                             </c:forEach>
                             <input type="hidden" name="totalPrice" value="${totalPrice}" />
@@ -391,7 +391,13 @@
     }
 
     function pointAll(){
-        document.getElementById('point').value = '${userInfo.userPoint}';
+        if(${userInfo.userPoint -(totalPrice + test1234)}>=0)
+        {
+            document.getElementById('point').value = '${totalPrice + test1234}';
+        }
+        else{
+            document.getElementById('point').value = '${userInfo.userPoint}';
+        }
     }
     function pointUses(){
         const raw = document.getElementById('point').value;
@@ -488,7 +494,7 @@
         e.preventDefault();
 
         // 필수 항목 체크
-        const requiredFields = ['orderName', 'orderPhone', 'orderEmail', 'recipientName', 'recipientPhone', 'postalCode', 'address', 'addressDetail'];
+        const requiredFields = ['userName', 'userPhone', 'userEmail', 'recipientName', 'recipientPhone', 'postalCode', 'address', 'addressDetail'];
         let isValid = true;
 
         requiredFields.forEach(fieldId => {

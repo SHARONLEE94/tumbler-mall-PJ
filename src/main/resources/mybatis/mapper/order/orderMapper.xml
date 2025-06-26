@@ -19,6 +19,7 @@
         <result property="price" column="price" />
         <result property="color" column="color" />
         <result property="size" column="sizes" />
+        <result property="filePath" column="filePath" />
     </resultMap>
 
 
@@ -30,25 +31,87 @@
         <result property="userPoint" column="points" />
     </resultMap>
 
+    <select id="cartSelect" parameterType="int" resultType="com.tumblermall.order.vo.ProductVo">
+        SELECT pdo.product_option_id                          AS productOptionId,
+               pd.product_name                                AS productName,
+               (pd.product_base_price + pdo.additional_price) AS price,
+               color_cd.code_name                             AS color,
+               size_cd.code_name                              AS sizes,
+               f.file_name                                    AS filePath,
+               uc.product_count                               AS quantity
+        FROM modeling.user_shopping_cart uc
+                 JOIN modeling.product_option pdo
+                      ON uc.product_option_id = pdo.product_option_id
+                          AND uc.cartCheckbox = 1
+                 JOIN modeling.product pd
+                      ON pd.product_id = pdo.product_id
+                 JOIN modeling.code color_cd
+                      ON pdo.product_color = color_cd.code_group_id
+                          AND pdo.color = color_cd.code_id
+                 JOIN modeling.code size_cd
+                      ON pdo.product_size = size_cd.code_group_id
+                          AND pdo.size = size_cd.code_id
+                 JOIN modeling.product_file pf
+                      ON pdo.product_id = pf.product_id
+                 JOIN modeling.fileTable f
+                      ON pf.file_id = f.file_id
+        where user_id = #{userId}
+        ;
+    </select>
     <select id="selectProduct" parameterType="int" resultMap="productInfo">
-        SELECT pdo.product_option_id AS productOptionId, pd.product_name AS productName, pd.product_base_price +pdo.additional_price AS  price,
-               color_cd.code_name AS color, size_cd.code_name AS  sizes
-        FROM modeling.product pd, modeling.product_option pdo
-            JOIN
-            modeling.code color_cd
-        ON pdo.product_color = color_cd.code_group_id AND pdo.color = color_cd.code_id
-            JOIN
-            modeling.code size_cd
-            ON pdo.product_size = size_cd.code_group_id AND pdo.size = size_cd.code_id
+        SELECT pdo.product_option_id                        AS productOptionId,
+               pd.product_name                              AS productName,
+               pd.product_base_price + pdo.additional_price AS price,
+               color_cd.code_name                           AS color,
+               size_cd.code_name                            AS sizes,
+               f.file_name                                  AS filePath
+        FROM modeling.product pd,
+             modeling.product_option pdo
+                 JOIN
+             modeling.code color_cd
+             ON pdo.product_color = color_cd.code_group_id AND pdo.color = color_cd.code_id
+                 JOIN
+             modeling.code size_cd
+             ON pdo.product_size = size_cd.code_group_id AND pdo.size = size_cd.code_id
+                 JOIN modeling.product_file pf
+                      ON pf.product_id = pdo.product_id
+                 JOIN modeling.fileTable f
+                      ON pf.file_id = f.file_id
         where pd.product_id = pdo.product_id
-        and pdo.product_option_id = #{productOptionId}
+          and pdo.product_option_id = #{productOptionId}
+        ;
     </select>
 
+    <select id="orderUserSelect" parameterType="int">
+        SELECT EXISTS(
+            SELECT 1
+            FROM modeling.order_master
+            WHERE order_id = #{orderId}
+              AND user_id = #{userId}
+        ) AS existFlag
+    </select>
     <select id="orderUserInfo" resultType="int" resultMap="userInfo">
         SELECT user_id, email,user_name,phone,points
         FROM modeling.users
         where user_id =#{userId}
         ;
+    </select>
+    <select id="orderListSelect" parameterType="int" resultType="com.tumblermall.order.vo.OrderVo">
+        SELECT order_id AS orderId,
+               user_id AS userId,
+               order_st_cd.code_name AS orderStatus,
+               product_type_count AS productTypeCount,
+               total_amount AS totalAmount,
+               DATE_FORMAT(order_date, '%Y-%m-%d')  AS orderDate,
+               payment_method AS paymentMethod
+        FROM modeling.order_master od
+                 JOIN
+             modeling.code order_st_cd
+             ON od.order_status_group = order_st_cd.code_group_id AND od.order_status_code = order_st_cd.code_id
+        where user_id = #{userId}
+        ORDER BY order_id DESC
+        ;
+
     </select>
     <select id="selectAdressDefault" parameterType="int" resultMap="adressInfo">
         select address_book_id,address_name,recipient_name,recipient_phone,
@@ -90,34 +153,38 @@
     </select>
 
     <select id="oderDetailSelect" parameterType="int" resultType="com.tumblermall.order.vo.OrderDetailVo">
-        SELECT
-            od.product_option_id AS productOptionId,
-            COUNT(*) AS quantities,
-            SUM(od.order_price) AS prices,
-            pd.product_name AS productName,
-            color_cd.code_name AS color,
-            size_cd.code_name AS sizes
-        FROM
-            modeling.order_detail od
-            JOIN modeling.product_option pdo
-        ON od.product_option_id = pdo.product_option_id
-            JOIN modeling.product pd
-            ON pd.product_id = pdo.product_id
-            JOIN modeling.code color_cd
-            ON pdo.product_color = color_cd.code_group_id
-            AND pdo.color = color_cd.code_id
-            JOIN modeling.code size_cd
-            ON pdo.product_size = size_cd.code_group_id
-            AND pdo.size = size_cd.code_id
-        WHERE
-            od.order_id = #{orderId}
-        GROUP BY
-            od.product_option_id,
-            pd.product_name,
-            pd.product_base_price,
-            pdo.additional_price,
-            color_cd.code_name,
-            size_cd.code_name;
+        SELECT od.product_option_id AS productOptionId,
+               COUNT(*)             AS quantities,
+               SUM(od.order_price)  AS prices,
+               pd.product_id AS productId,
+               pd.product_name      AS productName,
+               color_cd.code_name   AS color,
+               size_cd.code_name    AS sizes,
+               pdo.product_id,
+               f.file_name          AS filePath
+        FROM modeling.order_detail od
+                 JOIN modeling.product_option pdo
+                      ON od.product_option_id = pdo.product_option_id
+                 JOIN modeling.product pd
+                      ON pd.product_id = pdo.product_id
+                 JOIN modeling.code color_cd
+                      ON pdo.product_color = color_cd.code_group_id
+                          AND pdo.color = color_cd.code_id
+                 JOIN modeling.code size_cd
+                      ON pdo.product_size = size_cd.code_group_id
+                          AND pdo.size = size_cd.code_id
+                 JOIN modeling.product_file pf
+                      ON pf.product_id = pdo.product_id
+                 JOIN modeling.fileTable f
+                      ON pf.file_id = f.file_id
+        WHERE od.order_id = #{orderId}
+        GROUP BY od.product_option_id,
+                 pd.product_name,
+                 pd.product_base_price,
+                 pdo.additional_price,
+                 color_cd.code_name,
+                 size_cd.code_name,
+                 f.file_name;
     </select>
 
     <delete id="delAddress" parameterType="int">
@@ -147,20 +214,13 @@
             #{paymentMethod}
             )
     </insert>
-    <insert id="insertOrderDetail" parameterType="com.tumblermall.order.dto.OrderDetailDto">
-        insert into modeling.order_detail (
-             order_id,
-             seq,
-             product_option_id,
-             order_price
-            )
-        values
-            (
-            #{orderId},
-             #{seq},
-             #{productId},
-             #{price}
-           );
+    <insert id="insertOrderDetail" parameterType="java.util.List">
+        INSERT INTO modeling.order_detail
+        (order_id, product_option_id, order_price, seq)
+        VALUES
+        <foreach collection="list" item="dto" separator=",">
+            (#{dto.orderId}, #{dto.productId}, #{dto.price}, #{dto.seq})
+        </foreach>
     </insert>
 
     <insert id="insertOrderAdress" parameterType="com.tumblermall.order.dto.OrderDeliveryDto">

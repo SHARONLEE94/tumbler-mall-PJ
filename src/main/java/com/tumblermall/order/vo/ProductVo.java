@@ -7,9 +7,9 @@ public class ProductVo {
     private int price;
     private String color;
     private String size;
+    private String filePath;
+    private int quantity;
 
-
-    private int count;
 
     public int getProductOptionId() {
         return productOptionId;
@@ -51,11 +51,19 @@ public class ProductVo {
         this.size = size;
     }
 
-    public int getCount() {
-        return count;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

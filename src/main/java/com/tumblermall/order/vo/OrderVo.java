@@ -13,6 +13,7 @@ public class OrderVo {
     private Date orderDate;
     private String orderStatus;
     private String paymentMethod;
+    private int productTypeCount;
 
     public int getOrderId() {
         return orderId;
@@ -92,5 +93,13 @@ public class OrderVo {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public int getProductTypeCount() {
+        return productTypeCount;
+    }
+
+    public void setProductTypeCount(int productTypeCount) {
+        this.productTypeCount = productTypeCount;
     }
 }
