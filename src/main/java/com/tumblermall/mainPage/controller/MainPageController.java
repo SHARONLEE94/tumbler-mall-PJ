@@ -20,14 +20,20 @@ public class MainPageController {
     @Autowired
     private BannerService bannerService;
 
-    @ApiOperation(value = "메인 배너 페이지 이동")
-    @GetMapping("/main")
+    @ApiOperation(value = "메인 페이지",
+                  notes = "설명: 첫번째 토이 프로젝트 메인 페이지 조회 <br/><br/>"
+                        +  "- request param : 없음 <br/>")
+    @GetMapping(value = "/main",  produces = "application/json; charset=utf8")
     public String bannerPage(Model model) {
         model.addAttribute("banners", bannerService.getBanners());
         return "main/mainPage"; // JSP 페이지 반환
     }
 
-    @ApiOperation(value = "배너 리스트 API (Ajax)")
+    @ApiOperation(value = "배너 리스트 API (Ajax)",
+                  notes = "설명: 첫번째 토이 프로젝트 메인 페이지 조회 <br/><br/>"
+                        + "- request param : example1 <br/>"
+                        + "- request param : example2 <br/>"
+                        + "- request param : example3")
     @GetMapping("/api/banners")
     @ResponseBody
     public ApiResponse<List<BannerResponseDTO>> getBanners() {
