@@ -1,5 +1,6 @@
 package com.tumblermall.cart.mapper;
 
+import com.tumblermall.cart.dto.CartRequestDTO;
 import com.tumblermall.cart.vo.CartRequestVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +21,6 @@ public interface CartMapper {
     int insertCart(@Param("userId") int userId,
                    @Param("productOptionId") int productOptionId,
                    @Param("productCount") int productCoun);
+
+    int updateCartCheckbox(CartRequestDTO dto);
 }
