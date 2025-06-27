@@ -58,7 +58,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6">
+                    <div class="p-6 min-h-[260px] flex flex-col justify-between">
                         <h3 class="font-medium text-gray-900 mb-2 group-hover:text-beige-600 transition-colors">
                             클래식 아이스플로우 플립 스트로 2.0 텀블러 591ml
                         </h3>
@@ -71,7 +71,7 @@
                                 <div class="w-4 h-4 rounded-full border border-beige-300 bg-pink-300"></div>
                             </div>
                         </div>
-                        <a href="/productDetl?productId=1001" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <a href="/productDetl?productId=1001" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded transition-opacity duration-300">
                             상품 보기
                         </a>
                     </div>
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6">
+                    <div class="p-6 min-h-[260px] flex flex-col justify-between">
                         <h3 class="font-medium text-gray-900 mb-2 group-hover:text-beige-600 transition-colors">
                             퀜처 H2.0 플로우스테이트 텀블러 887ml 베리 트러플
                         </h3>
@@ -103,7 +103,7 @@
                                 <div class="w-4 h-4 rounded-full border border-beige-300 bg-gray-800"></div>
                             </div>
                         </div>
-                        <a href="/productDetl?productId=1002" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <a href="/productDetl?productId=1002" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded transition-opacity duration-300">
                             상품 보기
                         </a>
                     </div>
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6">
+                    <div class="p-6 min-h-[260px] flex flex-col justify-between">
                         <h3 class="font-medium text-gray-900 mb-2 group-hover:text-beige-600 transition-colors">
                             카페투고 트래블머그 591ml
                         </h3>
@@ -138,7 +138,7 @@
                                 <div class="w-4 h-4 rounded-full border border-beige-300 bg-white"></div>
                             </div>
                         </div>
-                        <a href="/productDetl?id=3" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <a href="/productDetl?id=3" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded transition-opacity duration-300">
                             상품 보기
                         </a>
                     </div>
@@ -157,7 +157,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6">
+                    <div class="p-6 min-h-[260px] flex flex-col justify-between">
                         <h3 class="font-medium text-gray-900 mb-2 group-hover:text-beige-600 transition-colors">
                             에어로라이트 보틀 591ml
                         </h3>
@@ -170,7 +170,7 @@
                                 <div class="w-4 h-4 rounded-full border border-beige-300 bg-lime-500"></div>
                             </div>
                         </div>
-                        <a href="/productDetl?id=4" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <a href="/productDetl?id=4" class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded transition-opacity duration-300">
                             상품 보기
                         </a>
                     </div>

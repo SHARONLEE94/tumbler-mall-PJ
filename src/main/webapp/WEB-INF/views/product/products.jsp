@@ -252,7 +252,7 @@
                 </div>
 
                 <!-- 호버 액션 -->
-                <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <div class="absolute inset-0 bg-black/20 transition-opacity duration-300 flex items-center justify-center">
                     <div class="flex gap-2">
                         <a href="product-detail?id=<%= product[0] %>"
                            class="bg-white hover:bg-gray-100 text-gray-900 p-2 rounded-full transition-colors">
@@ -292,7 +292,7 @@
                 </div>
 
                 <a href="/productDetl?id=<%= product[0] %>"
-                   class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300">
+                   class="block w-full bg-gray-900 hover:bg-beige-800 text-white text-center py-2 rounded-lg transition-all duration-300">
                     상품 보기
                 </a>
             </div>
