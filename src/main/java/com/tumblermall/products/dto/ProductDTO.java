@@ -1,35 +1,14 @@
 package com.tumblermall.products.dto;
 
+
 public class ProductDTO {
     private Long id;
     private String name;
     private Integer price;
     private String releaseDate; // Date 타입으로 해도 무방
-    private String discontinuedDate;
-    private String shippingMethodId;
-    private String shippingMethod;
-    private String shipping_fee;
     private String categoryId;
     private String seriesId;
     private String image;
-
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
 
     public Long getId() {
         return id;
@@ -37,22 +16,6 @@ public class ProductDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getShippingMethod() {
-        return shippingMethod;
-    }
-
-    public void setShippingMethod(String shippingMethod) {
-        this.shippingMethod = shippingMethod;
-    }
-
-    public String getDiscontinuedDate() {
-        return discontinuedDate;
-    }
-
-    public void setDiscontinuedDate(String discontinuedDate) {
-        this.discontinuedDate = discontinuedDate;
     }
 
     public String getName() {
@@ -71,35 +34,23 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public String getShippingMethodId() {
-        return shippingMethodId;
+    public String getImage() {
+        return image;
     }
 
-    public void setShippingMethodId(String shippingMethodId) {
-        this.shippingMethodId = shippingMethodId;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getShipping_fee() {
-        return shipping_fee;
-    }
+    public String getSeriesId() { return seriesId; }
 
-    public void setShipping_fee(String shipping_fee) {
-        this.shipping_fee = shipping_fee;
-    }
-
-    public String getSeriesId() {
-        return seriesId;
-    }
-
-    public void setSeriesId(String seriesId) {
-        this.seriesId = seriesId;
-    }
+    public void setSeriesId(String seriesId) { this.seriesId = seriesId; }
 }
