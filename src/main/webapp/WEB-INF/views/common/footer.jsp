@@ -12,7 +12,7 @@
     <div class="max-w-7xl mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-                <h3 class="text-2xl font-bold mb-4">STANLEY</h3>
+                <h3 class="text-2xl font-bold mb-4">SHARONLY</h3>
                 <p class="text-beige-200 mb-4">
                     LIFELONG COMPANION
                 </p>
@@ -36,15 +36,15 @@
             <div>
                 <h4 class="font-medium mb-4">SNS</h4>
                 <ul class="space-y-2 text-beige-200">
-                    <li>인스타그램 : stanley_korea</li>
-                    <li>톡딜 : stanleykorea</li>
-                    <li>블로그 : stanley-pmi</li>
-                    <li>페이스북 : stanleypmikorea</li>
+                    <li>인스타그램 : SHARONLY_korea</li>
+                    <li>톡딜 : SHARONLYkorea</li>
+                    <li>블로그 : SHARONLY-pmi</li>
+                    <li>페이스북 : SHARONLYpmikorea</li>
                 </ul>
             </div>
         </div>
         <div class="border-t border-beige-700 mt-8 pt-8 text-center text-beige-300">
-            <p>&copy; 2024 STANLEY. All rights reserved.</p>
+            <p>&copy; 2024 SHARONLY. All rights reserved.</p>
         </div>
     </div>
 </footer>

@@ -15,7 +15,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STANLEY - 당신에게 어울리는 색상을 찾아보세요</title>
+    <title>SHARONLY - 당신에게 어울리는 색상은?!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -48,7 +48,7 @@
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
             <a href="/main" class="text-2xl font-bold text-gray-900">
-                STANLEY
+                꼬우면_너가_조장ly
             </a>
 
             <!-- Desktop Navigation -->

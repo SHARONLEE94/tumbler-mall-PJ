@@ -501,7 +501,7 @@
                                     </div>
                                     <div class="flex-1">
                                         <div class="flex items-center gap-2 mb-2">
-                                            <span class="font-medium text-gray-900">STANLEY</span>
+                                            <span class="font-medium text-gray-900">SHARONLY</span>
                                             <span class="text-sm text-beige-600">2024.01.12</span>
                                         </div>
                                         <p class="text-gray-900">
@@ -532,7 +532,7 @@
                                     </div>
                                     <div class="flex-1">
                                         <div class="flex items-center gap-2 mb-2">
-                                            <span class="font-medium text-gray-900">STANLEY</span>
+                                            <span class="font-medium text-gray-900">SHARONLY</span>
                                             <span class="text-sm text-beige-600">2024.01.10</span>
                                         </div>
                                         <p class="text-gray-900">
@@ -586,11 +586,11 @@
             <div class="group bg-white border border-beige-200 shadow-sm hover:shadow-lg transition-all duration-300 rounded-lg overflow-hidden">
                 <div class="relative overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&h=400&fit=crop"
-                         alt="스탠리 퀜처 H2.0 플로우스테이트 보온 보냉 빨대 손잡이 텀블러 591ml 20온스"
+                         alt="SHARONLY 퀜처 H2.0 플로우스테이트 보온 보냉 빨대 손잡이 텀블러 591ml 20온스"
                          class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
                 </div>
                 <div class="p-4">
-                    <h3 class="font-medium text-gray-900 mb-2">스탠리 퀜처 H2.0 플로우스테이트 보온 보냉 빨대 손잡이 텀블러 591ml 20온스</h3>
+                    <h3 class="font-medium text-gray-900 mb-2">SHARONLY 퀜처 H2.0 플로우스테이트 보온 보냉 빨대 손잡이 텀블러 591ml 20온스</h3>
                     <p class="text-lg font-light text-gray-900">₩245,000</p>
                 </div>
             </div>
@@ -599,11 +599,11 @@
             <div class="group bg-white border border-beige-200 shadow-sm hover:shadow-lg transition-all duration-300 rounded-lg overflow-hidden">
                 <div class="relative overflow-hidden">
                     <img src="https://shop-phinf.pstatic.net/20250217_229/1739768604638FEh8L_JPEG/30954784340902937_184161788.jpg?type=m510"
-                         alt="스탠리 아이스플로우 플립 스트로 2.0 텀블러 887m"
+                         alt="SHARONLY 아이스플로우 플립 스트로 2.0 텀블러 887m"
                          class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
                 </div>
                 <div class="p-4">
-                    <h3 class="font-medium text-gray-900 mb-2">스탠리 아이스플로우 플립 스트로 2.0 텀블러 887m</h3>
+                    <h3 class="font-medium text-gray-900 mb-2">SHARONLY 아이스플로우 플립 스트로 2.0 텀블러 887m</h3>
                     <p class="text-lg font-light text-gray-900">₩125,000</p>
                 </div>
             </div>
@@ -612,11 +612,11 @@
             <div class="group bg-white border border-beige-200 shadow-sm hover:shadow-lg transition-all duration-300 rounded-lg overflow-hidden">
                 <div class="relative overflow-hidden">
                     <img src="https://shop-phinf.pstatic.net/20241011_62/1728658155335k8LEV_JPEG/8233519206248626_1647702423.JPG?type=m510"
-                         alt="스탠리 591 텀블러 퀜처 H2.0 플로우스테이트 차량용 텀블러"
+                         alt="SHARONLY 591 텀블러 퀜처 H2.0 플로우스테이트 차량용 텀블러"
                          class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
                 </div>
                 <div class="p-4">
-                    <h3 class="font-medium text-gray-900 mb-2">스탠리 591 텀블러 퀜처 H2.0 플로우스테이트 차량용 텀블러</h3>
+                    <h3 class="font-medium text-gray-900 mb-2">SHARONLY 591 텀블러 퀜처 H2.0 플로우스테이트 차량용 텀블러</h3>
                     <p class="text-lg font-light text-gray-900">₩159,000</p>
                 </div>
             </div>

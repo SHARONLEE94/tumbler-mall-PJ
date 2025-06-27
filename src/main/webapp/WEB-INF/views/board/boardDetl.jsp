@@ -76,7 +76,7 @@
                 <div class="p-8">
                     <!-- Post Content -->
                     <div class="text-gray-900 leading-relaxed mb-8">
-                        <p class="mb-4">안녕하세요, STANLEY입니다.</p>
+                        <p class="mb-4">안녕하세요,SHARONLY입니다.</p>
                         <p class="mb-6"다양한 컬러와 사이즈로 언제 어디서나 즐겨요</p>
 
                         <h3 class="text-xl font-medium mb-4">🍂 New Colors 빛나는 Shimmer 시리즈를 만나보세요</h3>

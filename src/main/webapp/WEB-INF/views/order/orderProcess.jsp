@@ -64,7 +64,7 @@
                     <c:forEach var="item" items="${orderDetailDtoList}">
                         <div class="flex gap-4 p-4 border border-beige-200 rounded-lg">
                             <img src="https://shop-phinf.pstatic.net/20250317_15/1742171755178UDtlA_JPEG/6974354318766909_716864716.jpg?type=m510"
-                                 alt="스탠리 아이스플로우 에어로라이트 플립스트로 2.0 텀블러 473ml"
+                                 alt="SHARONLY 아이스플로우 에어로라이트 플립스트로 2.0 텀블러 473ml"
                                  class="w-16 h-20 object-cover rounded">
                             <div class="flex-1">
                                 <h3 class="font-medium text-gray-900 mb-1">${item.productName}</h3>

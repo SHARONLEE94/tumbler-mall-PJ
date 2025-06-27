@@ -15,21 +15,21 @@
     <section class="relative h-screen flex items-center justify-center bg-gradient-to-r from-beige-100 to-beige-200">
         <div class="text-center max-w-4xl mx-auto px-4">
             <h1 class="text-5xl md:text-7xl font-light text-gray-900 mb-6">
-                Quencher Tumbler<br>
-                <span class="text-beige-600">Large </span>
+                혼자라면 절대 못했을 Timbler...<br/><br/>
+                <span class="text-beige-600">😈샤장님조</span>
             </h1>
             <p class="text-xl text-beige-700 mb-8 max-w-2xl mx-auto">
-                아침의 따뜻한 커피부터 갈증을 해소하는 시원한 물 한 잔까지 당신의 모든 순간을 함께
+                ※ 이 프로젝트는 팀원들의 영혼을 갈아 넣어 만든 결과물입니다.<br/>수고했어요!!!!!!!!!!
             </p>
-            <div class="flex gap-4 justify-center">
-                <button class="bg-gray-900 hover:bg-beige-800 text-white px-8 py-3 rounded-lg flex items-center gap-2">
-                    컬렉션 보기
-                    <i data-lucide="arrow-right" class="h-5 w-5"></i>
-                </button>
-                <button class="border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-8 py-3 rounded-lg">
-                    브랜드 스토리
-                </button>
-            </div>
+<%--            <div class="flex gap-4 justify-center">--%>
+<%--                <button class="bg-gray-900 hover:bg-beige-800 text-white px-8 py-3 rounded-lg flex items-center gap-2">--%>
+<%--                    컬렉션 보기--%>
+<%--                    <i data-lucide="arrow-right" class="h-5 w-5"></i>--%>
+<%--                </button>--%>
+<%--                <button class="border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-8 py-3 rounded-lg">--%>
+<%--                    우리의 스토리--%>
+<%--                </button>--%>
+<%--            </div>--%>
         </div>
     </section>
 
@@ -37,8 +37,8 @@
     <section class="py-16 px-4">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-light text-gray-900 mb-4">STANLEY COLLECTION</h2>
-                <p class="text-beige-600 max-w-2xl mx-auto">스탠리의 베스트셀러 제품을 만나보세요</p>
+                <h2 class="text-3xl font-light text-gray-900 mb-4">SHARONLY COLLECTION</h2>
+                <p class="text-beige-600 max-w-2xl mx-auto">SHARONLY의 베스트셀러 제품을 만나보세요</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -190,7 +190,7 @@
     <!-- Special Offer -->
     <section class="py-16 bg-gradient-to-r from-beige-200 to-beige-300">
         <div class="max-w-4xl mx-auto text-center px-4">
-            <h2 class="text-4xl font-light text-gray-900 mb-4">2021 STANLEY S/S CATALOG</h2>
+            <h2 class="text-4xl font-light text-gray-900 mb-4">2021 SHARONLY S/S CATALOG</h2>
             <p class="text-xl text-beige-700 mb-8">	CNC GLOBAL </p>
             <div class="flex justify-center gap-4">
                 <button class="bg-gray-900 hover:bg-beige-800 text-white px-8 py-3 rounded-lg">

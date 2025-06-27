@@ -14,7 +14,7 @@
 
         <!-- Logo -->
         <a class="navbar-brand fw-bold text-primary" href="${pageContext.request.contextPath}/">
-            STANLEY
+            꼬우면_너가_조장ly
         </a>
 
         <!-- Mobile Toggle Button -->
