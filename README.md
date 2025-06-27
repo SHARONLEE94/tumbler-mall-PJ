@@ -33,6 +33,7 @@
 | **IDE** | IntelliJ 또는 Eclipse |
 | **실행 환경** | 내장 또는 외부 Tomcat 9.x |
 | **배포 환경** | 로컬 개발 및 실행 중심 |
+| **배포** | http://mykakusi.tplinkdns.com/main |
 
 ---
 
@@ -67,28 +68,22 @@ src/main/java
 ---
 
 ## 🚀 Git 전략
+![img.png](img.png)
+
+**노션페이지** https://www.notion.so/Git-2139047c353d80c0bde4cb890c344e63
+
 
 ### 🔧 브랜치 전략
 
-| 브랜치 | 용도 | 병합 대상 |
-|--------|------|------------|
-| `main` | 최종 배포용 브랜치 | `stage` |
-| `stage` | QA 및 발표용 브랜치 | `dev` |
-| `dev` | 팀원 기능 통합 브랜치 | `feat/*` |
-| `feat/*` | 개별 기능 개발 브랜치 | - |
+| 브랜치           | 용도 | 병합 대상 |
+|---------------|------|------------|
+| `main`        | 최종 배포용 브랜치 | `stage` |
+| `stage`       | QA 및 발표용 브랜치 | `dev` |
+| `dev`         | 팀원 기능 통합 브랜치 | `feat/*` |
+| `featature/*` | 개별 기능 개발 브랜치 | - |
 
 ### 📈 브랜치 흐름도
 > feat/* → dev → stage → main
-
-
-### 🔖 브랜치 예시
-
-| 브랜치명 | 설명 |
-|----------|------|
-| `feat/join` | 회원가입 기능 |
-| `feat/login` | 로그인 기능 |
-| `fix/cart-bug` | 장바구니 오류 수정 |
-| `refactor/order-service` | 주문 서비스 리팩토링 |
 
 ---
 
@@ -134,4 +129,4 @@ git push origin feat/user-join
 
 1. 프로젝트는 로컬 실행을 기준으로 작성되었으며, 운영 배포를 고려하지 않습니다.
 2. 모든 작업은 Git을 통해 관리되며, PR 기반 리뷰 및 병합 방식을 따릅니다.
-3. 기본 Controller / Service / Mapper 구조와 주석 기반 템플릿을 팀장이 제공하여 협업을 진행합니다.
+3. 기본 Controller / Service / Mapper / xml 구조와 주석 기반 템플릿을 팀장이 제공하여 협업을 진행합니다.
