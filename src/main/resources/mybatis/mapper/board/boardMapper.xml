@@ -17,7 +17,6 @@
         from modeling.post p
                  join modeling.post_history ph
                       on p.post_id = ph.post_id
-        where ph.post_history_type_id = 1
         order by ph.post_write_history desc, p.is_pinned desc
     </select>
 
