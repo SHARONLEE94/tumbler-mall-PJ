@@ -99,7 +99,6 @@ public class ProductController {
             @RequestParam("color") String color,
             @RequestParam("size") String size,
             @RequestParam("quantity") int quantity,
-            //HttpSession session
             Model m
     ) {
         int userId = (Integer) session.getAttribute("userId");
@@ -153,8 +152,12 @@ public class ProductController {
             @RequestParam("color") String color,
             @RequestParam("size") String size,
             @RequestParam("quantity") int quantity,
+            HttpSession session,
             Model m
     ){
+        int userId = (Integer) session.getAttribute("userId");
+        m.addAttribute("userId",userId);
+
         String sanitizedColor = sanitize(color);
         String sanitizedSize = sanitize(size);
         int sanitizedQuantity = Math.max(1, quantity);
@@ -165,7 +168,7 @@ public class ProductController {
         String items = productOptionId + ":" + sanitizedQuantity;
 
         System.out.println("[AddToOrder] " + items);
-        m.addAttribute("userId",6);
+        m.addAttribute("userId",userId);
         m.addAttribute("items", items);
         return "redirect:/order";
     }
