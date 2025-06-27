@@ -4,7 +4,7 @@
     <data-source source="LOCAL" name="@mykakusi.tplinkdns.com" uuid="22d2655e-7def-47a6-a7be-e68d2d466b62">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://mykakusi.tplinkdns.com:3333</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />

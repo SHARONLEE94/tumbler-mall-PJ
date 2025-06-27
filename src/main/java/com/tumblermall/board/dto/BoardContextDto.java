@@ -1,14 +1,30 @@
 package com.tumblermall.board.dto;
 
-import java.util.Date;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+@ApiModel(description = "게시글 본문 요청 객체")
 public class BoardContextDto {
+    @ApiModelProperty(value = "게시글 id", example = "1001(게시글 고유 id)", required = true)
     private Integer postId;
+
+    @ApiModelProperty(value = "제목", example = "썸머 얼리버드 이벤트", required = true)
     private String postTitle;
+
+    @ApiModelProperty(value = "작성자", example = "999(관리자 id)", required = true)
     private String postWriter;
+
+    @ApiModelProperty(value = "게시글 작성 시간", example = "2025년 06월 02일 09시", required = true)
     private Date postAt;
+
+    @ApiModelProperty(value = "게시글 본문", example = "금일 오후 6시부터~", required = true)
     private String postContext;
+
+    @ApiModelProperty(value = "조회수", example = "99", required = true)
     private Integer viewCount;
+
+    @ApiModelProperty(value = "첨부파일 id", example = "2(첨부파일 고유 id)", required = true)
     private Integer attachedFileId;
 
     public Integer getPostId() {
