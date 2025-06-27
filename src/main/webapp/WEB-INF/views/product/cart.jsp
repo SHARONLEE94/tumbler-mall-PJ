@@ -279,6 +279,20 @@
         document.body.appendChild(form);
         form.submit();
     }
+
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+        const checkboxes = document.querySelectorAll('.cart-item input[type="checkbox"]');
+        let hasChecked = false;
+
+        checkboxes.forEach((cb) => {
+            if (cb.checked) hasChecked = true;
+        });
+
+        if (!hasChecked) {
+            e.preventDefault(); // 제출 막기
+            alert("주문할 상품이 없습니다.");
+        }
+    });
 </script><jsp:include page="../common/footer.jsp" />
 <%--</form>--%>
 </body>

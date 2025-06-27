@@ -3,6 +3,7 @@ package com.tumblermall.cart.controller;
 import com.tumblermall.cart.dto.CartRequestDTO;
 import com.tumblermall.cart.service.CartSelectService;
 import com.tumblermall.cart.vo.CartRequestVO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,9 @@ import java.util.List;
 public class CartSelectController {
     @Autowired
     CartSelectService selectService;
+
+    @ApiOperation(value = "장바구니 페이지",
+            notes = "설명 : 첫번째 토이 프로젝트 장바구니 조회 <br/><br/>")
 
     @GetMapping("/cart")
     public String goCart(HttpSession session, Model model) {
@@ -39,6 +43,10 @@ public class CartSelectController {
     }
 
 
+
+        @ApiOperation(value = "장바구니 페이지",
+            notes = "설명 : 첫번째 토이 프로젝트 장바구니 제품 별 체크박스 <br/><br/>"
+                    + "- request param : CartRequestDTO<br/>")
 
         //체크박스 확인
         @PostMapping("/cartCheckboxUpdate")
