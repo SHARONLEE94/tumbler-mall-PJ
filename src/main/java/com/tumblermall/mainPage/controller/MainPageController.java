@@ -31,9 +31,7 @@ public class MainPageController {
 
     @ApiOperation(value = "배너 리스트 API (Ajax)",
                   notes = "설명: 첫번째 토이 프로젝트 메인 페이지 조회 <br/><br/>"
-                        + "- request param : example1 <br/>"
-                        + "- request param : example2 <br/>"
-                        + "- request param : example3")
+                        + "- request param : 없음 <br/>")
     @GetMapping("/api/banners")
     @ResponseBody
     public ApiResponse<List<BannerResponseDTO>> getBanners() {
