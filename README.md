@@ -130,3 +130,4 @@ git push origin feat/user-join
 1. 프로젝트는 로컬 실행을 기준으로 작성되었으며, 운영 배포를 고려하지 않습니다.
 2. 모든 작업은 Git을 통해 관리되며, PR 기반 리뷰 및 병합 방식을 따릅니다.
 3. 기본 Controller / Service / Mapper / xml 구조와 주석 기반 템플릿을 팀장이 제공하여 협업을 진행합니다.
+**프로젝트 구조 정리** https://www.notion.so/2159047c353d8048bdaad266f0a073c0
