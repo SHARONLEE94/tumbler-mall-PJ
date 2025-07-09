@@ -1,5 +1,13 @@
 package com.tumblermall.global.exception;
 
+/**
+ * 예외코드 정의
+ *
+ * @author sharon
+ * @author whosoonhwang
+ * @deprecated 사용하는 곳이 없는데? TODO
+ */
+@Deprecated
 public enum ErrorCode {
 
     // 400 Bad Request
